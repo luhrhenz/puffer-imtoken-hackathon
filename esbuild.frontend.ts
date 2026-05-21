@@ -24,6 +24,7 @@ esbuild.build({
   },
   define: {
     'process.env.NODE_ENV': '"production"',
+    'process.env.LLM_API_KEY': JSON.stringify(process.env.LLM_API_KEY || ''),
     global: 'window',
   },
 });

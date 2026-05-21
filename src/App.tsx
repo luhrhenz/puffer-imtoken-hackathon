@@ -80,51 +80,78 @@ export default function App() {
   useEffect(() => {
     const init = async () => {
       try {
+        // Check if wallet is available
+        if (!window.ethereum) {
+          // For testing without wallet, use mock data
+          setContext({
+            address: '0x0000000000000000000000000000000000000000',
+            balance: '0',
+            rate: null,
+            metrics: null,
+            vaultsAPY: null,
+            vaultsTVL: null,
+            protocolTVL: null,
+          });
+          setMessages([{ 
+            role: 'assistant', 
+            content: 'Welcome to Puffer AI! Please open this app in imToken or install MetaMask to connect your wallet and start staking.' 
+          }]);
+          setLoading(false);
+          return;
+        }
+
         const address = await pufferService.connectWallet();
         await fetchData(address);
 
-        const systemPrompt = buildSystemPrompt({
-          address,
-          pufETHBalance: '0',
-          rate: { pufEthPerEth: '0.95', ethPerPufEth: '1.05' },
-          metrics: { lrtMarketCap: 0, averageDailyVolume: 0, holderCount: 0 },
-          vaultsAPY: { data: [], timestamp: '' },
-          vaultsTVL: {
-            unifi_eth_vault: '0',
-            unifi_usd_vault: '0',
-            unifi_btc_vault: '0',
-          },
-          protocolTVL: {
-            lrt_total_usd: '0',
-            tvl_puffer_staking: '0',
-            apy: '0',
-            timestamp: '',
-          },
-        });
-
-        const response = await fetch(
-          'https://api.openai.com/v1/chat/completions',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + (process.env.LLM_API_KEY || ''),
+        // Try to get initial AI greeting if API key is available
+        const apiKey = process.env.LLM_API_KEY || '';
+        if (apiKey) {
+          const systemPrompt = buildSystemPrompt({
+            address,
+            pufETHBalance: context.balance,
+            rate: context.rate || { pufEthPerEth: '0.95', ethPerPufEth: '1.05' },
+            metrics: context.metrics || { lrtMarketCap: 0, averageDailyVolume: 0, holderCount: 0 },
+            vaultsAPY: context.vaultsAPY || { data: [], timestamp: '' },
+            vaultsTVL: context.vaultsTVL || {
+              unifi_eth_vault: '0',
+              unifi_usd_vault: '0',
+              unifi_btc_vault: '0',
             },
-            body: JSON.stringify({
-              model: 'gpt-4o-mini',
-              messages: [{ role: 'system', content: systemPrompt }],
-              temperature: 0.7,
-            }),
-          },
-        );
+            protocolTVL: context.protocolTVL || {
+              lrt_total_usd: '0',
+              tvl_puffer_staking: '0',
+              apy: '0',
+              timestamp: '',
+            },
+          });
 
-        if (response.ok) {
-          const data = await response.json();
-          const content = data.choices[0].message.content;
-          setMessages([{ role: 'assistant', content }]);
+          const response = await fetch(
+            'https://api.openai.com/v1/chat/completions',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + apiKey,
+              },
+              body: JSON.stringify({
+                model: 'gpt-4o-mini',
+                messages: [{ role: 'system', content: systemPrompt }],
+                temperature: 0.7,
+              }),
+            },
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            const content = data.choices[0].message.content;
+            setMessages([{ role: 'assistant', content }]);
+          }
+        } else {
+          setMessages([{ role: 'assistant', content: 'Welcome to Puffer AI! How can I help you with staking today?' }]);
         }
       } catch (err: any) {
-        setError(err.message);
+        console.error('Init error:', err);
+        setError(err.message || 'Failed to initialize app');
       } finally {
         setLoading(false);
       }

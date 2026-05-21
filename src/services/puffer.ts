@@ -5,7 +5,6 @@ import {
   Token,
   UnifiToken,
 } from '@pufferfinance/puffer-sdk';
-import type { PufEthRate } from './api';
 
 const RPC_URL = 'https://eth.llamarpc.com';
 
@@ -69,7 +68,11 @@ export const pufferService = {
     return transact(amountWei);
   },
 
-  async approveToken(token: Token, address: string, amountWei: bigint): Promise<string> {
+  async approveToken(
+    token: Token,
+    address: string,
+    amountWei: bigint,
+  ): Promise<string> {
     if (!pufferClient) throw new Error('Puffer client not initialized');
     return pufferClient.vault.approveToken(
       token,

@@ -67,9 +67,13 @@ export const api = {
     return res.json();
   },
 
-  async getTokenPrices(addresses: string[]): Promise<Record<string, { usd: number }>> {
+  async getTokenPrices(
+    addresses: string[],
+  ): Promise<Record<string, { usd: number }>> {
     const addressesStr = addresses.join('%');
-    const res = await fetch(`${API_BASE}/tokens/prices?addresses=${addressesStr}`);
+    const res = await fetch(
+      `${API_BASE}/tokens/prices?addresses=${addressesStr}`,
+    );
     if (!res.ok) throw new Error('Failed to fetch token prices');
     return res.json();
   },

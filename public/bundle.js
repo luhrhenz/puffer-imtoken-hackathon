@@ -1,5 +1,5 @@
 "use strict";
-var PufferApp = (() => {
+(() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -777,7 +777,7 @@ var PufferApp = (() => {
   var require_react_dom_production = __commonJS({
     "node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom.production.js"(exports) {
       "use strict";
-      var React6 = require_react();
+      var React3 = require_react();
       function formatProdErrorMessage(code) {
         var url = "https://react.dev/errors/" + code;
         if (1 < arguments.length) {
@@ -817,7 +817,7 @@ var PufferApp = (() => {
           implementation
         };
       }
-      var ReactSharedInternals = React6.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      var ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       function getCrossOriginStringAs(as3, input) {
         if ("font" === as3) return "";
         if ("string" === typeof input)
@@ -953,7 +953,7 @@ var PufferApp = (() => {
     "node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom-client.production.js"(exports) {
       "use strict";
       var Scheduler = require_scheduler();
-      var React6 = require_react();
+      var React3 = require_react();
       var ReactDOM = require_react_dom();
       function formatProdErrorMessage(code) {
         var url = "https://react.dev/errors/" + code;
@@ -1148,7 +1148,7 @@ var PufferApp = (() => {
         return null;
       }
       var isArrayImpl = Array.isArray;
-      var ReactSharedInternals = React6.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      var ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       var ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       var sharedNotPendingObject = {
         pending: false,
@@ -12594,7 +12594,7 @@ var PufferApp = (() => {
           0 === i && attemptExplicitHydrationTarget(target);
         }
       };
-      var isomorphicReactPackageVersion$jscomp$inline_1840 = React6.version;
+      var isomorphicReactPackageVersion$jscomp$inline_1840 = React3.version;
       if ("19.2.6" !== isomorphicReactPackageVersion$jscomp$inline_1840)
         throw Error(
           formatProdErrorMessage(
@@ -21254,15 +21254,50 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   });
 
-  // src/frontend/index.tsx
-  var import_react5 = __toESM(require_react());
+  // src/index.tsx
+  var import_react2 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
-  // src/frontend/App.tsx
-  var import_react4 = __toESM(require_react());
-
-  // src/frontend/screens/ConnectScreen.tsx
+  // src/App.tsx
   var import_react = __toESM(require_react());
+
+  // src/services/api.ts
+  var API_BASE = "https://api-v2.puffer.fi/imtoken-hackathon";
+  var api = {
+    async getPufETHRate() {
+      const res = await fetch(`${API_BASE}/pufeth/rate`);
+      if (!res.ok) throw new Error("Failed to fetch pufETH rate");
+      return res.json();
+    },
+    async getPufETHMetrics() {
+      const res = await fetch(`${API_BASE}/pufeth/metrics`);
+      if (!res.ok) throw new Error("Failed to fetch pufETH metrics");
+      return res.json();
+    },
+    async getVaultsAPY() {
+      const res = await fetch(`${API_BASE}/vaults/apy`);
+      if (!res.ok) throw new Error("Failed to fetch vault APYs");
+      return res.json();
+    },
+    async getVaultsTVL() {
+      const res = await fetch(`${API_BASE}/vaults/tvl`);
+      if (!res.ok) throw new Error("Failed to fetch vault TVLs");
+      return res.json();
+    },
+    async getProtocolTVL() {
+      const res = await fetch(`${API_BASE}/protocol/tvl`);
+      if (!res.ok) throw new Error("Failed to fetch protocol TVL");
+      return res.json();
+    },
+    async getTokenPrices(addresses) {
+      const addressesStr = addresses.join("%");
+      const res = await fetch(
+        `${API_BASE}/tokens/prices?addresses=${addressesStr}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch token prices");
+      return res.json();
+    }
+  };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/api/puffer-client.js
   init_constants_CUYeD71n();
@@ -38043,10 +38078,20 @@ ${sa(b3)}`), super(t12.shortMessage, {
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/main.js
   init_constants_CUYeD71n();
 
-  // src/frontend/services/puffer.ts
+  // src/services/puffer.ts
   var RPC_URL = "https://eth.llamarpc.com";
   var pufferClient = null;
   var pufferService = {
+    async connectWallet() {
+      if (!window.ethereum) {
+        throw new Error("No wallet found. Please open this app in imToken.");
+      }
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts"
+      });
+      await this.init(window.ethereum);
+      return accounts[0];
+    },
     async init(provider) {
       const walletClient = R3.createWalletClient({
         chain: x.Mainnet,
@@ -38059,466 +38104,310 @@ ${sa(b3)}`), super(t12.shortMessage, {
       pufferClient = new Ct5(x.Mainnet, walletClient, publicClient);
       return pufferClient;
     },
-    async getAddress() {
-      if (!pufferClient) throw new Error("Puffer client not initialized");
-      const [address] = await pufferClient.requestAddresses();
-      return address;
-    },
-    async getBalance(address) {
+    async getPufETHBalance(address) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
       return pufferClient.vault.balanceOf(address);
     },
-    async getPufEthRate() {
-      if (!pufferClient) throw new Error("Puffer client not initialized");
-      const rate = await pufferClient.vault.getPufETHRate();
-      return {
-        pufEthPerEth: rate.toString(),
-        ethPerPufEth: (BigInt(1e18) * BigInt(1e18) / rate).toString(),
-        totalAssets: "0",
-        totalSupply: "0"
-      };
-    },
-    async depositETH(address, amount) {
+    async stakeETH(address, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
       const { transact } = pufferClient.vault.depositETH(
         address
       );
-      return transact(amount);
+      return transact(amountWei);
     },
-    async depositStETH(address, amount) {
+    async stakeStETH(address, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
       const { transact } = pufferClient.vault.depositStETH(
         address
       );
-      return transact(amount);
+      return transact(amountWei);
     },
-    async depositWstETH(address, amount) {
+    async stakeWstETH(address, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
       const { transact } = pufferClient.vault.depositWstETH(
         address
       );
-      return transact(amount);
+      return transact(amountWei);
     },
-    async approveToken(token, address, amount) {
+    async approveToken(token, address, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
       return pufferClient.vault.approveToken(
         token,
         address,
-        amount
+        amountWei
       );
     },
-    async estimateDepositETH(address) {
+    async depositToVault(address, unifiToken, token, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
-      const { estimate } = pufferClient.vault.depositETH(
-        address
-      );
-      return estimate();
-    },
-    async estimateDepositStETH(address) {
-      if (!pufferClient) throw new Error("Puffer client not initialized");
-      const { estimate } = pufferClient.vault.depositStETH(
-        address
-      );
-      return estimate();
-    },
-    async estimateDepositWstETH(address) {
-      if (!pufferClient) throw new Error("Puffer client not initialized");
-      const { estimate } = pufferClient.vault.depositWstETH(
-        address
-      );
-      return estimate();
+      const { transact } = await pufferClient.nucleusTeller.withToken(unifiToken).deposit({
+        account: address,
+        token,
+        unifiToken,
+        amount: amountWei,
+        minimumMint: BigInt(0),
+        isPreapproved: false
+      });
+      return transact();
     }
   };
 
-  // src/frontend/screens/ConnectScreen.tsx
-  function ConnectScreen({ onConnect }) {
-    const [loading, setLoading] = (0, import_react.useState)(false);
-    const [error, setError] = (0, import_react.useState)(null);
-    const connect = async () => {
-      setLoading(true);
-      setError(null);
+  // src/services/advisor.ts
+  var LLM_API_URL = "https://api.openai.com/v1/chat/completions";
+  function buildSystemPrompt(context) {
+    const { address, pufETHBalance, rate, protocolTVL, vaultsAPY } = context;
+    const vaultData = [
+      { name: "unifiETH", apy: 0, tvl: "0" },
+      { name: "unifiUSD", apy: 0, tvl: "0" },
+      { name: "unifiBTC", apy: 0, tvl: "0" },
+      { name: "pufETHs", apy: 0, tvl: "0" }
+    ];
+    vaultsAPY.data.forEach((v6) => {
+      const key = v6.token_address.toLowerCase();
+      if (key.includes("196ead47")) vaultData[0].apy = v6.apy;
+      else if (key.includes("82c40e07")) vaultData[1].apy = v6.apy;
+      else if (key.includes("170d847a")) vaultData[2].apy = v6.apy;
+      else if (key.includes("62a4ce07")) vaultData[3].apy = v6.apy;
+    });
+    return `You are a Puffer staking advisor AI. You help users stake ETH, stETH, wstETH to get pufETH, and deposit into UniFi vaults.
+
+Current data:
+- pufETH/ETH rate: ${rate.pufEthPerEth} pufETH per ETH
+- pufETH staking APY: ${protocolTVL.apy}%
+- User's pufETH balance: ${pufETHBalance}
+- Wallet: ${address.slice(0, 6)}...${address.slice(-4)}
+
+UniFi Vaults:
+${vaultData.map((v6) => `- ${v6.name}: ${v6.apy}% APY`).join("\n")}
+
+Vault addresses:
+- unifiETH: 0x196ead472583bc1e9af7a05f860d9857e1bd3dcc
+- unifiUSD: 0x82c40e07277eBb92935f79cE92268F80dDc7caB4
+- unifiBTC: 0x170d847a8320f3b6a77ee15b0cae430e3ec933a0
+- pufETHs: 0x62a4ce0722ee65635c0f8339dd814d549b6f6735
+
+When recommending transactions, include a JSON action in <action> tags at the end of your message. Example:
+<action>{"type":"stake_eth","amount":"1","label":"Stake 1 ETH \u2192 pufETH"}</action>
+
+For swap_and_stake, include inputToken: <action>{"type":"swap_and_stake","amount":"100","inputToken":"USDC","label":"Swap 100 USDC \u2192 pufETH"}</action>
+
+Be conversational but concise. Always end with a question or prompt.`;
+  }
+  async function sendMessage(messages, context, apiKey) {
+    const systemPrompt = buildSystemPrompt(context);
+    const response = await fetch(LLM_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "system", content: systemPrompt }, ...messages],
+        temperature: 0.7,
+        max_tokens: 500
+      })
+    });
+    if (!response.ok) {
+      throw new Error("Failed to get AI response");
+    }
+    const data = await response.json();
+    const content = data.choices[0].message.content;
+    const actionMatch = content.match(/<action>(.*?)<\/action>/s);
+    let action;
+    if (actionMatch) {
       try {
-        if (!window.ethereum) {
-          throw new Error(
-            "No wallet found. Please use imToken or a Web3 wallet."
-          );
-        }
-        await pufferService.init(window.ethereum);
-        const address = await pufferService.getAddress();
-        onConnect(address);
-      } catch (err) {
-        setError(err.message || "Failed to connect wallet");
-      } finally {
-        setLoading(false);
+        action = JSON.parse(actionMatch[1]);
+      } catch {
       }
-    };
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "screen connect-screen" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "logo" }, /* @__PURE__ */ import_react.default.createElement("h1", null, "Puffer"), /* @__PURE__ */ import_react.default.createElement("p", null, "Stake ETH to earn pufETH")), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn-primary", onClick: connect, disabled: loading }, loading ? "Connecting..." : "Connect Wallet"), error && /* @__PURE__ */ import_react.default.createElement("p", { className: "error" }, error));
+    }
+    return { reply: content.replace(actionMatch?.[0] || "", "").trim(), action };
   }
 
-  // src/frontend/screens/StakeScreen.tsx
-  var import_react2 = __toESM(require_react());
-
-  // src/frontend/services/api.ts
-  var API_BASE = "https://api-v2.puffer.fi/imtoken-hackathon";
-  var api = {
-    async getPufEthRate() {
-      const res = await fetch(`${API_BASE}/pufeth/rate`);
-      if (!res.ok) throw new Error("Failed to fetch pufETH rate");
-      return res.json();
-    },
-    async getProtocolTvl() {
-      const res = await fetch(`${API_BASE}/protocol/tvl`);
-      if (!res.ok) throw new Error("Failed to fetch protocol TVL");
-      return res.json();
-    },
-    async getVaultsApy() {
-      const res = await fetch(`${API_BASE}/vaults/apy`);
-      if (!res.ok) throw new Error("Failed to fetch vault APYs");
-      return res.json();
-    },
-    async getVaultsTvl() {
-      const res = await fetch(`${API_BASE}/vaults/tvl`);
-      if (!res.ok) throw new Error("Failed to fetch vault TVLs");
-      return res.json();
-    },
-    async getTokenPrices(addresses) {
-      const res = await fetch(`${API_BASE}/tokens/prices?addresses=${addresses}`);
-      if (!res.ok) throw new Error("Failed to fetch token prices");
-      return res.json();
-    },
-    async get1inchSwapQuote(fromToken, toToken, amount) {
-      const res = await fetch(
-        `https://api.1inch.dev/swap/v6.0/1/quote?fromTokenAddress=${fromToken}&toTokenAddress=${toToken}&amount=${amount}`
-      );
-      if (!res.ok) throw new Error("Failed to fetch swap quote");
-      return res.json();
-    }
+  // src/App.tsx
+  var VAULT_ADDRESSES = {
+    unifiETH: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc",
+    unifiUSD: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4",
+    unifiBTC: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0",
+    pufETHs: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735"
   };
-
-  // src/frontend/screens/StakeScreen.tsx
-  var TOKEN_MAP = {
-    ETH: c.ETH,
-    stETH: c.stETH,
-    wstETH: c.wstETH,
-    any: c.ETH
-  };
-  function StakeScreen({ address }) {
-    const [amount, setAmount] = (0, import_react2.useState)("");
-    const [selectedToken, setSelectedToken] = (0, import_react2.useState)("ETH");
-    const [anyTokenAddress, setAnyTokenAddress] = (0, import_react2.useState)("");
-    const [rate, setRate] = (0, import_react2.useState)(null);
-    const [output, setOutput] = (0, import_react2.useState)("0");
-    const [loading, setLoading] = (0, import_react2.useState)(false);
-    const [approving, setApproving] = (0, import_react2.useState)(false);
-    const [error, setError] = (0, import_react2.useState)(null);
-    const [txHash, setTxHash] = (0, import_react2.useState)(null);
-    const [swapQuote, setSwapQuote] = (0, import_react2.useState)(null);
-    const [swapLoading, setSwapLoading] = (0, import_react2.useState)(false);
-    const [swapStep, setSwapStep] = (0, import_react2.useState)(0);
-    const [needsApproval, setNeedsApproval] = (0, import_react2.useState)(false);
-    (0, import_react2.useEffect)(() => {
-      fetchRate();
-    }, []);
-    (0, import_react2.useEffect)(() => {
-      if (rate && amount) {
-        const ethAmount = Number(amount);
-        const pufethOut = ethAmount * Number(rate.pufEthPerEth);
-        setOutput(pufethOut.toFixed(6));
-      } else {
-        setOutput("0");
-      }
-    }, [amount, rate]);
-    const fetchRate = async () => {
+  function App() {
+    const [context, setContext] = (0, import_react.useState)({
+      address: null,
+      balance: "0",
+      rate: null,
+      metrics: null,
+      vaultsAPY: null,
+      vaultsTVL: null,
+      protocolTVL: null
+    });
+    const [loading, setLoading] = (0, import_react.useState)(true);
+    const [error, setError] = (0, import_react.useState)(null);
+    const [messages, setMessages] = (0, import_react.useState)([]);
+    const [input, setInput] = (0, import_react.useState)("");
+    const [sending, setSending] = (0, import_react.useState)(false);
+    const [pendingAction, setPendingAction] = (0, import_react.useState)(null);
+    const [showVaults, setShowVaults] = (0, import_react.useState)(false);
+    const messagesEndRef = (0, import_react.useRef)(null);
+    const fetchData = (0, import_react.useCallback)(async (address) => {
       try {
-        const rateData = await api.getPufEthRate();
-        setRate(rateData);
+        const [rate, metrics, vaultsAPY, vaultsTVL, protocolTVL, balance] = await Promise.all([
+          api.getPufETHRate(),
+          api.getPufETHMetrics(),
+          api.getVaultsAPY(),
+          api.getVaultsTVL(),
+          api.getProtocolTVL(),
+          pufferService.getPufETHBalance(address)
+        ]);
+        setContext({
+          address,
+          balance: (Number(balance) / 1e18).toFixed(4),
+          rate,
+          metrics,
+          vaultsAPY,
+          vaultsTVL,
+          protocolTVL
+        });
+      } catch (err) {
+        setError(err.message);
+      }
+    }, []);
+    (0, import_react.useEffect)(() => {
+      const init = async () => {
+        try {
+          const address = await pufferService.connectWallet();
+          await fetchData(address);
+          const systemPrompt = buildSystemPrompt({
+            address,
+            pufETHBalance: "0",
+            rate: { pufEthPerEth: "0.95", ethPerPufEth: "1.05" },
+            metrics: { lrtMarketCap: 0, averageDailyVolume: 0, holderCount: 0 },
+            vaultsAPY: { data: [], timestamp: "" },
+            vaultsTVL: {
+              unifi_eth_vault: "0",
+              unifi_usd_vault: "0",
+              unifi_btc_vault: "0"
+            },
+            protocolTVL: {
+              lrt_total_usd: "0",
+              tvl_puffer_staking: "0",
+              apy: "0",
+              timestamp: ""
+            }
+          });
+          const response = await fetch(
+            "https://api.openai.com/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + (process.env.LLM_API_KEY || "")
+              },
+              body: JSON.stringify({
+                model: "gpt-4o-mini",
+                messages: [{ role: "system", content: systemPrompt }],
+                temperature: 0.7
+              })
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+            const content = data.choices[0].message.content;
+            setMessages([{ role: "assistant", content }]);
+          }
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+      init();
+    }, [fetchData]);
+    (0, import_react.useEffect)(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+    const handleSend = async () => {
+      if (!input.trim() || sending) return;
+      const userMessage = { role: "user", content: input };
+      setMessages((prev) => [...prev, userMessage]);
+      setInput("");
+      setSending(true);
+      try {
+        const result = await sendMessage(
+          [...messages, userMessage],
+          context,
+          ""
+        );
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: result.reply }
+        ]);
+        if (result.action) setPendingAction(result.action);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setSending(false);
+      }
+    };
+    const handleConfirm = async () => {
+      if (!pendingAction || !context.address) return;
+      try {
+        const amountWei = BigInt(Number(pendingAction.amount) * 1e18);
+        let txHash;
+        switch (pendingAction.type) {
+          case "stake_eth":
+            txHash = await pufferService.stakeETH(context.address, amountWei);
+            break;
+          case "stake_steth":
+            txHash = await pufferService.stakeStETH(context.address, amountWei);
+            break;
+          case "stake_wsteth":
+            txHash = await pufferService.stakeWstETH(context.address, amountWei);
+            break;
+        }
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: `Transaction submitted! ${txHash}` }
+        ]);
+        setPendingAction(null);
+        await fetchData(context.address);
       } catch (err) {
         setError(err.message);
       }
     };
-    const fetchSwapQuote = async () => {
-      if (!anyTokenAddress || !amount) return;
-      setSwapLoading(true);
-      setError(null);
-      try {
-        const amountWei = BigInt(Number(amount) * 1e18).toString();
-        const WETH = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-        const quote = await api.get1inchSwapQuote(
-          anyTokenAddress,
-          WETH,
-          amountWei
-        );
-        setSwapQuote(quote);
-        const ethOut = Number(quote.toAmount) / 1e18;
-        const pufethOut = ethOut * Number(rate.pufEthPerEth);
-        setOutput(pufethOut.toFixed(6));
-      } catch (err) {
-        setError(err.message || "Failed to fetch swap quote");
-      } finally {
-        setSwapLoading(false);
+    if (loading) {
+      return /* @__PURE__ */ import_react.default.createElement("div", { className: "screen loading-screen" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "skeleton-card" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "skeleton-line" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "skeleton-line short" }));
+    }
+    if (error) {
+      return /* @__PURE__ */ import_react.default.createElement("div", { className: "screen error-screen" }, /* @__PURE__ */ import_react.default.createElement("p", null, error));
+    }
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "header" }, /* @__PURE__ */ import_react.default.createElement("h1", null, "Puffer AI"), /* @__PURE__ */ import_react.default.createElement("div", { className: "header-info" }, /* @__PURE__ */ import_react.default.createElement("span", null, context.address?.slice(0, 6), "...", context.address?.slice(-4)), /* @__PURE__ */ import_react.default.createElement("span", { className: "balance" }, context.balance, " pufETH")), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setShowVaults(true) }, "Vaults")), /* @__PURE__ */ import_react.default.createElement("main", { className: "chat-container" }, messages.map((msg, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${msg.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, msg.content))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "typing" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: messagesEndRef })), /* @__PURE__ */ import_react.default.createElement("footer", { className: "input-container" }, /* @__PURE__ */ import_react.default.createElement(
+      "input",
+      {
+        value: input,
+        onChange: (e19) => setInput(e19.target.value),
+        placeholder: "Ask about staking...",
+        onKeyPress: (e19) => e19.key === "Enter" && handleSend()
       }
-    };
-    const handleApprove = async () => {
-      if (!amount) return;
-      setApproving(true);
-      setError(null);
-      try {
-        const amountWei = BigInt(Number(amount) * 1e18);
-        await pufferService.approveToken(
-          TOKEN_MAP[selectedToken],
-          address,
-          amountWei
-        );
-        setNeedsApproval(false);
-      } catch (err) {
-        setError(err.message || "Approval failed");
-      } finally {
-        setApproving(false);
-      }
-    };
-    const handleStake = async () => {
-      if (!amount || !rate) return;
-      setLoading(true);
-      setError(null);
-      setTxHash(null);
-      try {
-        let txHash2;
-        if (selectedToken === "any" && swapQuote) {
-          setSwapStep(1);
-          const amountWei = BigInt(Number(amount) * 1e18);
-          const swapRes = await fetch(
-            `https://api.1inch.dev/swap/v6.0/1/swap?fromTokenAddress=${anyTokenAddress}&toTokenAddress=0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2&amount=${amountWei}&fromAddress=${address}&slippage=1`
-          );
-          if (!swapRes.ok) throw new Error("Swap failed");
-          const swapData = await swapRes.json();
-          await pufferService.init(window.ethereum);
-          await window.ethereum.request({
-            method: "eth_sendTransaction",
-            params: [swapData.tx]
-          });
-          setSwapStep(2);
-          const wethToPufeth = BigInt(swapQuote.toAmount);
-          txHash2 = await pufferService.depositETH(address, wethToPufeth);
-        } else if (selectedToken === "ETH") {
-          txHash2 = await pufferService.depositETH(
-            address,
-            BigInt(Number(amount) * 1e18)
-          );
-        } else if (selectedToken === "stETH") {
-          txHash2 = await pufferService.depositStETH(
-            address,
-            BigInt(Number(amount) * 1e18)
-          );
-        } else if (selectedToken === "wstETH") {
-          txHash2 = await pufferService.depositWstETH(
-            address,
-            BigInt(Number(amount) * 1e18)
-          );
-        } else {
-          throw new Error("Invalid token");
-        }
-        setTxHash(txHash2);
-        setAmount("");
-      } catch (err) {
-        setError(err.message || "Transaction failed");
-      } finally {
-        setLoading(false);
-        setSwapStep(0);
-      }
-    };
-    const tokenOptions = ["ETH", "stETH", "wstETH", "any"];
-    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "screen stake-screen" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "card" }, /* @__PURE__ */ import_react2.default.createElement("h2", null, "Stake to pufETH"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react2.default.createElement("label", null, "Token"), /* @__PURE__ */ import_react2.default.createElement("div", { className: "token-selector" }, tokenOptions.map((token) => /* @__PURE__ */ import_react2.default.createElement(
+    ), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleSend, disabled: sending || !input.trim() }, "Send")), pendingAction && /* @__PURE__ */ import_react.default.createElement("div", { className: "modal" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "Confirm ", pendingAction.label), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleConfirm }, "Confirm"), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setPendingAction(null) }, "Cancel"))), showVaults && /* @__PURE__ */ import_react.default.createElement("div", { className: "modal" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "UniFi Vaults"), Object.entries(VAULT_ADDRESSES).map(([name]) => /* @__PURE__ */ import_react.default.createElement("div", { key: name, className: "vault-card" }, /* @__PURE__ */ import_react.default.createElement("h4", null, name), /* @__PURE__ */ import_react.default.createElement(
       "button",
       {
-        key: token,
-        className: selectedToken === token ? "active" : "",
         onClick: () => {
-          setSelectedToken(token);
-          setNeedsApproval(token !== "ETH" && token !== "any");
-          if (token !== "any") {
-            setSwapQuote(null);
-          }
+          setMessages((prev) => [
+            ...prev,
+            { role: "user", content: `Tell me about ${name}` }
+          ]);
+          setShowVaults(false);
         }
       },
-      token
-    )))), selectedToken === "any" && /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react2.default.createElement("label", null, "Token Address (0x...)"), /* @__PURE__ */ import_react2.default.createElement(
-      "input",
-      {
-        type: "text",
-        value: anyTokenAddress,
-        onChange: (e19) => setAnyTokenAddress(e19.target.value),
-        placeholder: "0x..."
-      }
-    ), /* @__PURE__ */ import_react2.default.createElement(
-      "button",
-      {
-        onClick: fetchSwapQuote,
-        disabled: swapLoading || !anyTokenAddress
-      },
-      swapLoading ? "Fetching..." : "Get Quote"
-    )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react2.default.createElement("label", null, "Amount"), /* @__PURE__ */ import_react2.default.createElement(
-      "input",
-      {
-        type: "number",
-        value: amount,
-        onChange: (e19) => setAmount(e19.target.value),
-        placeholder: "0.0",
-        step: "0.0001"
-      }
-    )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-group" }, /* @__PURE__ */ import_react2.default.createElement("label", null, "You'll receive"), /* @__PURE__ */ import_react2.default.createElement("p", { className: "output" }, output, " pufETH"), swapQuote && /* @__PURE__ */ import_react2.default.createElement("p", { className: "swap-info" }, "Swap route: ", swapQuote.fromToken?.symbol || "Any", " \u2192", " ", swapQuote.toToken?.symbol || "WETH")), swapStep > 0 && loading && /* @__PURE__ */ import_react2.default.createElement("p", { className: "info" }, "Step ", swapStep, "/2:", " ", swapStep === 1 ? "Swapping tokens..." : "Depositing to PufferVault..."), !needsApproval && !(selectedToken === "any") ? /* @__PURE__ */ import_react2.default.createElement(
-      "button",
-      {
-        className: "btn-primary",
-        onClick: handleStake,
-        disabled: loading || !amount
-      },
-      loading ? "Processing..." : "Stake"
-    ) : needsApproval ? /* @__PURE__ */ import_react2.default.createElement(
-      "button",
-      {
-        className: "btn-primary",
-        onClick: handleApprove,
-        disabled: approving || !amount
-      },
-      approving ? "Approving..." : "Approve"
-    ) : selectedToken === "any" ? /* @__PURE__ */ import_react2.default.createElement(
-      "button",
-      {
-        className: "btn-primary",
-        onClick: handleStake,
-        disabled: loading || !amount || !swapQuote
-      },
-      loading ? "Processing..." : swapStep ? "Processing..." : "Swap & Stake"
-    ) : null, error && /* @__PURE__ */ import_react2.default.createElement("p", { className: "error" }, error), txHash && /* @__PURE__ */ import_react2.default.createElement("p", { className: "success" }, "Transaction submitted!", " ", /* @__PURE__ */ import_react2.default.createElement(
-      "a",
-      {
-        href: `https://etherscan.io/tx/${txHash}`,
-        target: "_blank",
-        rel: "noopener noreferrer"
-      },
-      "View on Etherscan"
-    ))));
+      "Ask AI"
+    ))), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setShowVaults(false) }, "Close"))));
   }
 
-  // src/frontend/screens/VaultsScreen.tsx
-  var import_react3 = __toESM(require_react());
-  var VAULT_ADDRESSES = {
-    unifiETH: {
-      name: "unifiETH",
-      address: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc",
-      tellerAddress: "0x08eb2eccdf6ebd7aba601791f23ec5b5f68a1d53"
-    },
-    unifiUSD: {
-      name: "unifiUSD",
-      address: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4",
-      tellerAddress: "0x5d3Fb47FE7f3F4Ce8fe55518f7E4F7D6061B54DD"
-    },
-    unifiBTC: {
-      name: "unifiBTC",
-      address: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0",
-      tellerAddress: "0x0743647a607822781f9d0a639454e76289182f0b"
-    },
-    pufETHs: {
-      name: "pufETHs",
-      address: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735",
-      tellerAddress: "0xd049ebeaa59b75ba8ee38f9f6830db7293320236"
-    }
-  };
-  function VaultsScreen() {
-    const [vaults, setVaults] = (0, import_react3.useState)([]);
-    const [loading, setLoading] = (0, import_react3.useState)(true);
-    const [error, setError] = (0, import_react3.useState)(null);
-    (0, import_react3.useEffect)(() => {
-      fetchVaults();
-    }, []);
-    const fetchVaults = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const [apyData, tvlData] = await Promise.all([
-          api.getVaultsApy(),
-          api.getVaultsTvl()
-        ]);
-        const vaultList = [];
-        for (const [key, info] of Object.entries(VAULT_ADDRESSES)) {
-          const apyEntry = apyData.data.find(
-            (d5) => d5.token_address.toLowerCase() === info.address.toLowerCase()
-          );
-          const tvlKey = key.toLowerCase() + "_vault";
-          const tvl = tvlData[tvlKey] || "0";
-          vaultList.push({
-            name: info.name,
-            address: info.address,
-            apy: apyEntry?.apy || 0,
-            tvl,
-            tellerAddress: info.tellerAddress
-          });
-        }
-        setVaults(vaultList);
-      } catch (err) {
-        setError(err.message || "Failed to fetch vaults");
-      } finally {
-        setLoading(false);
-      }
-    };
-    const formatTvl = (tvl) => {
-      return Number(tvl).toLocaleString(void 0, {
-        style: "currency",
-        currency: "USD",
-        notation: "compact"
-      });
-    };
-    if (loading) return /* @__PURE__ */ import_react3.default.createElement("div", { className: "screen" }, "Loading...");
-    if (error) return /* @__PURE__ */ import_react3.default.createElement("div", { className: "screen error" }, error);
-    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "screen vaults-screen" }, /* @__PURE__ */ import_react3.default.createElement("div", { className: "vaults-list" }, vaults.map((vault) => /* @__PURE__ */ import_react3.default.createElement("div", { className: "card vault-card", key: vault.name }, /* @__PURE__ */ import_react3.default.createElement("h3", null, vault.name), /* @__PURE__ */ import_react3.default.createElement("div", { className: "stat-row" }, /* @__PURE__ */ import_react3.default.createElement("span", null, "APY"), /* @__PURE__ */ import_react3.default.createElement("span", { className: "apy" }, vault.apy.toFixed(2), "%")), /* @__PURE__ */ import_react3.default.createElement("div", { className: "stat-row" }, /* @__PURE__ */ import_react3.default.createElement("span", null, "TVL"), /* @__PURE__ */ import_react3.default.createElement("span", null, formatTvl(vault.tvl))), /* @__PURE__ */ import_react3.default.createElement(
-      "a",
-      {
-        href: `https://etherscan.io/address/${vault.address}`,
-        target: "_blank",
-        rel: "noopener noreferrer",
-        className: "address-link"
-      },
-      vault.address.slice(0, 6),
-      "...",
-      vault.address.slice(-4)
-    )))));
-  }
-
-  // src/frontend/App.tsx
-  function App() {
-    const [address, setAddress] = (0, import_react4.useState)(null);
-    const [activeTab, setActiveTab] = (0, import_react4.useState)("stake");
-    const handleConnect = (connectedAddress) => {
-      setAddress(connectedAddress);
-    };
-    const handleDisconnect = () => {
-      setAddress(null);
-    };
-    if (!address) {
-      return /* @__PURE__ */ import_react4.default.createElement(ConnectScreen, { onConnect: handleConnect });
-    }
-    return /* @__PURE__ */ import_react4.default.createElement("div", { className: "app" }, /* @__PURE__ */ import_react4.default.createElement("header", { className: "header" }, /* @__PURE__ */ import_react4.default.createElement("div", { className: "header-top" }, /* @__PURE__ */ import_react4.default.createElement("h1", null, "Puffer"), /* @__PURE__ */ import_react4.default.createElement("button", { className: "disconnect-btn", onClick: handleDisconnect }, address.slice(0, 6), "...", address.slice(-4))), /* @__PURE__ */ import_react4.default.createElement("nav", { className: "tabs" }, /* @__PURE__ */ import_react4.default.createElement(
-      "button",
-      {
-        className: activeTab === "stake" ? "active" : "",
-        onClick: () => setActiveTab("stake")
-      },
-      "Stake"
-    ), /* @__PURE__ */ import_react4.default.createElement(
-      "button",
-      {
-        className: activeTab === "vaults" ? "active" : "",
-        onClick: () => setActiveTab("vaults")
-      },
-      "Vaults"
-    ))), /* @__PURE__ */ import_react4.default.createElement("main", { className: "main-content" }, activeTab === "stake" && /* @__PURE__ */ import_react4.default.createElement(StakeScreen, { address }), activeTab === "vaults" && /* @__PURE__ */ import_react4.default.createElement(VaultsScreen, null)));
-  }
-
-  // src/frontend/index.tsx
+  // src/index.tsx
   var container = document.getElementById("root");
   if (container) {
     const root = (0, import_client.createRoot)(container);
-    root.render(/* @__PURE__ */ import_react5.default.createElement(App, null));
+    root.render(/* @__PURE__ */ import_react2.default.createElement(App, null));
   }
 })();
 /*! Bundled license information:

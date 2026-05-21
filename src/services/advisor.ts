@@ -9,7 +9,12 @@ export interface AdvisorContext {
 }
 
 export interface Action {
-  type: 'stake_eth' | 'stake_steth' | 'stake_wsteth' | 'deposit_vault' | 'swap_and_stake';
+  type:
+    | 'stake_eth'
+    | 'stake_steth'
+    | 'stake_wsteth'
+    | 'deposit_vault'
+    | 'swap_and_stake';
   amount: string;
   vault?: string;
   inputToken?: string;
@@ -24,7 +29,7 @@ interface Message {
 const LLM_API_URL = 'https://api.openai.com/v1/chat/completions';
 
 export function buildSystemPrompt(context: AdvisorContext): string {
-  const { address, pufETHBalance, rate, protocolTVL, vaultsAPY, vaultsTVL } = context;
+  const { address, pufETHBalance, rate, protocolTVL, vaultsAPY } = context;
 
   const vaultData = [
     { name: 'unifiETH', apy: 0, tvl: '0' },

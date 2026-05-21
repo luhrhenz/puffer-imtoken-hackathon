@@ -9,7 +9,8 @@
     "start": "node dist/index.js",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "build": "tsx esbuild.config.ts",
+    "build": "tsx esbuild.config.ts && tsx esbuild.frontend.ts",
+    "dev:frontend": "tsx esbuild.frontend.ts --watch",
     "lint": "eslint ./src",
     "lint:fix": "pnpm lint --fix"
   },
@@ -34,6 +35,9 @@
     "typescript-eslint": "^8.46.4"
   },
   "dependencies": {
+    "@pufferfinance/puffer-sdk": "^1.31.0",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-dist": "^3.30.6",
     "@types/swagger-ui-express": "^4.1.8",
@@ -46,6 +50,8 @@
     "pino": "^10.1.0",
     "pino-http": "^11.0.0",
     "pino-pretty": "^13.1.2",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-dist": "^5.30.2",
     "swagger-ui-express": "^5.0.1",

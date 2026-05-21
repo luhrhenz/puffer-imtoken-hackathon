@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import pinoHttp from 'pino-http';
+import path from 'path';
 import {
   healthRouter,
   pufethRouter,
@@ -30,6 +31,14 @@ app.use(helmet());
 app.use(pinoHttp({ logger }));
 app.use(requestLoggingMiddleware);
 app.use(rateLimitMiddleware);
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Serve index.html for root path
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 // Create a base router to handle the BASE_URL prefix.
 const baseRouter = express.Router();

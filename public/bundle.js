@@ -35,10 +35,17 @@
   ));
   var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
+  // <define:process.env>
+  var init_define_process_env = __esm({
+    "<define:process.env>"() {
+    }
+  });
+
   // node_modules/.pnpm/react@19.2.6/node_modules/react/cjs/react.production.js
   var require_react_production = __commonJS({
     "node_modules/.pnpm/react@19.2.6/node_modules/react/cjs/react.production.js"(exports) {
       "use strict";
+      init_define_process_env();
       var REACT_ELEMENT_TYPE = Symbol.for("react.transitional.element");
       var REACT_PORTAL_TYPE = Symbol.for("react.portal");
       var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -480,6 +487,7 @@
   var require_react = __commonJS({
     "node_modules/.pnpm/react@19.2.6/node_modules/react/index.js"(exports, module) {
       "use strict";
+      init_define_process_env();
       if (true) {
         module.exports = require_react_production();
       } else {
@@ -492,6 +500,7 @@
   var require_scheduler_production = __commonJS({
     "node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/cjs/scheduler.production.js"(exports) {
       "use strict";
+      init_define_process_env();
       function push(heap, node) {
         var index = heap.length;
         heap.push(node);
@@ -765,6 +774,7 @@
   var require_scheduler = __commonJS({
     "node_modules/.pnpm/scheduler@0.27.0/node_modules/scheduler/index.js"(exports, module) {
       "use strict";
+      init_define_process_env();
       if (true) {
         module.exports = require_scheduler_production();
       } else {
@@ -777,6 +787,7 @@
   var require_react_dom_production = __commonJS({
     "node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom.production.js"(exports) {
       "use strict";
+      init_define_process_env();
       var React3 = require_react();
       function formatProdErrorMessage(code) {
         var url = "https://react.dev/errors/" + code;
@@ -926,6 +937,7 @@
   var require_react_dom = __commonJS({
     "node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/index.js"(exports, module) {
       "use strict";
+      init_define_process_env();
       function checkDCE() {
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
           return;
@@ -952,6 +964,7 @@
   var require_react_dom_client_production = __commonJS({
     "node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom-client.production.js"(exports) {
       "use strict";
+      init_define_process_env();
       var Scheduler = require_scheduler();
       var React3 = require_react();
       var ReactDOM = require_react_dom();
@@ -12697,6 +12710,7 @@
   var require_client = __commonJS({
     "node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/client.js"(exports, module) {
       "use strict";
+      init_define_process_env();
       function checkDCE() {
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === "undefined" || typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.checkDCE !== "function") {
           return;
@@ -13625,6 +13639,7 @@
   var ze, ie, u, Fe, Ce, xn, Se, gn, Tt, It, Pt, $t, zt, y, J, ve, Ht, Lt, Gt, Ot, S, _t, Te, Oe, jt, R, Kt, Wt, Xt, qt, Ne, _e, Ve, Re, Yt, Zt, Ie, Pe, de, Qt, es, T, De, ae, ss, ce, Ae, as, cs, us, ls, ds, hs, ps, bs, In, Pn, An, $n, Un, Qe, se, gs, ys, ws, Es, Bs, vs, Ts, Is, et, zn, he, tt, Ps, Us, Cs, E, Ss, B, Hs, Ls, Gs, $e, rt, be, it, Ue, ot, _s, at, Vs, Rs, kn, Fn, Cn, Sn, ne, Xs, Ys, un, ln, fn, w, mn, ct, ut, D, xe, j, ge, lt, dt, ft, ht, pt, bt, mt, K, xt, gt, W, yt, wt, ue, Et, x, Hn;
   var init_constants_CUYeD71n = __esm({
     "node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/constants-CUYeD71n.js"() {
+      init_define_process_env();
       ze = "2.45.0";
       ie = {
         getDocsUrl: ({ docsBaseUrl: e19, docsPath: t12 = "", docsSlug: s }) => t12 ? `${e19 ?? "https://viem.sh"}${t12}${s ? `#${s}` : ""}` : void 0,
@@ -16275,6 +16290,7 @@
   var Rt2, Nt2, Dt2, Ee, D2, bt2, gt2, Et2, Ct2, xe2, Ft2, Qt2, j2, C, tt2, Se2, Jt2, te2, ee2, Oe2, jt2, qt2, xt2, fe2, ke2, G2, X2, U2, It2, _e2, ue2, Pt2, Ke2, Pe2, Ht2, $t2, Lt2, De2;
   var init_secp256k1_BbMQ_WWG = __esm({
     "node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/secp256k1-BbMQ_WWG.js"() {
+      init_define_process_env();
       init_constants_CUYeD71n();
       Rt2 = /* @__PURE__ */ BigInt(0);
       Nt2 = /* @__PURE__ */ BigInt(1);
@@ -16582,6 +16598,7 @@
   var u2, d, v2;
   var init_localBatchGatewayRequest_Dm7yXllz = __esm({
     "node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/localBatchGatewayRequest-Dm7yXllz.js"() {
+      init_define_process_env();
       init_writeContract_Bq8HaVjW();
       init_constants_CUYeD71n();
       u2 = "/docs/contract/encodeErrorResult";
@@ -16672,6 +16689,7 @@
   var S2, $2, q3, j3, T2;
   var init_ccip_BTVr5_VZ = __esm({
     "node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/ccip-BTVr5-VZ.js"() {
+      init_define_process_env();
       init_writeContract_Bq8HaVjW();
       init_constants_CUYeD71n();
       init_localBatchGatewayRequest_Dm7yXllz();
@@ -19249,6 +19267,7 @@
   var Ar, O2, wn2, vn2, xn2, Kt3, Pn2, En2, $n2, An2, Sn2, Mn, zr, xs2, Dr, He3, Ps2, Lr, _r, Es2, Hr, qr, Vr, Ur, Wr, ae3, Zr, Kr, Jr, Yr, Ie3, s0, o0, i0, c0, l0, p0, Jt3, jn, tt3, y0, m0, h0, $s2, As2, Rn, g0, w0, Yt3, he2, v0, Fs2, x0, Ss2, qe3, Cn2, P0, E0, $0, A0, F0, S0, T0, Pe3, Ms2, B0, ot2, Xt3, en2, H0, q0, V0, tn2, Ue3, ne3, ra, aa, oa, ct2, ia, ca, ua, fa, da, zn2, Is2, Gn, Ts2, la, k2, N, ut3, ft3, dt3, lt3, $e3, de2, bt3, pt2, yt2, mt3, ht3, gt3, wt3, vt3, xt3, Pt3, Et3, $t3, At3, Ft3, St3, Mt3, It3, Tt2, Bt3, Bs2, ba, ga, va, _n, Rt3, Ea, $a, Un2, sn2, Te3, on2, Be3, ja, R2, ka, za, Ga, Ha, cn2, un2, qa, Qn, Va, fn2, _s2, er, Hs2, qs2, Vs2, Us2, Ws2, Zs2, Za, Ka, Ja, Ks2, Ya, je3, Re3, Ce3, dn2, os2, cs2, us2, ls2, ar, Oe3, ke3;
   var init_writeContract_Bq8HaVjW = __esm({
     "node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/writeContract-Bq8HaVjW.js"() {
+      init_define_process_env();
       init_constants_CUYeD71n();
       Ar = "1.2.3";
       O2 = class Le3 extends Error {
@@ -21255,14 +21274,17 @@ ${sa(b3)}`), super(t12.shortMessage, {
   });
 
   // src/index.tsx
+  init_define_process_env();
   var import_react2 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // src/App.tsx
+  init_define_process_env();
   var import_react = __toESM(require_react());
 
   // src/services/api.ts
-  var API_BASE = "https://api-v2.puffer.fi/imtoken-hackathon";
+  init_define_process_env();
+  var API_BASE = window.location.origin;
   var api = {
     async getPufETHRate() {
       const res = await fetch(`${API_BASE}/pufeth/rate`);
@@ -21299,13 +21321,22 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
+  // src/services/puffer.ts
+  init_define_process_env();
+
+  // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/main.js
+  init_define_process_env();
+
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/api/puffer-client.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/puffer-vault-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/addresses.js
+  init_define_process_env();
   init_constants_CUYeD71n();
   var f2 = {
     // Casting to number so the consumer can use chain ids. Also not using
@@ -21354,6 +21385,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/PufferVaultV5.js
+  init_define_process_env();
   var t = [
     {
       inputs: [],
@@ -21859,6 +21891,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   ];
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/getContract-Dxh0At3n.js
+  init_define_process_env();
   init_writeContract_Bq8HaVjW();
   function W2({ abi: t12, address: i, client: l2 }) {
     const e19 = l2, [a2, g4] = e19 ? "public" in e19 && "wallet" in e19 ? [e19.public, e19.wallet] : "public" in e19 ? [e19.public, void 0] : "wallet" in e19 ? [void 0, e19.wallet] : [e19, e19] : [void 0, void 0], m5 = a2 != null, P4 = g4 != null, u5 = {};
@@ -22194,12 +22227,15 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/puffer-depositor-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/erc20-permit-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/tokens.js
+  init_define_process_env();
   init_constants_CUYeD71n();
   var c = /* @__PURE__ */ ((e19) => (e19.USDT = "USDT", e19.USDC = "USDC", e19.DAI = "DAI", e19.WETH = "WETH", e19.stETH = "stETH", e19.wstETH = "wstETH", e19.eETH = "eETH", e19.cbETH = "cbETH", e19.ALT = "ALT", e19.pufETHwstE = "pufETHwstE", e19.pufETH = "pufETH", e19.xPufETH = "xPufETH", e19.ctTACpufETH = "ctTACpufETH", e19.tacpufETH = "tacpufETH", e19.WBTC = "WBTC", e19.LBTC = "LBTC", e19.tBTC = "tBTC", e19.cbBTC = "cbBTC", e19.pumpBTC = "pumpBTC", e19.SolvBTC = "SolvBTC", e19.FBTC = "FBTC", e19.PUFFER = "PUFFER", e19.vePUFFER = "vePUFFER", e19.CARROT = "CARROT", e19.lvlUSD = "lvlUSD", e19.slvlUSD = "slvlUSD", e19.mtwCARROT = "mtwCARROT", e19.sCARROT = "sCARROT", e19.LINK = "LINK", e19.TEST = "TEST", e19.VT = "VT", e19.EIGEN = "EIGEN", e19.ARPA = "ARPA", e19.vlPUFFER = "vlPUFFER", e19))(c || {});
   var f3 = /* @__PURE__ */ ((e19) => (e19.unifiETH = "unifiETH", e19.unifiUSD = "unifiUSD", e19.unifiBTC = "unifiBTC", e19.pufETHs = "pufETHs", e19))(f3 || {});
@@ -22436,9 +22472,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/utils/time.js
+  init_define_process_env();
   var e = () => Math.floor(Date.now() / 1e3);
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/ERC20Permit.js
+  init_define_process_env();
   var e2 = [
     {
       type: "function",
@@ -23104,6 +23142,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/PufferDepositor.js
+  init_define_process_env();
   var e3 = [
     {
       type: "constructor",
@@ -23569,9 +23608,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/puffer-l2-depositor-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/PufferL2Depositor.js
+  init_define_process_env();
   var e4 = [
     {
       inputs: [
@@ -23692,9 +23733,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/puf-locker-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/PufLocker.js
+  init_define_process_env();
   var e5 = [
     {
       inputs: [
@@ -23933,9 +23976,17 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/l2-reward-manager-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
+  // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/errors/validation-errors.js
+  init_define_process_env();
+
+  // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/errors/base-error.js
+  init_define_process_env();
+
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/utils/version.js
+  init_define_process_env();
   var o = "1.30.2";
   var n = o;
 
@@ -23966,6 +24017,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/L2RewardManager.js
+  init_define_process_env();
   var e6 = [
     {
       type: "function",
@@ -24209,9 +24261,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/l1-reward-manager-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/L1RewardManager.js
+  init_define_process_env();
   var e7 = [
     {
       inputs: [{ internalType: "address", name: "bridge", type: "address" }],
@@ -24305,9 +24359,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/puffer-withdrawal-manager-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/PufferWithdrawalManager.js
+  init_define_process_env();
   var t3 = [
     {
       type: "function",
@@ -24523,9 +24579,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/nucleus-boring-vault-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/vaults-addresses.js
+  init_define_process_env();
   init_constants_CUYeD71n();
   var n3 = {
     [f3.unifiETH]: {
@@ -24576,6 +24634,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/BoringVault.js
+  init_define_process_env();
   var e8 = [
     {
       inputs: [
@@ -24799,9 +24858,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/nucleus-teller-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/Teller.js
+  init_define_process_env();
   var t4 = [
     {
       inputs: [],
@@ -25220,7 +25281,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
+  // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/nucleus-accountant-handler.js
+  init_define_process_env();
+
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/Accountant.js
+  init_define_process_env();
   var t5 = [
     {
       inputs: [{ internalType: "contract ERC20", name: "", type: "address" }],
@@ -25371,9 +25436,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/nucleus-atomic-queue-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/AtomicQueue.js
+  init_define_process_env();
   var e9 = [
     {
       inputs: [{ internalType: "address", name: "user", type: "address" }],
@@ -25689,9 +25756,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/mtw-carrot-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/mtwCARROT.js
+  init_define_process_env();
   var e10 = [
     {
       inputs: [{ internalType: "address", name: "account", type: "address" }],
@@ -26084,9 +26153,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/carrot-staking-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/CarrotStaker.js
+  init_define_process_env();
   var t6 = [
     {
       inputs: [
@@ -26244,9 +26315,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/distributor-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/Distributor.js
+  init_define_process_env();
   var t7 = [
     {
       inputs: [
@@ -26579,9 +26652,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/concrete-vault-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/ConcreteMultiStrategyVault.js
+  init_define_process_env();
   var e11 = [
     { inputs: [], stateMutability: "nonpayable", type: "constructor" },
     {
@@ -26971,9 +27046,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/validator-ticket-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/ValidatorTicket.js
+  init_define_process_env();
   var e12 = [
     {
       type: "constructor",
@@ -27700,9 +27777,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/puffer-oracle-v2-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/PufferOracleV2.js
+  init_define_process_env();
   var e13 = [
     {
       inputs: [
@@ -27965,9 +28044,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/puffer-protocol-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/PufferProtocol.js
+  init_define_process_env();
   var e14 = [
     {
       type: "constructor",
@@ -29081,9 +29162,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/guardian-module-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/GuardianModule.js
+  init_define_process_env();
   var e15 = [
     {
       inputs: [],
@@ -29423,7 +29506,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
+  // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/institutional-vault-handler.js
+  init_define_process_env();
+
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/InstitutionalVault.js
+  init_define_process_env();
   var t8 = [
     {
       inputs: [],
@@ -30441,7 +30528,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
+  // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/institutional-access-manager-handler.js
+  init_define_process_env();
+
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/InstitutionalAccessManager.js
+  init_define_process_env();
   var e16 = [
     {
       inputs: [],
@@ -31244,9 +31335,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/lagoon-vault-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/LagoonVault.js
+  init_define_process_env();
   var t9 = [
     {
       inputs: [],
@@ -32007,9 +32100,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/vl-puffer-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/vlPUFFER.js
+  init_define_process_env();
   var e17 = [
     {
       type: "function",
@@ -32642,9 +32737,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/gauge-registry-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/GaugeRegistry.js
+  init_define_process_env();
   var e18 = [
     {
       type: "function",
@@ -32919,9 +33016,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/carrot-vesting-handler.js
+  init_define_process_env();
   init_constants_CUYeD71n();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/CarrotVesting.js
+  init_define_process_env();
   var t10 = [
     {
       type: "function",
@@ -33284,7 +33383,11 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
+  // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/handlers/non-restaking-withdrawal-credentials-handler.js
+  init_define_process_env();
+
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/contracts/abis/mainnet/NonRestakingWithdrawalCredentials.js
+  init_define_process_env();
   var t11 = [
     {
       inputs: [],
@@ -33483,6 +33586,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/http-Clq2Hoy9.js
+  init_define_process_env();
   init_writeContract_Bq8HaVjW();
   init_constants_CUYeD71n();
   init_localBatchGatewayRequest_Dm7yXllz();
@@ -37931,6 +38035,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/api/puffer-client-helpers.js
+  init_define_process_env();
   init_constants_CUYeD71n();
   init_writeContract_Bq8HaVjW();
   function P3(s, e19 = {}) {
@@ -38079,7 +38184,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
   init_constants_CUYeD71n();
 
   // src/services/puffer.ts
-  var RPC_URL = "https://eth.llamarpc.com";
+  var RPC_URL = "https://eth-mainnet.g.alchemy.com/v2/cRrLtE5RwGjA6xFJu4piL";
   var pufferClient = null;
   var pufferService = {
     async connectWallet() {
@@ -38152,14 +38257,15 @@ ${sa(b3)}`), super(t12.shortMessage, {
   };
 
   // src/services/advisor.ts
+  init_define_process_env();
   var LLM_API_URL = "https://api.openai.com/v1/chat/completions";
   function buildSystemPrompt(context) {
     const { address, pufETHBalance, rate, protocolTVL, vaultsAPY } = context;
     const vaultData = [
-      { name: "unifiETH", apy: 0, tvl: "0" },
-      { name: "unifiUSD", apy: 0, tvl: "0" },
-      { name: "unifiBTC", apy: 0, tvl: "0" },
-      { name: "pufETHs", apy: 0, tvl: "0" }
+      { name: "unifiETH", apy: 0, address: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc" },
+      { name: "unifiUSD", apy: 0, address: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4" },
+      { name: "unifiBTC", apy: 0, address: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0" },
+      { name: "pufETHs", apy: 0, address: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735" }
     ];
     vaultsAPY.data.forEach((v6) => {
       const key = v6.token_address.toLowerCase();
@@ -38168,29 +38274,32 @@ ${sa(b3)}`), super(t12.shortMessage, {
       else if (key.includes("170d847a")) vaultData[2].apy = v6.apy;
       else if (key.includes("62a4ce07")) vaultData[3].apy = v6.apy;
     });
-    return `You are a Puffer staking advisor AI. You help users stake ETH, stETH, wstETH to get pufETH, and deposit into UniFi vaults.
+    const pufEthBalanceInEth = (Number(pufETHBalance) * Number(rate.ethPerPufEth)).toFixed(4);
+    const vaultsTable = vaultData.map((v6) => `${v6.name}: ${v6.apy}% APY`).join(", ");
+    return `You are a DeFi staking advisor for Puffer Finance, embedded inside the imToken mobile wallet.
+You help users stake ETH and earn yield through Puffer's liquid restaking protocol.
 
-Current data:
-- pufETH/ETH rate: ${rate.pufEthPerEth} pufETH per ETH
+Be concise \u2014 this is a mobile interface. Keep responses under 4 sentences unless the user asks for detail.
+Never use markdown headers or bullet points. Write in plain conversational sentences.
+Always be specific \u2014 use the real numbers from the context below.
+
+LIVE PROTOCOL DATA (fetched just now):
+- pufETH/ETH rate: ${rate.ethPerPufEth} ETH per pufETH (rate appreciation = staking yield)
+- Protocol TVL: $${(Number(protocolTVL.lrt_total_usd) / 1e9).toFixed(2)}B
 - pufETH staking APY: ${protocolTVL.apy}%
-- User's pufETH balance: ${pufETHBalance}
-- Wallet: ${address.slice(0, 6)}...${address.slice(-4)}
 
-UniFi Vaults:
-${vaultData.map((v6) => `- ${v6.name}: ${v6.apy}% APY`).join("\n")}
+UNIFI VAULT OPPORTUNITIES:
+${vaultsTable}
 
-Vault addresses:
-- unifiETH: 0x196ead472583bc1e9af7a05f860d9857e1bd3dcc
-- unifiUSD: 0x82c40e07277eBb92935f79cE92268F80dDc7caB4
-- unifiBTC: 0x170d847a8320f3b6a77ee15b0cae430e3ec933a0
-- pufETHs: 0x62a4ce0722ee65635c0f8339dd814d549b6f6735
+USER:
+- Address: ${address.slice(0, 6)}...${address.slice(-4)}
+- pufETH balance: ${pufETHBalance} pufETH (\u2248 ${pufEthBalanceInEth} ETH)
 
-When recommending transactions, include a JSON action in <action> tags at the end of your message. Example:
-<action>{"type":"stake_eth","amount":"1","label":"Stake 1 ETH \u2192 pufETH"}</action>
+When you recommend a specific action (stake, deposit into a vault), end your message with an XML action tag:
+<action>{"type":"stake_eth","amount":"1.0","label":"Stake 1 ETH \u2192 pufETH"}</action>
 
-For swap_and_stake, include inputToken: <action>{"type":"swap_and_stake","amount":"100","inputToken":"USDC","label":"Swap 100 USDC \u2192 pufETH"}</action>
-
-Be conversational but concise. Always end with a question or prompt.`;
+Only include one action tag per message. Only recommend amounts the user mentioned or that make sense from context.
+If the user wants to stake a token other than ETH/stETH/wstETH, use type "swap_and_stake" and set inputToken.`;
   }
   async function sendMessage(messages, context, apiKey) {
     const systemPrompt = buildSystemPrompt(context);
@@ -38224,6 +38333,24 @@ Be conversational but concise. Always end with a question or prompt.`;
   }
 
   // src/App.tsx
+  var IS_MOCK = true;
+  var MOCK_CONTEXT = {
+    address: "0xMock000000000000000000000000000000001234",
+    balance: "2.4500",
+    rate: { pufEthPerEth: "0.959", ethPerPufEth: "1.042", totalAssets: "450000", totalSupply: "432000" },
+    metrics: { lrtMarketCap: 12e8, averageDailyVolume: 5e6, holderCount: 18420 },
+    vaultsAPY: {
+      data: [
+        { token_address: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc", apy: 5.2 },
+        { token_address: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4", apy: 4.8 },
+        { token_address: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0", apy: 3.9 },
+        { token_address: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735", apy: 6.1 }
+      ],
+      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+    },
+    vaultsTVL: { unifi_eth_vault: "120000000", unifi_usd_vault: "85000000", unifi_btc_vault: "45000000" },
+    protocolTVL: { lrt_total_usd: "1200000000", tvl_puffer_staking: "900000000", apy: "4.2", timestamp: (/* @__PURE__ */ new Date()).toISOString() }
+  };
   var VAULT_ADDRESSES = {
     unifiETH: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc",
     unifiUSD: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4",
@@ -38250,14 +38377,14 @@ Be conversational but concise. Always end with a question or prompt.`;
     const messagesEndRef = (0, import_react.useRef)(null);
     const fetchData = (0, import_react.useCallback)(async (address) => {
       try {
-        const [rate, metrics, vaultsAPY, vaultsTVL, protocolTVL, balance] = await Promise.all([
+        const [rate, metrics, vaultsAPY, vaultsTVL, protocolTVL] = await Promise.all([
           api.getPufETHRate(),
           api.getPufETHMetrics(),
           api.getVaultsAPY(),
           api.getVaultsTVL(),
-          api.getProtocolTVL(),
-          pufferService.getPufETHBalance(address)
+          api.getProtocolTVL()
         ]);
+        const balance = await pufferService.getPufETHBalance(address);
         setContext({
           address,
           balance: (Number(balance) / 1e18).toFixed(4),
@@ -38274,68 +38401,18 @@ Be conversational but concise. Always end with a question or prompt.`;
     (0, import_react.useEffect)(() => {
       const init = async () => {
         try {
-          if (!window.ethereum) {
-            setContext({
-              address: "0x0000000000000000000000000000000000000000",
-              balance: "0",
-              rate: null,
-              metrics: null,
-              vaultsAPY: null,
-              vaultsTVL: null,
-              protocolTVL: null
-            });
+          if (IS_MOCK) {
+            setContext(MOCK_CONTEXT);
             setMessages([{
               role: "assistant",
-              content: "Welcome to Puffer AI! Please open this app in imToken or install MetaMask to connect your wallet and start staking."
+              content: "\u{1F44B} Welcome to StakeMind! Your AI staking advisor for Puffer Finance.\n\nYou have 2.45 pufETH (\u22482.55 ETH). Current rate: 1.042 ETH per pufETH. Protocol APY: 4.2%.\n\nTop vault: pufETHs at 6.1% APY. Want to stake more ETH or explore vaults?"
             }]);
             setLoading(false);
             return;
           }
           const address = await pufferService.connectWallet();
           await fetchData(address);
-          const apiKey = "";
-          if (apiKey) {
-            const systemPrompt = buildSystemPrompt({
-              address,
-              pufETHBalance: context.balance,
-              rate: context.rate || { pufEthPerEth: "0.95", ethPerPufEth: "1.05" },
-              metrics: context.metrics || { lrtMarketCap: 0, averageDailyVolume: 0, holderCount: 0 },
-              vaultsAPY: context.vaultsAPY || { data: [], timestamp: "" },
-              vaultsTVL: context.vaultsTVL || {
-                unifi_eth_vault: "0",
-                unifi_usd_vault: "0",
-                unifi_btc_vault: "0"
-              },
-              protocolTVL: context.protocolTVL || {
-                lrt_total_usd: "0",
-                tvl_puffer_staking: "0",
-                apy: "0",
-                timestamp: ""
-              }
-            });
-            const response = await fetch(
-              "https://api.openai.com/v1/chat/completions",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: "Bearer " + apiKey
-                },
-                body: JSON.stringify({
-                  model: "gpt-4o-mini",
-                  messages: [{ role: "system", content: systemPrompt }],
-                  temperature: 0.7
-                })
-              }
-            );
-            if (response.ok) {
-              const data = await response.json();
-              const content = data.choices[0].message.content;
-              setMessages([{ role: "assistant", content }]);
-            }
-          } else {
-            setMessages([{ role: "assistant", content: "Welcome to Puffer AI! How can I help you with staking today?" }]);
-          }
+          setMessages([{ role: "assistant", content: "Welcome to StakeMind! How can I help you with staking today?" }]);
         } catch (err) {
           console.error("Init error:", err);
           setError(err.message || "Failed to initialize app");
@@ -38344,7 +38421,7 @@ Be conversational but concise. Always end with a question or prompt.`;
         }
       };
       init();
-    }, [fetchData]);
+    }, []);
     (0, import_react.useEffect)(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -38355,6 +38432,38 @@ Be conversational but concise. Always end with a question or prompt.`;
       setInput("");
       setSending(true);
       try {
+        if (IS_MOCK) {
+          const mockReplies = {
+            stake: {
+              reply: "Sure! How much ETH would you like to stake? At the current rate of 1.042 ETH per pufETH, staking 1 ETH will mint about 0.96 pufETH. Current APY is 4.2%.",
+              action: { type: "stake_eth", amount: "1", label: "Stake 1 ETH \u2192 pufETH" }
+            },
+            vault: {
+              reply: "Top vaults right now: pufETHs leads at 6.1% APY, followed by unifiETH at 5.2%, unifiUSD at 4.8%, and unifiBTC at 3.9%. pufETHs is the best choice for maximizing ETH-denominated yield."
+            },
+            balance: {
+              reply: `You currently hold ${context.balance} pufETH, worth approximately ${(Number(context.balance) * 1.042).toFixed(4)} ETH at today's rate. That's earning you about 4.2% APY just by holding.`
+            },
+            apy: {
+              reply: "pufETH base staking APY is 4.2% from validator rewards. UniFi vaults offer 3.9%\u20136.1% depending on strategy. The rate appreciates over time as validators earn, so your pufETH becomes worth more ETH."
+            },
+            earn: {
+              reply: "Staking 2 ETH for 3 months at 4.2% APY would earn you about 0.021 ETH (\u2248$63 at current prices). Your 2 ETH becomes 1.92 pufETH, which grows to \u22482.021 ETH worth of pufETH after 3 months.",
+              action: { type: "stake_eth", amount: "2", label: "Stake 2 ETH \u2192 pufETH" }
+            },
+            difference: {
+              reply: "unifiETH is a multi-strategy ETH vault (5.2% APY) that deploys across DeFi. pufETHs is a single-sided pufETH vault (6.1% APY) optimized for liquid restaking yield. pufETHs has higher APY but is ETH-only."
+            }
+          };
+          const key = Object.keys(mockReplies).find((k3) => input.toLowerCase().includes(k3));
+          const result2 = mockReplies[key || ""] || {
+            reply: "I can help you stake ETH/stETH/wstETH, compare vault APYs, estimate earnings, or explain how Puffer works. What would you like to know?"
+          };
+          setMessages((prev) => [...prev, { role: "assistant", content: result2.reply }]);
+          if (result2.action) setPendingAction(result2.action);
+          setSending(false);
+          return;
+        }
         const result = await sendMessage(
           [...messages, userMessage],
           context,
@@ -38374,6 +38483,15 @@ Be conversational but concise. Always end with a question or prompt.`;
     const handleConfirm = async () => {
       if (!pendingAction || !context.address) return;
       try {
+        if (IS_MOCK) {
+          const mockTx = "0xMock" + Math.random().toString(16).slice(2, 18).toUpperCase();
+          setMessages((prev) => [...prev, { role: "assistant", content: `\u2705 Mock transaction submitted!
+Tx: ${mockTx}
+
+In a real wallet, this would stake ${pendingAction.amount} ETH and mint ~${(Number(pendingAction.amount) * 0.959).toFixed(4)} pufETH.` }]);
+          setPendingAction(null);
+          return;
+        }
         const amountWei = BigInt(Number(pendingAction.amount) * 1e18);
         let txHash;
         switch (pendingAction.type) {
@@ -38403,7 +38521,7 @@ Be conversational but concise. Always end with a question or prompt.`;
     if (error) {
       return /* @__PURE__ */ import_react.default.createElement("div", { className: "screen error-screen" }, /* @__PURE__ */ import_react.default.createElement("p", null, error));
     }
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "header" }, /* @__PURE__ */ import_react.default.createElement("h1", null, "Puffer AI"), /* @__PURE__ */ import_react.default.createElement("div", { className: "header-info" }, /* @__PURE__ */ import_react.default.createElement("span", null, context.address?.slice(0, 6), "...", context.address?.slice(-4)), /* @__PURE__ */ import_react.default.createElement("span", { className: "balance" }, context.balance, " pufETH")), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setShowVaults(true) }, "Vaults")), /* @__PURE__ */ import_react.default.createElement("main", { className: "chat-container" }, messages.map((msg, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${msg.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, msg.content))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "typing" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: messagesEndRef })), /* @__PURE__ */ import_react.default.createElement("footer", { className: "input-container" }, /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "header" }, /* @__PURE__ */ import_react.default.createElement("h1", null, "StakeMind ", IS_MOCK && /* @__PURE__ */ import_react.default.createElement("span", { className: "mock-badge" }, "MOCK")), /* @__PURE__ */ import_react.default.createElement("div", { className: "header-info" }, /* @__PURE__ */ import_react.default.createElement("span", null, context.address?.slice(0, 6), "...", context.address?.slice(-4)), /* @__PURE__ */ import_react.default.createElement("span", { className: "balance" }, context.balance, " pufETH")), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setShowVaults(true) }, "Vaults")), /* @__PURE__ */ import_react.default.createElement("main", { className: "chat-container" }, messages.map((msg, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${msg.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, msg.content))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "typing" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: messagesEndRef })), /* @__PURE__ */ import_react.default.createElement("footer", { className: "input-container" }, /* @__PURE__ */ import_react.default.createElement(
       "input",
       {
         value: input,

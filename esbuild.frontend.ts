@@ -25,6 +25,8 @@ esbuild.build({
   define: {
     'process.env.NODE_ENV': '"production"',
     'process.env.LLM_API_KEY': JSON.stringify(process.env.LLM_API_KEY || ''),
+    'process.env.ETH_RPC_URL': JSON.stringify(process.env.ETH_RPC_URL || 'https://eth-mainnet.g.alchemy.com/v2/cRrLtE5RwGjA6xFJu4piL'),
+    'process.env': '{}',
     global: 'window',
   },
 });

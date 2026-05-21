@@ -1,4 +1,4 @@
-const API_BASE = 'https://api-v2.puffer.fi/imtoken-hackathon';
+const API_BASE = window.location.origin;
 
 export interface PufEthRate {
   pufEthPerEth: string;
@@ -10,7 +10,7 @@ export interface PufEthRate {
 export interface PufEthMetrics {
   lrtMarketCap: number;
   averageDailyVolume: number;
-  holderCount: number;
+  holderCount?: number;
 }
 
 export interface VaultApy {

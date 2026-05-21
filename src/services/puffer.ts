@@ -6,7 +6,7 @@ import {
   UnifiToken,
 } from '@pufferfinance/puffer-sdk';
 
-const RPC_URL = 'https://eth.llamarpc.com';
+const RPC_URL = process.env.ETH_RPC_URL || 'https://eth.llamarpc.com';
 
 let pufferClient: PufferClient | null = null;
 

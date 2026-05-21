@@ -10,6 +10,26 @@ import {
 import { pufferService } from './services/puffer';
 import { sendMessage, buildSystemPrompt, Action } from './services/advisor';
 
+const IS_MOCK = true; // Force mock mode for hackathon demo
+
+const MOCK_CONTEXT = {
+  address: '0xMock000000000000000000000000000000001234',
+  balance: '2.4500',
+  rate: { pufEthPerEth: '0.959', ethPerPufEth: '1.042', totalAssets: '450000', totalSupply: '432000' },
+  metrics: { lrtMarketCap: 1200000000, averageDailyVolume: 5000000, holderCount: 18420 },
+  vaultsAPY: {
+    data: [
+      { token_address: '0x196ead472583bc1e9af7a05f860d9857e1bd3dcc', apy: 5.2 },
+      { token_address: '0x82c40e07277eBb92935f79cE92268F80dDc7caB4', apy: 4.8 },
+      { token_address: '0x170d847a8320f3b6a77ee15b0cae430e3ec933a0', apy: 3.9 },
+      { token_address: '0x62a4ce0722ee65635c0f8339dd814d549b6f6735', apy: 6.1 },
+    ],
+    timestamp: new Date().toISOString(),
+  },
+  vaultsTVL: { unifi_eth_vault: '120000000', unifi_usd_vault: '85000000', unifi_btc_vault: '45000000' },
+  protocolTVL: { lrt_total_usd: '1200000000', tvl_puffer_staking: '900000000', apy: '4.2', timestamp: new Date().toISOString() },
+};
+
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -53,15 +73,16 @@ export default function App() {
 
   const fetchData = useCallback(async (address: string) => {
     try {
-      const [rate, metrics, vaultsAPY, vaultsTVL, protocolTVL, balance] =
+      const [rate, metrics, vaultsAPY, vaultsTVL, protocolTVL] =
         await Promise.all([
           api.getPufETHRate(),
           api.getPufETHMetrics(),
           api.getVaultsAPY(),
           api.getVaultsTVL(),
           api.getProtocolTVL(),
-          pufferService.getPufETHBalance(address),
         ]);
+
+      const balance = await pufferService.getPufETHBalance(address);
 
       setContext({
         address,
@@ -80,75 +101,21 @@ export default function App() {
   useEffect(() => {
     const init = async () => {
       try {
-        // Check if wallet is available
-        if (!window.ethereum) {
-          // For testing without wallet, use mock data
-          setContext({
-            address: '0x0000000000000000000000000000000000000000',
-            balance: '0',
-            rate: null,
-            metrics: null,
-            vaultsAPY: null,
-            vaultsTVL: null,
-            protocolTVL: null,
-          });
-          setMessages([{ 
-            role: 'assistant', 
-            content: 'Welcome to Puffer AI! Please open this app in imToken or install MetaMask to connect your wallet and start staking.' 
+        // Check for wallet FIRST before any API calls
+        if (IS_MOCK) {
+          setContext(MOCK_CONTEXT);
+          setMessages([{
+            role: 'assistant',
+            content: '👋 Welcome to StakeMind! Your AI staking advisor for Puffer Finance.\n\nYou have 2.45 pufETH (≈2.55 ETH). Current rate: 1.042 ETH per pufETH. Protocol APY: 4.2%.\n\nTop vault: pufETHs at 6.1% APY. Want to stake more ETH or explore vaults?',
           }]);
           setLoading(false);
           return;
         }
 
+        // Only fetch real data if wallet exists
         const address = await pufferService.connectWallet();
         await fetchData(address);
-
-        // Try to get initial AI greeting if API key is available
-        const apiKey = process.env.LLM_API_KEY || '';
-        if (apiKey) {
-          const systemPrompt = buildSystemPrompt({
-            address,
-            pufETHBalance: context.balance,
-            rate: context.rate || { pufEthPerEth: '0.95', ethPerPufEth: '1.05' },
-            metrics: context.metrics || { lrtMarketCap: 0, averageDailyVolume: 0, holderCount: 0 },
-            vaultsAPY: context.vaultsAPY || { data: [], timestamp: '' },
-            vaultsTVL: context.vaultsTVL || {
-              unifi_eth_vault: '0',
-              unifi_usd_vault: '0',
-              unifi_btc_vault: '0',
-            },
-            protocolTVL: context.protocolTVL || {
-              lrt_total_usd: '0',
-              tvl_puffer_staking: '0',
-              apy: '0',
-              timestamp: '',
-            },
-          });
-
-          const response = await fetch(
-            'https://api.openai.com/v1/chat/completions',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + apiKey,
-              },
-              body: JSON.stringify({
-                model: 'gpt-4o-mini',
-                messages: [{ role: 'system', content: systemPrompt }],
-                temperature: 0.7,
-              }),
-            },
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            const content = data.choices[0].message.content;
-            setMessages([{ role: 'assistant', content }]);
-          }
-        } else {
-          setMessages([{ role: 'assistant', content: 'Welcome to Puffer AI! How can I help you with staking today?' }]);
-        }
+        setMessages([{ role: 'assistant', content: 'Welcome to StakeMind! How can I help you with staking today?' }]);
       } catch (err: any) {
         console.error('Init error:', err);
         setError(err.message || 'Failed to initialize app');
@@ -158,7 +125,7 @@ export default function App() {
     };
 
     init();
-  }, [fetchData]);
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -173,6 +140,39 @@ export default function App() {
     setSending(true);
 
     try {
+      if (IS_MOCK) {
+        const mockReplies: Record<string, { reply: string; action?: Action }> = {
+          stake: { 
+            reply: 'Sure! How much ETH would you like to stake? At the current rate of 1.042 ETH per pufETH, staking 1 ETH will mint about 0.96 pufETH. Current APY is 4.2%.', 
+            action: { type: 'stake_eth', amount: '1', label: 'Stake 1 ETH → pufETH' } 
+          },
+          vault: { 
+            reply: 'Top vaults right now: pufETHs leads at 6.1% APY, followed by unifiETH at 5.2%, unifiUSD at 4.8%, and unifiBTC at 3.9%. pufETHs is the best choice for maximizing ETH-denominated yield.' 
+          },
+          balance: { 
+            reply: `You currently hold ${context.balance} pufETH, worth approximately ${(Number(context.balance) * 1.042).toFixed(4)} ETH at today's rate. That's earning you about 4.2% APY just by holding.` 
+          },
+          apy: { 
+            reply: 'pufETH base staking APY is 4.2% from validator rewards. UniFi vaults offer 3.9%–6.1% depending on strategy. The rate appreciates over time as validators earn, so your pufETH becomes worth more ETH.' 
+          },
+          earn: {
+            reply: 'Staking 2 ETH for 3 months at 4.2% APY would earn you about 0.021 ETH (≈$63 at current prices). Your 2 ETH becomes 1.92 pufETH, which grows to ≈2.021 ETH worth of pufETH after 3 months.',
+            action: { type: 'stake_eth', amount: '2', label: 'Stake 2 ETH → pufETH' }
+          },
+          difference: {
+            reply: 'unifiETH is a multi-strategy ETH vault (5.2% APY) that deploys across DeFi. pufETHs is a single-sided pufETH vault (6.1% APY) optimized for liquid restaking yield. pufETHs has higher APY but is ETH-only.'
+          },
+        };
+        const key = Object.keys(mockReplies).find((k) => input.toLowerCase().includes(k));
+        const result = mockReplies[key || ''] || { 
+          reply: 'I can help you stake ETH/stETH/wstETH, compare vault APYs, estimate earnings, or explain how Puffer works. What would you like to know?' 
+        };
+        setMessages((prev) => [...prev, { role: 'assistant', content: result.reply }]);
+        if (result.action) setPendingAction(result.action);
+        setSending(false);
+        return;
+      }
+
       const result = await sendMessage(
         [...messages, userMessage],
         context as any,
@@ -194,6 +194,13 @@ export default function App() {
     if (!pendingAction || !context.address) return;
 
     try {
+      if (IS_MOCK) {
+        const mockTx = '0xMock' + Math.random().toString(16).slice(2, 18).toUpperCase();
+        setMessages((prev) => [...prev, { role: 'assistant', content: `✅ Mock transaction submitted!\nTx: ${mockTx}\n\nIn a real wallet, this would stake ${pendingAction.amount} ETH and mint ~${(Number(pendingAction.amount) * 0.959).toFixed(4)} pufETH.` }]);
+        setPendingAction(null);
+        return;
+      }
+
       const amountWei = BigInt(Number(pendingAction.amount) * 1e18);
       let txHash: string;
 
@@ -241,7 +248,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="header">
-        <h1>Puffer AI</h1>
+        <h1>StakeMind {IS_MOCK && <span className="mock-badge">MOCK</span>}</h1>
         <div className="header-info">
           <span>
             {context.address?.slice(0, 6)}...{context.address?.slice(-4)}

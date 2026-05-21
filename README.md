@@ -1,18 +1,37 @@
-# Puffer x imToken Hackathon - Developer Resources
+# StakeMind - AI-Powered Puffer Staking Advisor
 
-Developer API and resources for the [imToken 10th Anniversary AI Co-Creation Campaign](https://10.token.im/#cocreation).
+An AI-powered Puffer staking advisor built natively for imToken's mobile wallet. Rather than a static form, StakeMind puts an intelligent staking assistant at the center of the experience — one that knows live on-chain data in real time and turns its recommendations into one-tap transactions.
 
-## What's Inside
+## What It Does
 
-- **Public API** - Endpoints for pufETH rates, vault APYs, TVL, token prices, and gauge APR data
-- **SDK examples** - Code snippets using `@pufferfinance/puffer-sdk` for staking, vault deposits, and on-chain reads
-- **Contract addresses** - All mainnet addresses for PufferVault, UniFi vaults, and key tokens
+Connect your imToken wallet and the advisor immediately greets you with your current pufETH balance, the live staking rate, and the best yield opportunity available right now across Puffer's UniFi vaults. 
 
-## Challenge Direction
+Ask it anything:
+- "which vault has the best APY?"
+- "how much would I earn staking 2 ETH for 3 months?"
+- "what's the difference between unifiETH and pufETHs?"
 
-**Base challenge:** Build an imToken-compatible Puffer staking mini app - connect wallet, stake ETH/stETH/wstETH to mint pufETH, display pufETH balance/rate and selected Puffer UniFi Vault opportunities, and guide users through a safe participation flow.
+It answers with real numbers, not generic advice.
 
-**Advanced challenge:** Integrate a DEX aggregator to accept any token, swap to ETH/WETH, and deposit into PufferVault in a single transaction.
+When it recommends an action, a confirmation button appears inline. Tap it, review the estimated output and gas, confirm — done. No tab-switching, no copy-pasting addresses, no guessing.
+
+## Features
+
+- **Conversational AI Interface** - Natural language staking advisor powered by real-time protocol data
+- **One-Tap Transactions** - Inline action buttons turn recommendations into executable transactions
+- **Multi-Token Support** - Stake ETH, stETH, and wstETH natively
+- **Live Data** - Real-time pufETH rates, vault APYs, TVL, and user balances
+- **UniFi Vault Integration** - Compare and deposit into all Puffer UniFi vaults
+- **Advanced Mode** - DEX aggregator integration for any-token deposits (coming soon)
+
+## Tech Stack
+
+- **Frontend**: React + TypeScript
+- **Blockchain**: Official Puffer SDK, viem
+- **Data**: Live Puffer API
+- **AI**: OpenAI GPT-4o-mini
+- **Backend**: Express API proxy
+- **Environment**: imToken WebView compatible
 
 ## API Reference
 

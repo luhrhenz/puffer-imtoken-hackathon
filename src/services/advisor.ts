@@ -32,10 +32,10 @@ export function buildSystemPrompt(context: AdvisorContext): string {
   const { address, pufETHBalance, rate, protocolTVL, vaultsAPY } = context;
 
   const vaultData = [
-    { name: 'unifiETH', apy: 0, tvl: '0' },
-    { name: 'unifiUSD', apy: 0, tvl: '0' },
-    { name: 'unifiBTC', apy: 0, tvl: '0' },
-    { name: 'pufETHs', apy: 0, tvl: '0' },
+    { name: 'unifiETH', apy: 0, address: '0x196ead472583bc1e9af7a05f860d9857e1bd3dcc' },
+    { name: 'unifiUSD', apy: 0, address: '0x82c40e07277eBb92935f79cE92268F80dDc7caB4' },
+    { name: 'unifiBTC', apy: 0, address: '0x170d847a8320f3b6a77ee15b0cae430e3ec933a0' },
+    { name: 'pufETHs', apy: 0, address: '0x62a4ce0722ee65635c0f8339dd814d549b6f6735' },
   ];
 
   vaultsAPY.data.forEach((v: any) => {
@@ -46,29 +46,33 @@ export function buildSystemPrompt(context: AdvisorContext): string {
     else if (key.includes('62a4ce07')) vaultData[3].apy = v.apy;
   });
 
-  return `You are a Puffer staking advisor AI. You help users stake ETH, stETH, wstETH to get pufETH, and deposit into UniFi vaults.
+  const pufEthBalanceInEth = (Number(pufETHBalance) * Number(rate.ethPerPufEth)).toFixed(4);
+  const vaultsTable = vaultData.map(v => `${v.name}: ${v.apy}% APY`).join(', ');
 
-Current data:
-- pufETH/ETH rate: ${rate.pufEthPerEth} pufETH per ETH
+  return `You are a DeFi staking advisor for Puffer Finance, embedded inside the imToken mobile wallet.
+You help users stake ETH and earn yield through Puffer's liquid restaking protocol.
+
+Be concise — this is a mobile interface. Keep responses under 4 sentences unless the user asks for detail.
+Never use markdown headers or bullet points. Write in plain conversational sentences.
+Always be specific — use the real numbers from the context below.
+
+LIVE PROTOCOL DATA (fetched just now):
+- pufETH/ETH rate: ${rate.ethPerPufEth} ETH per pufETH (rate appreciation = staking yield)
+- Protocol TVL: $${(Number(protocolTVL.lrt_total_usd) / 1e9).toFixed(2)}B
 - pufETH staking APY: ${protocolTVL.apy}%
-- User's pufETH balance: ${pufETHBalance}
-- Wallet: ${address.slice(0, 6)}...${address.slice(-4)}
 
-UniFi Vaults:
-${vaultData.map((v) => `- ${v.name}: ${v.apy}% APY`).join('\n')}
+UNIFI VAULT OPPORTUNITIES:
+${vaultsTable}
 
-Vault addresses:
-- unifiETH: 0x196ead472583bc1e9af7a05f860d9857e1bd3dcc
-- unifiUSD: 0x82c40e07277eBb92935f79cE92268F80dDc7caB4
-- unifiBTC: 0x170d847a8320f3b6a77ee15b0cae430e3ec933a0
-- pufETHs: 0x62a4ce0722ee65635c0f8339dd814d549b6f6735
+USER:
+- Address: ${address.slice(0, 6)}...${address.slice(-4)}
+- pufETH balance: ${pufETHBalance} pufETH (≈ ${pufEthBalanceInEth} ETH)
 
-When recommending transactions, include a JSON action in <action> tags at the end of your message. Example:
-<action>{"type":"stake_eth","amount":"1","label":"Stake 1 ETH → pufETH"}</action>
+When you recommend a specific action (stake, deposit into a vault), end your message with an XML action tag:
+<action>{"type":"stake_eth","amount":"1.0","label":"Stake 1 ETH → pufETH"}</action>
 
-For swap_and_stake, include inputToken: <action>{"type":"swap_and_stake","amount":"100","inputToken":"USDC","label":"Swap 100 USDC → pufETH"}</action>
-
-Be conversational but concise. Always end with a question or prompt.`;
+Only include one action tag per message. Only recommend amounts the user mentioned or that make sense from context.
+If the user wants to stake a token other than ETH/stETH/wstETH, use type "swap_and_stake" and set inputToken.`;
 }
 
 export async function sendMessage(

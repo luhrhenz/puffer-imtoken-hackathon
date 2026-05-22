@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "pnpm install && pnpm run build",
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["public/**", "dist/**"]
-      }
-    }
-  ],
-  "routes": [
+      "source": "/bundle.js",
+      "destination": "/public/bundle.js"
+    },
     {
-      "src": "/(.*)",
-      "dest": "/dist/index.js"
+      "source": "/bundle.css",
+      "destination": "/public/bundle.css"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api/index.js"
     }
   ]
 }

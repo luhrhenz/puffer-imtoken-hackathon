@@ -12,7 +12,8 @@
     "build": "tsx esbuild.config.ts && tsx esbuild.frontend.ts",
     "dev:frontend": "tsx esbuild.frontend.ts --watch",
     "lint": "eslint ./src",
-    "lint:fix": "pnpm lint --fix"
+    "lint:fix": "pnpm lint --fix",
+    "vercel-build": "tsx esbuild.config.ts && tsx esbuild.frontend.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

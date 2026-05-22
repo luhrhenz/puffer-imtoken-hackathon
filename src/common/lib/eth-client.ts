@@ -47,3 +47,22 @@ export async function getPufEthRate() {
     totalSupply: formatUnits(totalSupply, 18),
   };
 }
+
+export async function getPufEthBalance(address: string) {
+  const BALANCE_OF_ABI = [{
+    inputs: [{ name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  }] as const;
+
+  const balance = await publicClient.readContract({
+    address: PUFFER_VAULT_ADDRESS,
+    abi: BALANCE_OF_ABI,
+    functionName: 'balanceOf',
+    args: [address as `0x${string}`],
+  });
+
+  return formatUnits(balance, 18);
+}

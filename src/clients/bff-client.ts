@@ -7,17 +7,17 @@ class BffClient extends ApiClient {
   }
 
   async getAllVaultsApy() {
-    const { data } = await this.client.get('/vaults-apy');
+    const { data } = await this.client.get('/vaults/apy');
     return data;
   }
 
   async getProtocolTvl() {
-    const { data } = await this.client.get('/tvl/all');
+    const { data } = await this.client.get('/protocol/tvl');
     return data;
   }
 
   async getVaultTvl() {
-    const { data } = await this.client.get('/tvl/vault');
+    const { data } = await this.client.get('/vaults/tvl');
     return data;
   }
 
@@ -36,7 +36,7 @@ class BffClient extends ApiClient {
   }
 
   async getPufEthMetrics() {
-    const { data } = await this.client.get('/lrt/puf-eth');
+    const { data } = await this.client.get('/pufeth/metrics');
     return data;
   }
 }

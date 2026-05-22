@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { sendResponse } from '@/common/lib/response';
-import { getPufEthRate } from '@/common/lib/eth-client';
+import { getPufEthRate, getPufEthBalance } from '@/common/lib/eth-client';
 import { bffClient } from '@/clients/bff-client';
 
 const pufethRouter = Router();
@@ -88,7 +88,19 @@ pufethRouter.get(
   async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const metrics = await bffClient.getPufEthMetrics();
-      return sendResponse(res, 200, metrics.message ?? metrics);
+      return sendResponse(res, 200, metrics);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+pufethRouter.get(
+  '/balance/:address',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const balance = await getPufEthBalance(req.params.address);
+      return sendResponse(res, 200, { balance });
     } catch (error) {
       next(error);
     }

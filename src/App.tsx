@@ -18,6 +18,7 @@ type StakeStep = null | 'approving' | 'staking' | 'swapping' | 'done';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  action?: Action;
 }
 
 interface AppData {
@@ -818,24 +819,27 @@ function ChatOverlay({
         }
         setMessages((prev) => [
           ...prev,
-          { role: 'assistant', content: result.reply },
+          {
+            role: 'assistant',
+            content: result.reply,
+            action: result.action,
+          },
         ]);
-        if (result.action) setTimeout(() => onAction(result.action!), 400);
       } else {
         const lower = userMsg.content.toLowerCase();
         const reply = lower.includes('vault')
-          ? 'The Vaults screen has live APY and TVL for all four UniFi vaults. I can take you there to review before depositing.'
-          : `At the current rate, 1 ETH previews about ${fmt(data.rate?.pufEthPerEth || 0, 4)} pufETH. I can open the Stake screen with the amount filled so you can confirm.`;
-        setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
-        setTimeout(
-          () =>
-            onAction(
-              lower.includes('vault')
-                ? { type: 'deposit_vault', amount: '', label: 'Browse Vaults' }
-                : { type: 'stake_eth', amount: '1.0', label: 'Stake 1 ETH' },
-            ),
-          400,
-        );
+          ? 'The Vaults screen has live APY and TVL for all four UniFi vaults. Tap below if you want to browse them.'
+          : `At the current rate, 1 ETH previews about ${fmt(data.rate?.pufEthPerEth || 0, 4)} pufETH. Tap below if you want to open the Stake screen.`;
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: reply,
+            action: lower.includes('vault')
+              ? { type: 'deposit_vault', amount: '', label: 'Browse Vaults' }
+              : { type: 'stake_eth', amount: '1.0', label: 'Stake 1 ETH' },
+          },
+        ]);
       }
     } catch {
       setMessages((prev) => [
@@ -868,7 +872,18 @@ function ChatOverlay({
         <div className="chat-messages">
           {messages.map((m, i) => (
             <div key={i} className={`message ${m.role}`}>
-              <div className="bubble">{m.content}</div>
+              <div className="message-stack">
+                <div className="bubble">{m.content}</div>
+                {m.action && (
+                  <button
+                    type="button"
+                    className="chat-action-btn"
+                    onClick={() => onAction(m.action!)}
+                  >
+                    {m.action.label}
+                  </button>
+                )}
+              </div>
             </div>
           ))}
           {sending && (

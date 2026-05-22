@@ -39086,19 +39086,23 @@ ${sa(b3)}`), super(t12.shortMessage, {
           }
           setMessages((prev) => [
             ...prev,
-            { role: "assistant", content: result.reply }
+            {
+              role: "assistant",
+              content: result.reply,
+              action: result.action
+            }
           ]);
-          if (result.action) setTimeout(() => onAction(result.action), 400);
         } else {
           const lower = userMsg.content.toLowerCase();
-          const reply = lower.includes("vault") ? "The Vaults screen has live APY and TVL for all four UniFi vaults. I can take you there to review before depositing." : `At the current rate, 1 ETH previews about ${fmt(data.rate?.pufEthPerEth || 0, 4)} pufETH. I can open the Stake screen with the amount filled so you can confirm.`;
-          setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
-          setTimeout(
-            () => onAction(
-              lower.includes("vault") ? { type: "deposit_vault", amount: "", label: "Browse Vaults" } : { type: "stake_eth", amount: "1.0", label: "Stake 1 ETH" }
-            ),
-            400
-          );
+          const reply = lower.includes("vault") ? "The Vaults screen has live APY and TVL for all four UniFi vaults. Tap below if you want to browse them." : `At the current rate, 1 ETH previews about ${fmt(data.rate?.pufEthPerEth || 0, 4)} pufETH. Tap below if you want to open the Stake screen.`;
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "assistant",
+              content: reply,
+              action: lower.includes("vault") ? { type: "deposit_vault", amount: "", label: "Browse Vaults" } : { type: "stake_eth", amount: "1.0", label: "Stake 1 ETH" }
+            }
+          ]);
         }
       } catch {
         setMessages((prev) => [
@@ -39112,7 +39116,15 @@ ${sa(b3)}`), super(t12.shortMessage, {
         setSending(false);
       }
     };
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-overlay" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-panel" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "chat-header" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "AI Advisor"), /* @__PURE__ */ import_react.default.createElement("button", { onClick: onClose }, "\xD7")), aiEnabled === false && /* @__PURE__ */ import_react.default.createElement("p", { className: "chat-setup-hint" }, "No free AI key found. Add ", /* @__PURE__ */ import_react.default.createElement("code", null, "GROQ_API_KEY"), " (free at console.groq.com) or ", /* @__PURE__ */ import_react.default.createElement("code", null, "GEMINI_API_KEY"), " to ", /* @__PURE__ */ import_react.default.createElement("code", null, ".env"), " ", "and restart ", /* @__PURE__ */ import_react.default.createElement("code", null, "pnpm dev"), ". Using basic fallback until then."), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-messages" }, messages.map((m5, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${m5.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, m5.content))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: endRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-input-row" }, /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-overlay" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-panel" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "chat-header" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "AI Advisor"), /* @__PURE__ */ import_react.default.createElement("button", { onClick: onClose }, "\xD7")), aiEnabled === false && /* @__PURE__ */ import_react.default.createElement("p", { className: "chat-setup-hint" }, "No free AI key found. Add ", /* @__PURE__ */ import_react.default.createElement("code", null, "GROQ_API_KEY"), " (free at console.groq.com) or ", /* @__PURE__ */ import_react.default.createElement("code", null, "GEMINI_API_KEY"), " to ", /* @__PURE__ */ import_react.default.createElement("code", null, ".env"), " ", "and restart ", /* @__PURE__ */ import_react.default.createElement("code", null, "pnpm dev"), ". Using basic fallback until then."), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-messages" }, messages.map((m5, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${m5.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "message-stack" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, m5.content), m5.action && /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        type: "button",
+        className: "chat-action-btn",
+        onClick: () => onAction(m5.action)
+      },
+      m5.action.label
+    )))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: endRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-input-row" }, /* @__PURE__ */ import_react.default.createElement(
       "input",
       {
         value: input,

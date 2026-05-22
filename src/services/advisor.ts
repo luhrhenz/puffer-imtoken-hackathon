@@ -109,10 +109,11 @@ USER:
 - Address: ${address.slice(0, 6)}...${address.slice(-4)}
 - pufETH balance: ${pufETHBalance} pufETH (≈ ${pufEthBalanceInEth} ETH)
 
-When you recommend a specific action (stake, deposit into a vault), end your message with an XML action tag:
+Only when the user clearly wants to stake or deposit NOW (not for general questions), end your message with an XML action tag:
 <action>{"type":"stake_eth","amount":"1.0","label":"Stake 1 ETH → pufETH"}</action>
 
-Only include one action tag per message. Only recommend amounts the user mentioned or that make sense from context.
+Do NOT include an action tag for greetings, explanations, comparisons, or "what is" questions — answer in text only.
+Only include one action tag when the user is ready to transact. Use amounts they mentioned.
 If the user wants to stake a token other than ETH/stETH/wstETH, use type "swap_and_stake" and set inputToken.`;
 }
 

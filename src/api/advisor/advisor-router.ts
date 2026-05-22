@@ -15,13 +15,19 @@ function fallbackAdvisor(messages: any[], context: any) {
   const apy = context?.protocolTVL?.apy || '0';
   const balance = context?.pufETHBalance || '0';
 
+  if (latest.includes('balance')) {
+    return {
+      reply: `Your connected wallet currently shows ${balance} pufETH. You can use the Home screen for the live pufETH balance and recent transaction link.`,
+    };
+  }
+
   if (
     latest.includes('stake') ||
     latest.includes('staking') ||
-    latest.includes('pufeth')
+    latest.includes('deposit')
   ) {
     return {
-      reply: `Current pufETH staking APY is ${apy}%. At the live rate, 1 ETH previews about ${rate.toFixed(4)} pufETH. Open the Stake screen to review and confirm before transacting.`,
+      reply: `Current pufETH staking APY is ${apy}%. At the live rate, 1 ETH previews about ${rate.toFixed(4)} pufETH. Tap the button below when you are ready to stake.`,
       action: {
         type: 'stake_eth',
         amount: '1.0',
@@ -30,10 +36,10 @@ function fallbackAdvisor(messages: any[], context: any) {
     };
   }
 
-  if (latest.includes('vault') || latest.includes('apy')) {
+  if (latest.includes('vault')) {
     return {
       reply:
-        'The Vaults screen has live APY and TVL for all four UniFi vaults. Open Vaults to compare each opportunity and confirm before depositing.',
+        'The Vaults screen has live APY and TVL for all four UniFi vaults. Tap below to compare and deposit.',
       action: {
         type: 'deposit_vault',
         amount: '',
@@ -42,19 +48,8 @@ function fallbackAdvisor(messages: any[], context: any) {
     };
   }
 
-  if (latest.includes('balance')) {
-    return {
-      reply: `Your connected wallet currently shows ${balance} pufETH. You can use the Home screen for the live pufETH balance and recent transaction link.`,
-    };
-  }
-
   return {
-    reply: `Current pufETH staking APY is ${apy}%. At the live rate, 1 ETH previews about ${rate.toFixed(4)} pufETH. Open the Stake screen to review and confirm before transacting.`,
-    action: {
-      type: 'stake_eth',
-      amount: '1.0',
-      label: 'Stake 1 ETH',
-    },
+    reply: `Current pufETH staking APY is ${apy}%. At the live rate, 1 ETH previews about ${rate.toFixed(4)} pufETH. Ask me to stake or compare vaults when you are ready.`,
   };
 }
 

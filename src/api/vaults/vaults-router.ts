@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { sendResponse } from '@/common/lib/response';
-import { bffClient } from '@/clients/bff-client';
+import { getVaultsApySafe, getVaultsTvlSafe } from '@/services/bff-service';
 
 const vaultsRouter = Router();
 
@@ -44,7 +44,7 @@ vaultsRouter.get(
   '/apy',
   async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = await bffClient.getAllVaultsApy();
+      const data = await getVaultsApySafe();
       return sendResponse(res, 200, data);
     } catch (error) {
       next(error);
@@ -87,7 +87,7 @@ vaultsRouter.get(
   '/tvl',
   async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = await bffClient.getVaultTvl();
+      const data = await getVaultsTvlSafe();
       return sendResponse(res, 200, data);
     } catch (error) {
       next(error);

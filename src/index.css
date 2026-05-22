@@ -2,10 +2,27 @@
   box-sizing: border-box;
 }
 
+:root {
+  --app-max: 430px;
+  --page-x: 16px;
+  --page-bottom: 108px;
+  --radius-lg: 16px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --overlay-bg: rgba(0, 0, 0, 0.68);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 html,
 body,
 #root {
   min-height: 100%;
+  min-height: 100dvh;
 }
 
 body {
@@ -20,6 +37,7 @@ body {
     BlinkMacSystemFont,
     'Segoe UI',
     sans-serif;
+  overflow-x: hidden;
 }
 
 button,
@@ -45,12 +63,15 @@ a {
 .app-shell,
 .app {
   width: 100%;
-  max-width: 430px;
+  max-width: var(--app-max);
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
   background: #0d0d0d;
   position: relative;
   overflow-x: hidden;
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
 }
 
 .app-shell {
@@ -74,11 +95,12 @@ a {
 
 .top-header {
   min-height: 72px;
-  padding: 16px 18px 12px;
+  padding: calc(12px + var(--safe-top)) 18px 12px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px 12px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -96,9 +118,41 @@ a {
 
 .header-actions {
   min-width: 0;
+  flex: 1 1 auto;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
+}
+
+.lang-switcher {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
+  border-radius: 8px;
+  background: #101010;
+}
+
+.lang-switcher.compact button {
+  min-height: 28px;
+  padding: 0 6px;
+  font-size: 0.65rem;
+}
+
+.lang-switcher button {
+  min-height: 30px;
+  border-radius: 6px;
+  background: transparent;
+  color: #a7a095;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.lang-switcher button.active {
+  background: #2a2a2a;
+  color: #f5a623;
 }
 
 .network-tabs {
@@ -127,6 +181,7 @@ a {
 
 .wallet-pill {
   min-width: 0;
+  max-width: min(160px, 42vw);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -139,6 +194,14 @@ a {
   font-size: 0.74rem;
 }
 
+.wallet-pill span,
+.wallet-pill strong {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .wallet-pill strong {
   color: #f5a623;
   font-size: 0.78rem;
@@ -147,11 +210,13 @@ a {
 
 .main-content {
   flex: 1;
-  padding-bottom: 108px;
+  padding-bottom: var(--page-bottom);
+  width: 100%;
 }
 
 .screen-content {
-  padding: 10px 16px 24px;
+  padding: 10px var(--page-x) 24px;
+  width: 100%;
 }
 
 .screen-title {
@@ -312,8 +377,8 @@ a {
 }
 
 .token-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   padding: 4px;
   border-radius: 8px;
@@ -323,9 +388,24 @@ a {
 
 .token-tabs.compact {
   margin: 12px 0 14px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.token-tabs.compact::-webkit-scrollbar {
+  display: none;
+}
+
+.token-tabs.compact button {
+  flex: 0 0 auto;
+  min-width: 78px;
 }
 
 .token-tabs button {
+  flex: 1 1 calc(33.333% - 6px);
+  min-width: 72px;
   min-height: 38px;
   border-radius: 6px;
   background: transparent;
@@ -369,7 +449,7 @@ a {
 }
 
 .amount-row input {
-  font-size: 1.7rem;
+  font-size: clamp(1.25rem, 5vw, 1.7rem);
   font-weight: 750;
 }
 
@@ -545,13 +625,14 @@ a {
   left: 50%;
   bottom: 0;
   transform: translateX(-50%);
-  width: 100%;
-  max-width: 430px;
+  width: min(100%, var(--app-max));
   min-height: 76px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  padding: 9px 12px calc(9px + env(safe-area-inset-bottom));
+  padding: 9px 12px calc(9px + var(--safe-bottom));
+  padding-left: calc(12px + var(--safe-left));
+  padding-right: calc(12px + var(--safe-right));
   background: rgba(15, 15, 15, 0.96);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
@@ -584,10 +665,13 @@ a {
 
 .advisor-fab {
   position: fixed;
-  right: max(18px, calc((100vw - 430px) / 2 + 18px));
-  bottom: calc(90px + env(safe-area-inset-bottom));
-  width: 58px;
-  height: 58px;
+  right: max(
+    calc(18px + var(--safe-right)),
+    calc((100vw - var(--app-max)) / 2 + 18px + var(--safe-right))
+  );
+  bottom: calc(90px + var(--safe-bottom));
+  width: clamp(52px, 12vw, 58px);
+  height: clamp(52px, 12vw, 58px);
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -603,9 +687,11 @@ a {
   position: fixed;
   inset: 0;
   z-index: 40;
-  background: rgba(0, 0, 0, 0.68);
+  background: var(--overlay-bg);
   display: flex;
   justify-content: center;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+  overscroll-behavior: contain;
 }
 
 .sheet-overlay {
@@ -614,13 +700,15 @@ a {
 
 .bottom-sheet {
   width: 100%;
-  max-width: 430px;
-  max-height: 86vh;
+  max-width: var(--app-max);
+  max-height: min(86vh, 86dvh);
   overflow-y: auto;
-  padding: 10px 16px 18px;
-  border-radius: 16px 16px 0 0;
+  overscroll-behavior: contain;
+  padding: 10px var(--page-x) calc(18px + var(--safe-bottom));
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   background: #171717;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-overflow-scrolling: touch;
 }
 
 .sheet-handle {
@@ -642,11 +730,14 @@ a {
 
 .chat-panel {
   width: 100%;
-  max-width: 430px;
+  max-width: var(--app-max);
   min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100dvh;
   background: #0d0d0d;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .chat-header {
@@ -655,7 +746,14 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .chat-header button {
@@ -684,8 +782,11 @@ a {
 
 .chat-messages {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 16px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .message {
@@ -706,7 +807,7 @@ a {
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  max-width: 90%;
+  max-width: min(90%, 520px);
 }
 
 .message.user .message-stack {
@@ -729,13 +830,15 @@ a {
 }
 
 .bubble {
-  max-width: 84%;
+  max-width: 100%;
   padding: 11px 13px;
   border-radius: 8px;
   background: #1b1b1b;
   color: #f7f3ea;
   line-height: 1.42;
-  font-size: 0.92rem;
+  font-size: clamp(0.86rem, 2.8vw, 0.92rem);
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .message.user .bubble {
@@ -748,7 +851,8 @@ a {
   display: grid;
   grid-template-columns: 1fr 46px;
   gap: 8px;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  flex-shrink: 0;
+  padding: 12px var(--page-x) calc(12px + var(--safe-bottom));
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -792,32 +896,195 @@ a {
 }
 
 .splash-card p {
-  max-width: 260px;
+  max-width: min(320px, 90%);
   margin: 0;
   color: #a7a095;
 }
 
-@media (max-width: 360px) {
-  .top-header {
-    padding-left: 12px;
-    padding-right: 12px;
+.chat-action-btn {
+  max-width: 100%;
+  text-align: center;
+}
+
+.preview-card,
+.success-card,
+.activity-row,
+.toggle-row {
+  flex-wrap: wrap;
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  :root {
+    --page-x: 12px;
+  }
+
+  .brand-lockup span {
+    font-size: 0.95rem;
   }
 
   .header-actions {
-    align-items: flex-end;
-    flex-direction: column;
+    width: 100%;
+    justify-content: space-between;
   }
 
-  .screen-content {
-    padding-left: 12px;
-    padding-right: 12px;
+  .network-tabs {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .wallet-pill {
+    max-width: none;
+    flex: 1;
+    align-items: flex-start;
   }
 
   .hero-card h1 {
-    font-size: 1.9rem;
+    font-size: 1.85rem;
+  }
+
+  .cta-row {
+    grid-template-columns: 1fr;
   }
 
   .vault-grid {
     grid-template-columns: 1fr;
+  }
+
+  .progress-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-grid strong,
+  .vault-metrics strong {
+    font-size: 0.95rem;
+  }
+}
+
+/* Short viewports (landscape phones) */
+@media (max-height: 520px) and (orientation: landscape) {
+  .chat-panel {
+    min-height: 100vh;
+    max-height: 100vh;
+  }
+
+  .bottom-sheet {
+    max-height: 92vh;
+  }
+
+  .splash-card {
+    min-height: auto;
+    padding: 24px 16px;
+  }
+
+  .main-content {
+    --page-bottom: 88px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 600px) {
+  :root {
+    --app-max: 520px;
+    --page-x: 20px;
+  }
+
+  .hero-card h1 {
+    font-size: 2.5rem;
+  }
+
+  .vault-grid {
+    gap: 14px;
+  }
+
+  .vault-card {
+    min-height: 200px;
+  }
+}
+
+/* Desktop — wider shell, modal-style overlays */
+@media (min-width: 900px) {
+  :root {
+    --app-max: 680px;
+    --page-x: 24px;
+    --page-bottom: 112px;
+    --overlay-bg: rgba(0, 0, 0, 0.55);
+  }
+
+  body {
+    background: #080808;
+  }
+
+  .app-shell {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .vault-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vault-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sheet-overlay {
+    align-items: center;
+    padding: 32px;
+  }
+
+  .bottom-sheet {
+    border-radius: var(--radius-lg);
+    max-height: min(80vh, 720px);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  }
+
+  .chat-overlay {
+    align-items: center;
+    padding: 28px;
+  }
+
+  .chat-panel {
+    min-height: auto;
+    max-height: min(760px, 88vh);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+  }
+
+  .chat-header {
+    padding-top: 14px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+  :root {
+    --app-max: 760px;
+  }
+
+  .vault-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .screen-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Touch-friendly targets */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost,
+  .bottom-nav button,
+  .token-tabs button,
+  .chat-action-btn {
+    min-height: 44px;
+  }
+
+  .chat-header button {
+    width: 44px;
+    height: 44px;
   }
 }

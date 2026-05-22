@@ -40,6 +40,7 @@ app.use(
           'https://api.groq.com',
           'https://generativelanguage.googleapis.com',
           'https://api.1inch.dev',
+          'https://api.coingecko.com',
         ],
       },
     },

@@ -9,11 +9,18 @@ advisorRouter.get('/status', (_req: Request, res: Response) => {
   return sendResponse(res, 200, llmStatus(resolveLlmConfig()));
 });
 
+function isInformationalQuestion(text: string) {
+  return /^(what|how|why|when|where|who|explain|tell me|describe|difference|compare|is |are |can you)/i.test(
+    text.trim(),
+  );
+}
+
 function fallbackAdvisor(messages: any[], context: any) {
   const latest = String(messages.at(-1)?.content || '').toLowerCase();
   const rate = Number(context?.rate?.pufEthPerEth || 0);
   const apy = context?.protocolTVL?.apy || '0';
   const balance = context?.pufETHBalance || '0';
+  const informational = isInformationalQuestion(latest);
 
   if (latest.includes('balance')) {
     return {
@@ -22,9 +29,10 @@ function fallbackAdvisor(messages: any[], context: any) {
   }
 
   if (
-    latest.includes('stake') ||
-    latest.includes('staking') ||
-    latest.includes('deposit')
+    !informational &&
+    (latest.includes('stake') ||
+      latest.includes('staking') ||
+      latest.includes('deposit'))
   ) {
     return {
       reply: `Current pufETH staking APY is ${apy}%. At the live rate, 1 ETH previews about ${rate.toFixed(4)} pufETH. Tap the button below when you are ready to stake.`,
@@ -36,7 +44,7 @@ function fallbackAdvisor(messages: any[], context: any) {
     };
   }
 
-  if (latest.includes('vault')) {
+  if (!informational && latest.includes('vault')) {
     return {
       reply:
         'The Vaults screen has live APY and TVL for all four UniFi vaults. Tap below to compare and deposit.',
@@ -45,6 +53,12 @@ function fallbackAdvisor(messages: any[], context: any) {
         amount: '',
         label: 'Browse Vaults',
       },
+    };
+  }
+
+  if (informational) {
+    return {
+      reply: `Puffer staking lets you deposit ETH (or stETH/wstETH) and receive pufETH, a liquid restaking token that earns yield as validator rewards accrue. Right now pufETH staking APY is about ${apy}%, and 1 ETH would preview roughly ${rate.toFixed(4)} pufETH at the live rate. UniFi vaults on top can offer higher targeted APY if you want to go further.`,
     };
   }
 

@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { sendResponse } from '@/common/lib/response';
 import { getPufEthRate, getPufEthBalance } from '@/common/lib/eth-client';
+import { trackPufEthRate } from '@/common/lib/metrics-fallback';
 import { bffClient } from '@/clients/bff-client';
 
 const pufethRouter = Router();
@@ -45,6 +46,7 @@ pufethRouter.get(
   async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const rate = await getPufEthRate();
+      trackPufEthRate(rate.ethPerPufEth);
       return sendResponse(res, 200, rate);
     } catch (error) {
       next(error);

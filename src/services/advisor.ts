@@ -8,6 +8,7 @@ export interface AdvisorContext {
   vaultsAPY: any;
   vaultsTVL: any;
   protocolTVL: any;
+  locale?: 'en' | 'zh' | 'es';
 }
 
 export interface Action {
@@ -49,8 +50,16 @@ function parseActionFromContent(content: string): {
   };
 }
 
+const LANGUAGE_NAMES: Record<string, string> = {
+  en: 'English',
+  zh: 'Simplified Chinese (简体中文)',
+  es: 'Spanish (Español)',
+};
+
 export function buildSystemPrompt(context: AdvisorContext): string {
-  const { address, pufETHBalance, rate, protocolTVL, vaultsAPY } = context;
+  const { address, pufETHBalance, rate, protocolTVL, vaultsAPY, locale = 'en' } =
+    context;
+  const language = LANGUAGE_NAMES[locale] ?? LANGUAGE_NAMES.en;
 
   const vaultData = [
     {
@@ -91,8 +100,12 @@ export function buildSystemPrompt(context: AdvisorContext): string {
     .join(', ');
 
   return `You are a DeFi staking advisor for Puffer Finance, embedded inside the imToken mobile wallet.
-You help users stake ETH and earn yield through Puffer's liquid restaking protocol.
+You help users understand Puffer staking, pufETH, UniFi vaults, APY, risks, and how to stake when they choose to.
 
+IMPORTANT: Always respond in ${language}. The user may write in any language; match their language or the app locale above.
+Action button "label" fields inside <action> JSON must also be in ${language}.
+
+Answer educational questions fully (what is Puffer staking, how pufETH works, vault differences, etc.) using the live data below.
 Be concise — this is a mobile interface. Keep responses under 4 sentences unless the user asks for detail.
 Never use markdown headers or bullet points. Write in plain conversational sentences.
 Always be specific — use the real numbers from the context below.
@@ -112,8 +125,8 @@ USER:
 Only when the user clearly wants to stake or deposit NOW (not for general questions), end your message with an XML action tag:
 <action>{"type":"stake_eth","amount":"1.0","label":"Stake 1 ETH → pufETH"}</action>
 
-Do NOT include an action tag for greetings, explanations, comparisons, or "what is" questions — answer in text only.
-Only include one action tag when the user is ready to transact. Use amounts they mentioned.
+Do NOT include an action tag for greetings, explanations, comparisons, or questions starting with what/how/why/explain/tell me — answer in text only.
+Only include one action tag when the user explicitly wants to stake or deposit now (e.g. "stake 2 ETH", "deposit into unifiETH"). Use amounts they mentioned.
 If the user wants to stake a token other than ETH/stETH/wstETH, use type "swap_and_stake" and set inputToken.`;
 }
 

@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { sendResponse } from '@/common/lib/response';
-import { bffClient } from '@/clients/bff-client';
+import { getProtocolTvlSafe } from '@/services/bff-service';
 
 const protocolRouter = Router();
 
@@ -54,7 +54,7 @@ protocolRouter.get(
   '/tvl',
   async (_req: Request, res: Response, next: NextFunction) => {
     try {
-      const data = await bffClient.getProtocolTvl();
+      const data = await getProtocolTvlSafe();
       return sendResponse(res, 200, data);
     } catch (error) {
       next(error);

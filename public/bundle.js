@@ -790,7 +790,7 @@
     "node_modules/.pnpm/react-dom@19.2.6_react@19.2.6/node_modules/react-dom/cjs/react-dom.production.js"(exports) {
       "use strict";
       init_define_process_env();
-      var React3 = require_react();
+      var React4 = require_react();
       function formatProdErrorMessage(code) {
         var url = "https://react.dev/errors/" + code;
         if (1 < arguments.length) {
@@ -830,7 +830,7 @@
           implementation
         };
       }
-      var ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      var ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       function getCrossOriginStringAs(as3, input) {
         if ("font" === as3) return "";
         if ("string" === typeof input)
@@ -968,7 +968,7 @@
       "use strict";
       init_define_process_env();
       var Scheduler = require_scheduler();
-      var React3 = require_react();
+      var React4 = require_react();
       var ReactDOM = require_react_dom();
       function formatProdErrorMessage(code) {
         var url = "https://react.dev/errors/" + code;
@@ -1163,7 +1163,7 @@
         return null;
       }
       var isArrayImpl = Array.isArray;
-      var ReactSharedInternals = React3.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
+      var ReactSharedInternals = React4.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       var ReactDOMSharedInternals = ReactDOM.__DOM_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE;
       var sharedNotPendingObject = {
         pending: false,
@@ -12609,7 +12609,7 @@
           0 === i && attemptExplicitHydrationTarget(target);
         }
       };
-      var isomorphicReactPackageVersion$jscomp$inline_1840 = React3.version;
+      var isomorphicReactPackageVersion$jscomp$inline_1840 = React4.version;
       if ("19.2.6" !== isomorphicReactPackageVersion$jscomp$inline_1840)
         throw Error(
           formatProdErrorMessage(
@@ -21421,12 +21421,12 @@ ${sa(b3)}`), super(t12.shortMessage, {
 
   // src/index.tsx
   init_define_process_env();
-  var import_react2 = __toESM(require_react());
+  var import_react3 = __toESM(require_react());
   var import_client = __toESM(require_client());
 
   // src/App.tsx
   init_define_process_env();
-  var import_react = __toESM(require_react());
+  var import_react2 = __toESM(require_react());
 
   // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/index.js
   init_define_process_env();
@@ -38581,7 +38581,319 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
+  // src/i18n/context.tsx
+  init_define_process_env();
+  var import_react = __toESM(require_react());
+
+  // src/i18n/locales.ts
+  init_define_process_env();
+  var LOCALE_LABELS = {
+    en: "EN",
+    zh: "\u4E2D\u6587",
+    es: "ES"
+  };
+  var LOCALE_NAMES = {
+    en: "English",
+    zh: "\u7B80\u4F53\u4E2D\u6587",
+    es: "Espa\xF1ol"
+  };
+  var en3 = {
+    brand: "StakeMind",
+    nav: { home: "Home", stake: "Stake", vaults: "Vaults" },
+    splash: {
+      connecting: "Connecting wallet...",
+      openImToken: "Open in imToken to connect your wallet"
+    },
+    home: {
+      liveRate: "Live pufETH / ETH \xB7 {{network}}",
+      protocolApy: "Protocol APY",
+      totalTvl: "Total TVL",
+      holeskyNote: "Holesky uses testnet contracts. UniFi APY and TVL are mainnet-only.",
+      stakeEth: "Stake ETH",
+      browseVaults: "Browse Vaults",
+      recentActivity: "Recent activity",
+      lastTx: "Last transaction",
+      noTx: "No local transaction yet"
+    },
+    stake: {
+      title: "Stake",
+      amount: "Amount",
+      balance: "Balance",
+      youReceive: "You will receive",
+      approve: "Approve",
+      stakeStep: "Stake",
+      swapWeth: "Swap to WETH",
+      stakeWeth: "Stake WETH",
+      approving: "Approving...",
+      swapping: "Swapping...",
+      staking: "Staking...",
+      swapStake: "Swap + Stake",
+      stakeToken: "Stake {{token}}",
+      success: "Success. View transaction",
+      advanced: "Stake any token (Advanced)",
+      mainnetOnly: "Mainnet only",
+      on: "On",
+      off: "Off",
+      tokenAddress: "Token address",
+      quote: "1inch quote:",
+      quoteEmpty: "enter token and amount",
+      advancedMainnet: "Advanced swap + stake is available on mainnet only.",
+      enterToken: "Enter a token address",
+      txFailed: "Transaction failed"
+    },
+    vaults: {
+      title: "Vaults",
+      testnetNote: "UniFi vault deposits are mainnet-only in the current Puffer SDK. Switch to Mainnet to deposit.",
+      apy: "APY",
+      tvl: "TVL",
+      deposit: "Deposit",
+      depositing: "Depositing...",
+      depositVault: "Deposit {{vault}}",
+      prepare: "Prepare deposit",
+      submit: "Submit deposit",
+      close: "Close",
+      depositFailed: "Deposit failed",
+      success: "Success. View transaction"
+    },
+    chat: {
+      title: "AI Advisor",
+      greeting: "Ask me about Puffer staking, vault APYs, or how much pufETH you would receive. Current APY is {{apy}}%.",
+      placeholder: "Ask about Puffer...",
+      noAiKey: "No AI key configured on server. Using basic replies until Groq/Gemini is set up.",
+      offline: "I could not reach the advisor right now, but the live staking and vault screens are ready.",
+      fallbackVault: "The Vaults screen has live APY and TVL for all four UniFi vaults. Tap below if you want to browse them.",
+      fallbackStake: "At the current rate, 1 ETH previews about {{amount}} pufETH. Tap below to open the Stake screen.",
+      browseVaults: "Browse Vaults",
+      stake1Eth: "Stake 1 ETH"
+    },
+    advisor: {
+      languageInstruction: "Respond in {{language}}. Action button labels in <action> JSON must also be in {{language}}."
+    }
+  };
+  var zh = {
+    brand: "StakeMind",
+    nav: { home: "\u9996\u9875", stake: "\u8D28\u62BC", vaults: "\u91D1\u5E93" },
+    splash: {
+      connecting: "\u6B63\u5728\u8FDE\u63A5\u94B1\u5305...",
+      openImToken: "\u8BF7\u5728 imToken \u4E2D\u6253\u5F00\u4EE5\u8FDE\u63A5\u94B1\u5305"
+    },
+    home: {
+      liveRate: "\u5B9E\u65F6 pufETH / ETH \xB7 {{network}}",
+      protocolApy: "\u534F\u8BAE APY",
+      totalTvl: "\u603B TVL",
+      holeskyNote: "Holesky \u4E3A\u6D4B\u8BD5\u7F51\u5408\u7EA6\u3002UniFi APY \u4E0E TVL \u4EC5\u4E3B\u7F51\u53EF\u7528\u3002",
+      stakeEth: "\u8D28\u62BC ETH",
+      browseVaults: "\u6D4F\u89C8\u91D1\u5E93",
+      recentActivity: "\u6700\u8FD1\u6D3B\u52A8",
+      lastTx: "\u6700\u8FD1\u4EA4\u6613",
+      noTx: "\u6682\u65E0\u672C\u5730\u4EA4\u6613\u8BB0\u5F55"
+    },
+    stake: {
+      title: "\u8D28\u62BC",
+      amount: "\u6570\u91CF",
+      balance: "\u4F59\u989D",
+      youReceive: "\u4F60\u5C06\u83B7\u5F97",
+      approve: "\u6388\u6743",
+      stakeStep: "\u8D28\u62BC",
+      swapWeth: "\u5151\u6362\u4E3A WETH",
+      stakeWeth: "\u8D28\u62BC WETH",
+      approving: "\u6388\u6743\u4E2D...",
+      swapping: "\u5151\u6362\u4E2D...",
+      staking: "\u8D28\u62BC\u4E2D...",
+      swapStake: "\u5151\u6362\u5E76\u8D28\u62BC",
+      stakeToken: "\u8D28\u62BC {{token}}",
+      success: "\u6210\u529F\uFF0C\u67E5\u770B\u4EA4\u6613",
+      advanced: "\u8D28\u62BC\u4EFB\u610F\u4EE3\u5E01\uFF08\u9AD8\u7EA7\uFF09",
+      mainnetOnly: "\u4EC5\u4E3B\u7F51",
+      on: "\u5F00",
+      off: "\u5173",
+      tokenAddress: "\u4EE3\u5E01\u5408\u7EA6\u5730\u5740",
+      quote: "1inch \u62A5\u4EF7\uFF1A",
+      quoteEmpty: "\u8BF7\u8F93\u5165\u4EE3\u5E01\u548C\u6570\u91CF",
+      advancedMainnet: "\u9AD8\u7EA7\u5151\u6362+\u8D28\u62BC\u4EC5\u4E3B\u7F51\u53EF\u7528\u3002",
+      enterToken: "\u8BF7\u8F93\u5165\u4EE3\u5E01\u5730\u5740",
+      txFailed: "\u4EA4\u6613\u5931\u8D25"
+    },
+    vaults: {
+      title: "\u91D1\u5E93",
+      testnetNote: "\u5F53\u524D Puffer SDK \u4E2D UniFi \u91D1\u5E93\u5B58\u6B3E\u4EC5\u652F\u6301\u4E3B\u7F51\u3002\u8BF7\u5207\u6362\u5230\u4E3B\u7F51\u3002",
+      apy: "APY",
+      tvl: "TVL",
+      deposit: "\u5B58\u5165",
+      depositing: "\u5B58\u5165\u4E2D...",
+      depositVault: "\u5B58\u5165 {{vault}}",
+      prepare: "\u51C6\u5907\u5B58\u5165",
+      submit: "\u63D0\u4EA4\u5B58\u5165",
+      close: "\u5173\u95ED",
+      depositFailed: "\u5B58\u5165\u5931\u8D25",
+      success: "\u6210\u529F\uFF0C\u67E5\u770B\u4EA4\u6613"
+    },
+    chat: {
+      title: "AI \u987E\u95EE",
+      greeting: "\u53EF\u95EE\u6211 Puffer \u8D28\u62BC\u3001\u91D1\u5E93 APY \u6216\u80FD\u83B7\u5F97\u591A\u5C11 pufETH\u3002\u5F53\u524D APY \u4E3A {{apy}}%\u3002",
+      placeholder: "\u8BE2\u95EE Puffer...",
+      noAiKey: "\u670D\u52A1\u5668\u672A\u914D\u7F6E AI \u5BC6\u94A5\uFF0C\u5F53\u524D\u4F7F\u7528\u57FA\u7840\u56DE\u590D\u3002",
+      offline: "\u6682\u65F6\u65E0\u6CD5\u8FDE\u63A5\u987E\u95EE\uFF0C\u4F46\u8D28\u62BC\u4E0E\u91D1\u5E93\u9875\u9762\u53EF\u6B63\u5E38\u4F7F\u7528\u3002",
+      fallbackVault: "\u91D1\u5E93\u9875\u9762\u663E\u793A\u56DB\u4E2A UniFi \u91D1\u5E93\u7684\u5B9E\u65F6 APY \u4E0E TVL\uFF0C\u70B9\u51FB\u4E0B\u65B9\u53EF\u6D4F\u89C8\u3002",
+      fallbackStake: "\u6309\u5F53\u524D\u6C47\u7387\uFF0C1 ETH \u7EA6\u53EF\u5151\u6362 {{amount}} pufETH\u3002\u70B9\u51FB\u4E0B\u65B9\u6253\u5F00\u8D28\u62BC\u9875\u9762\u3002",
+      browseVaults: "\u6D4F\u89C8\u91D1\u5E93",
+      stake1Eth: "\u8D28\u62BC 1 ETH"
+    },
+    advisor: {
+      languageInstruction: "\u8BF7\u4F7F\u7528{{language}}\u56DE\u590D\u3002<action> \u4E2D\u7684\u6309\u94AE\u6587\u6848\u4E5F\u5FC5\u987B\u4F7F\u7528{{language}}\u3002"
+    }
+  };
+  var es3 = {
+    brand: "StakeMind",
+    nav: { home: "Inicio", stake: "Stake", vaults: "B\xF3vedas" },
+    splash: {
+      connecting: "Conectando billetera...",
+      openImToken: "Abre en imToken para conectar tu billetera"
+    },
+    home: {
+      liveRate: "pufETH / ETH en vivo \xB7 {{network}}",
+      protocolApy: "APY del protocolo",
+      totalTvl: "TVL total",
+      holeskyNote: "Holesky usa contratos de testnet. APY y TVL de UniFi solo en mainnet.",
+      stakeEth: "Stake ETH",
+      browseVaults: "Ver b\xF3vedas",
+      recentActivity: "Actividad reciente",
+      lastTx: "\xDAltima transacci\xF3n",
+      noTx: "Sin transacciones locales"
+    },
+    stake: {
+      title: "Stake",
+      amount: "Cantidad",
+      balance: "Saldo",
+      youReceive: "Recibir\xE1s",
+      approve: "Aprobar",
+      stakeStep: "Stake",
+      swapWeth: "Swap a WETH",
+      stakeWeth: "Stake WETH",
+      approving: "Aprobando...",
+      swapping: "Intercambiando...",
+      staking: "Haciendo stake...",
+      swapStake: "Swap + Stake",
+      stakeToken: "Stake {{token}}",
+      success: "\xC9xito. Ver transacci\xF3n",
+      advanced: "Stake cualquier token (Avanzado)",
+      mainnetOnly: "Solo mainnet",
+      on: "S\xED",
+      off: "No",
+      tokenAddress: "Direcci\xF3n del token",
+      quote: "Cotizaci\xF3n 1inch:",
+      quoteEmpty: "ingresa token y cantidad",
+      advancedMainnet: "Swap + stake avanzado solo en mainnet.",
+      enterToken: "Ingresa la direcci\xF3n del token",
+      txFailed: "Transacci\xF3n fallida"
+    },
+    vaults: {
+      title: "B\xF3vedas",
+      testnetNote: "Los dep\xF3sitos UniFi son solo mainnet en el SDK actual. Cambia a Mainnet.",
+      apy: "APY",
+      tvl: "TVL",
+      deposit: "Depositar",
+      depositing: "Depositando...",
+      depositVault: "Depositar {{vault}}",
+      prepare: "Preparar dep\xF3sito",
+      submit: "Enviar dep\xF3sito",
+      close: "Cerrar",
+      depositFailed: "Dep\xF3sito fallido",
+      success: "\xC9xito. Ver transacci\xF3n"
+    },
+    chat: {
+      title: "Asesor IA",
+      greeting: "Pregunta sobre staking Puffer, APY de b\xF3vedas o cu\xE1nto pufETH recibir\xEDas. APY actual: {{apy}}%.",
+      placeholder: "Pregunta sobre Puffer...",
+      noAiKey: "Sin clave IA en el servidor. Respuestas b\xE1sicas por ahora.",
+      offline: "No pude contactar al asesor, pero las pantallas de stake y b\xF3vedas est\xE1n listas.",
+      fallbackVault: "La pantalla B\xF3vedas tiene APY y TVL en vivo. Toca abajo para explorar.",
+      fallbackStake: "A la tasa actual, 1 ETH \u2248 {{amount}} pufETH. Toca abajo para abrir Stake.",
+      browseVaults: "Ver b\xF3vedas",
+      stake1Eth: "Stake 1 ETH"
+    },
+    advisor: {
+      languageInstruction: "Responde en {{language}}. Las etiquetas en <action> JSON tambi\xE9n en {{language}}."
+    }
+  };
+  var messages = { en: en3, zh, es: es3 };
+  function interpolate(template, vars) {
+    return template.replace(/\{\{(\w+)\}\}/g, (_2, key) => String(vars[key] ?? ""));
+  }
+
+  // src/i18n/context.tsx
+  var STORAGE_KEY = "stakemind-locale";
+  var I18nContext = (0, import_react.createContext)(null);
+  function getByPath(obj, path) {
+    return path.split(".").reduce((acc, part) => {
+      if (acc && typeof acc === "object" && part in acc) {
+        return acc[part];
+      }
+      return void 0;
+    }, obj);
+  }
+  function I18nProvider({ children }) {
+    const [locale, setLocaleState] = (0, import_react.useState)(() => {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved && saved in messages) return saved;
+      const browser = navigator.language.toLowerCase();
+      if (browser.startsWith("zh")) return "zh";
+      if (browser.startsWith("es")) return "es";
+      return "en";
+    });
+    const setLocale = (0, import_react.useCallback)((next) => {
+      setLocaleState(next);
+      localStorage.setItem(STORAGE_KEY, next);
+    }, []);
+    const t12 = (0, import_react.useCallback)(
+      (key, vars) => {
+        const value2 = getByPath(messages[locale], key) ?? getByPath(messages.en, key) ?? key;
+        return vars ? interpolate(value2, vars) : value2;
+      },
+      [locale]
+    );
+    (0, import_react.useEffect)(() => {
+      document.documentElement.lang = locale;
+      document.title = locale === "zh" ? "StakeMind - AI \u8D28\u62BC\u987E\u95EE" : locale === "es" ? "StakeMind - Asesor IA de Staking" : "StakeMind - AI Staking Advisor";
+    }, [locale]);
+    const value = (0, import_react.useMemo)(
+      () => ({
+        locale,
+        setLocale,
+        t: t12,
+        localeLabel: LOCALE_LABELS[locale],
+        localeName: LOCALE_NAMES[locale]
+      }),
+      [locale, setLocale, t12]
+    );
+    return /* @__PURE__ */ import_react.default.createElement(I18nContext.Provider, { value }, children);
+  }
+  function useI18n() {
+    const ctx = (0, import_react.useContext)(I18nContext);
+    if (!ctx) throw new Error("useI18n must be used within I18nProvider");
+    return ctx;
+  }
+  function LanguageSwitcher({ compact = false }) {
+    const { locale, setLocale } = useI18n();
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: `lang-switcher${compact ? " compact" : ""}` }, ["en", "zh", "es"].map((code) => /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        key: code,
+        type: "button",
+        className: locale === code ? "active" : "",
+        onClick: () => setLocale(code),
+        "aria-label": LOCALE_NAMES[code]
+      },
+      LOCALE_LABELS[code]
+    )));
+  }
+
   // src/App.tsx
+  function numberLocale(locale) {
+    if (locale === "zh") return "zh-CN";
+    if (locale === "es") return "es-ES";
+    return "en-US";
+  }
   var WETH_ADDRESS = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
   var STAKE_TOKEN_MAP = {
     stETH: c.stETH,
@@ -38634,10 +38946,10 @@ ${sa(b3)}`), super(t12.shortMessage, {
       { label: "wstETH", token: c.wstETH, decimals: 18 }
     ]
   };
-  function fmt(n4, decimals = 4) {
+  function fmt(n4, decimals = 4, locale = "en") {
     const v6 = Number(n4);
     if (!Number.isFinite(v6)) return "-";
-    return v6.toLocaleString(void 0, {
+    return v6.toLocaleString(numberLocale(locale), {
       maximumFractionDigits: decimals,
       minimumFractionDigits: decimals
     });
@@ -38665,14 +38977,15 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   }
   function PufferLogo() {
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "puffer-logo", "aria-label": "Puffer" }, /* @__PURE__ */ import_react.default.createElement("span", null, "P"));
+    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "puffer-logo", "aria-label": "Puffer" }, /* @__PURE__ */ import_react2.default.createElement("span", null, "P"));
   }
   function AppHeader({
     data,
     network,
     onNetworkChange
   }) {
-    return /* @__PURE__ */ import_react.default.createElement("header", { className: "top-header" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "brand-lockup" }, /* @__PURE__ */ import_react.default.createElement(PufferLogo, null), /* @__PURE__ */ import_react.default.createElement("span", null, "StakeMind")), /* @__PURE__ */ import_react.default.createElement("div", { className: "header-actions" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "network-tabs" }, ["mainnet", "holesky"].map((key) => /* @__PURE__ */ import_react.default.createElement(
+    const { t: t12, locale } = useI18n();
+    return /* @__PURE__ */ import_react2.default.createElement("header", { className: "top-header" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "brand-lockup" }, /* @__PURE__ */ import_react2.default.createElement(PufferLogo, null), /* @__PURE__ */ import_react2.default.createElement("span", null, t12("brand"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "header-actions" }, /* @__PURE__ */ import_react2.default.createElement(LanguageSwitcher, { compact: true }), /* @__PURE__ */ import_react2.default.createElement("div", { className: "network-tabs" }, ["mainnet", "holesky"].map((key) => /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         key,
@@ -38680,48 +38993,51 @@ ${sa(b3)}`), super(t12.shortMessage, {
         onClick: () => onNetworkChange(key)
       },
       NETWORKS[key].label
-    ))), data.address && /* @__PURE__ */ import_react.default.createElement("div", { className: "wallet-pill" }, /* @__PURE__ */ import_react.default.createElement("span", null, shortAddr(data.address)), /* @__PURE__ */ import_react.default.createElement("strong", null, fmt(data.balances.pufETH, 4), " pufETH"))));
+    ))), data.address && /* @__PURE__ */ import_react2.default.createElement("div", { className: "wallet-pill" }, /* @__PURE__ */ import_react2.default.createElement("span", null, shortAddr(data.address)), /* @__PURE__ */ import_react2.default.createElement("strong", null, fmt(data.balances.pufETH, 4, locale), " pufETH"))));
   }
   function BottomNav({
     screen,
     onNav
   }) {
-    return /* @__PURE__ */ import_react.default.createElement("nav", { className: "bottom-nav" }, /* @__PURE__ */ import_react.default.createElement(
+    const { t: t12 } = useI18n();
+    return /* @__PURE__ */ import_react2.default.createElement("nav", { className: "bottom-nav" }, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: screen === "home" ? "active" : "",
         onClick: () => onNav("home")
       },
-      /* @__PURE__ */ import_react.default.createElement("span", null, "\u2302"),
-      "Home"
-    ), /* @__PURE__ */ import_react.default.createElement(
+      /* @__PURE__ */ import_react2.default.createElement("span", null, "\u2302"),
+      t12("nav.home")
+    ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: screen === "stake" ? "active" : "",
         onClick: () => onNav("stake")
       },
-      /* @__PURE__ */ import_react.default.createElement("span", null, "\u21E7"),
-      "Stake"
-    ), /* @__PURE__ */ import_react.default.createElement(
+      /* @__PURE__ */ import_react2.default.createElement("span", null, "\u21E7"),
+      t12("nav.stake")
+    ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: screen === "vaults" ? "active" : "",
         onClick: () => onNav("vaults")
       },
-      /* @__PURE__ */ import_react.default.createElement("span", null, "\u25A6"),
-      "Vaults"
+      /* @__PURE__ */ import_react2.default.createElement("span", null, "\u25A6"),
+      t12("nav.vaults")
     ));
   }
   function SplashScreen({ loading = false }) {
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app splash-shell" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "splash-card" }, /* @__PURE__ */ import_react.default.createElement(PufferLogo, null), /* @__PURE__ */ import_react.default.createElement("h1", null, "StakeMind"), /* @__PURE__ */ import_react.default.createElement("p", null, loading ? "Connecting wallet..." : "Open in imToken to connect your wallet")));
+    const { t: t12 } = useI18n();
+    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "app splash-shell" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "splash-card" }, /* @__PURE__ */ import_react2.default.createElement(PufferLogo, null), /* @__PURE__ */ import_react2.default.createElement("h1", null, t12("brand")), /* @__PURE__ */ import_react2.default.createElement("p", null, loading ? t12("splash.connecting") : t12("splash.openImToken")), /* @__PURE__ */ import_react2.default.createElement(LanguageSwitcher, null)));
   }
   function HomeScreen({
     data,
     onNav
   }) {
+    const { t: t12, locale } = useI18n();
     const lastTx = localStorage.getItem("lastTxHash");
     const explorer = NETWORKS[data.network].explorer;
-    return /* @__PURE__ */ import_react.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "hero-card" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("p", { className: "eyebrow" }, "Live pufETH / ETH \xB7 ", NETWORKS[data.network].label), /* @__PURE__ */ import_react.default.createElement("h1", null, data.rate ? fmt(data.rate.ethPerPufEth, 4) : "-", " ETH")), /* @__PURE__ */ import_react.default.createElement("div", { className: "metric-grid" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "Protocol APY"), /* @__PURE__ */ import_react.default.createElement("strong", null, data.protocolTVL ? `${fmt(data.protocolTVL.apy, 2)}%` : "-")), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "Total TVL"), /* @__PURE__ */ import_react.default.createElement("strong", null, data.protocolTVL ? fmtCompact(data.protocolTVL.lrt_total_usd) : "-"))), data.network === "holesky" && /* @__PURE__ */ import_react.default.createElement("p", { className: "network-note" }, "Holesky uses testnet contracts. UniFi APY and TVL are mainnet-only.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "cta-row" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn-primary", onClick: () => onNav("stake") }, "Stake ETH"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn-secondary", onClick: () => onNav("vaults") }, "Browse Vaults")), /* @__PURE__ */ import_react.default.createElement("div", { className: "section-block" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "section-title-row" }, /* @__PURE__ */ import_react.default.createElement("h2", null, "Recent activity")), lastTx ? /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react2.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "hero-card" }, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("p", { className: "eyebrow" }, t12("home.liveRate", { network: NETWORKS[data.network].label })), /* @__PURE__ */ import_react2.default.createElement("h1", null, data.rate ? fmt(data.rate.ethPerPufEth, 4, locale) : "-", " ETH")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "metric-grid" }, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("span", null, t12("home.protocolApy")), /* @__PURE__ */ import_react2.default.createElement("strong", null, data.protocolTVL ? `${fmt(data.protocolTVL.apy, 2, locale)}%` : "-")), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("span", null, t12("home.totalTvl")), /* @__PURE__ */ import_react2.default.createElement("strong", null, data.protocolTVL ? fmtCompact(data.protocolTVL.lrt_total_usd) : "-"))), data.network === "holesky" && /* @__PURE__ */ import_react2.default.createElement("p", { className: "network-note" }, t12("home.holeskyNote"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "cta-row" }, /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn-primary", onClick: () => onNav("stake") }, t12("home.stakeEth")), /* @__PURE__ */ import_react2.default.createElement("button", { className: "btn-secondary", onClick: () => onNav("vaults") }, t12("home.browseVaults"))), /* @__PURE__ */ import_react2.default.createElement("div", { className: "section-block" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "section-title-row" }, /* @__PURE__ */ import_react2.default.createElement("h2", null, t12("home.recentActivity"))), lastTx ? /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
         className: "activity-row",
@@ -38729,22 +39045,22 @@ ${sa(b3)}`), super(t12.shortMessage, {
         target: "_blank",
         rel: "noreferrer"
       },
-      /* @__PURE__ */ import_react.default.createElement("span", null, "Last transaction"),
-      /* @__PURE__ */ import_react.default.createElement("strong", null, shortAddr(lastTx))
-    ) : /* @__PURE__ */ import_react.default.createElement("div", { className: "empty-state" }, "No local transaction yet")));
+      /* @__PURE__ */ import_react2.default.createElement("span", null, t12("home.lastTx")),
+      /* @__PURE__ */ import_react2.default.createElement("strong", null, shortAddr(lastTx))
+    ) : /* @__PURE__ */ import_react2.default.createElement("div", { className: "empty-state" }, t12("home.noTx"))));
   }
   function ProgressSteps({
     step,
     labels
   }) {
     const activeIndex = step === "approving" || step === "swapping" ? 0 : step === "staking" || step === "depositing" || step === "done" ? 1 : -1;
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "progress-steps" }, labels.map((label, index) => /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "progress-steps" }, labels.map((label, index) => /* @__PURE__ */ import_react2.default.createElement(
       "div",
       {
         key: label,
         className: activeIndex > index || step === "done" ? "done" : activeIndex === index ? "active" : ""
       },
-      /* @__PURE__ */ import_react.default.createElement("span", null, index + 1),
+      /* @__PURE__ */ import_react2.default.createElement("span", null, index + 1),
       label
     )));
   }
@@ -38753,23 +39069,24 @@ ${sa(b3)}`), super(t12.shortMessage, {
     prefill,
     onSuccess
   }) {
-    const [token, setToken] = (0, import_react.useState)(prefill.token || "ETH");
-    const [amount, setAmount] = (0, import_react.useState)(prefill.amount || "");
-    const [advanced, setAdvanced] = (0, import_react.useState)(!!prefill.advanced);
-    const [customToken, setCustomToken] = (0, import_react.useState)(prefill.customToken || "");
-    const [quote, setQuote] = (0, import_react.useState)("");
-    const [step, setStep] = (0, import_react.useState)(null);
-    const [txHash, setTxHash] = (0, import_react.useState)("");
-    const [err, setErr] = (0, import_react.useState)("");
+    const [token, setToken] = (0, import_react2.useState)(prefill.token || "ETH");
+    const [amount, setAmount] = (0, import_react2.useState)(prefill.amount || "");
+    const [advanced, setAdvanced] = (0, import_react2.useState)(!!prefill.advanced);
+    const [customToken, setCustomToken] = (0, import_react2.useState)(prefill.customToken || "");
+    const [quote, setQuote] = (0, import_react2.useState)("");
+    const [step, setStep] = (0, import_react2.useState)(null);
+    const [txHash, setTxHash] = (0, import_react2.useState)("");
+    const [err, setErr] = (0, import_react2.useState)("");
     const isTestnet = data.network === "holesky";
-    (0, import_react.useEffect)(() => {
+    const { t: t12, locale } = useI18n();
+    (0, import_react2.useEffect)(() => {
       if (prefill.token) setToken(prefill.token);
       if (prefill.amount) setAmount(prefill.amount);
       if (prefill.customToken) setCustomToken(prefill.customToken);
       if (prefill.advanced !== void 0) setAdvanced(prefill.advanced);
     }, [prefill]);
-    const preview = amount && data.rate ? fmt(Number(amount) * Number(data.rate.pufEthPerEth), 4) : "-";
-    const fetchQuote = (0, import_react.useCallback)(async () => {
+    const preview = amount && data.rate ? fmt(Number(amount) * Number(data.rate.pufEthPerEth), 4, locale) : "-";
+    const fetchQuote = (0, import_react2.useCallback)(async () => {
       if (!advanced || !customToken || !amount) {
         setQuote("");
         return;
@@ -38788,7 +39105,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
         setQuote("");
       }
     }, [advanced, customToken, amount]);
-    (0, import_react.useEffect)(() => {
+    (0, import_react2.useEffect)(() => {
       fetchQuote();
     }, [fetchQuote]);
     const handleMax = () => {
@@ -38804,11 +39121,9 @@ ${sa(b3)}`), super(t12.shortMessage, {
         await pufferService.ensureNetwork(data.network);
         if (advanced) {
           if (isTestnet) {
-            throw new Error(
-              "Advanced swap + stake is available on mainnet only."
-            );
+            throw new Error(t12("stake.advancedMainnet"));
           }
-          if (!customToken) throw new Error("Enter a token address");
+          if (!customToken) throw new Error(t12("stake.enterToken"));
           setStep("swapping");
           const params = new URLSearchParams({
             src: customToken,
@@ -38848,21 +39163,21 @@ ${sa(b3)}`), super(t12.shortMessage, {
         localStorage.setItem("lastTxHash", hash);
         onSuccess(hash);
       } catch (e19) {
-        setErr(e19.message || "Transaction failed");
+        setErr(e19.message || t12("stake.txFailed"));
         setStep(null);
       }
     };
     const busy = !!step && step !== "done";
-    return /* @__PURE__ */ import_react.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react.default.createElement("h1", { className: "screen-title" }, "Stake"), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-card" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "token-tabs" }, ["ETH", "stETH", "wstETH"].map((t12) => /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react2.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react2.default.createElement("h1", { className: "screen-title" }, t12("stake.title")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "form-card" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "token-tabs" }, ["ETH", "stETH", "wstETH"].map((t13) => /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
-        key: t12,
-        className: token === t12 ? "active" : "",
-        onClick: () => setToken(t12),
+        key: t13,
+        className: token === t13 ? "active" : "",
+        onClick: () => setToken(t13),
         disabled: busy || advanced
       },
-      t12
-    ))), /* @__PURE__ */ import_react.default.createElement("label", { className: "field-label" }, "Amount"), /* @__PURE__ */ import_react.default.createElement("div", { className: "amount-row" }, /* @__PURE__ */ import_react.default.createElement(
+      t13
+    ))), /* @__PURE__ */ import_react2.default.createElement("label", { className: "field-label" }, t12("stake.amount")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "amount-row" }, /* @__PURE__ */ import_react2.default.createElement(
       "input",
       {
         type: "number",
@@ -38872,13 +39187,17 @@ ${sa(b3)}`), super(t12.shortMessage, {
         onChange: (e19) => setAmount(e19.target.value),
         disabled: busy
       }
-    ), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleMax, disabled: busy || advanced }, "MAX")), /* @__PURE__ */ import_react.default.createElement("div", { className: "balance-line" }, "Balance", " ", advanced ? "-" : `${fmt(data.balances[token] || "0", 4)} ${token}`), /* @__PURE__ */ import_react.default.createElement("div", { className: "preview-card" }, /* @__PURE__ */ import_react.default.createElement("span", null, "You will receive"), /* @__PURE__ */ import_react.default.createElement("strong", null, advanced && quote ? fmt(Number(quote) * Number(data.rate?.pufEthPerEth || 0), 4) : preview, " ", "pufETH")), (token !== "ETH" && busy || advanced) && /* @__PURE__ */ import_react.default.createElement(
+    ), /* @__PURE__ */ import_react2.default.createElement("button", { onClick: handleMax, disabled: busy || advanced }, "MAX")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "balance-line" }, t12("stake.balance"), " ", advanced ? "-" : `${fmt(data.balances[token] || "0", 4, locale)} ${token}`), /* @__PURE__ */ import_react2.default.createElement("div", { className: "preview-card" }, /* @__PURE__ */ import_react2.default.createElement("span", null, t12("stake.youReceive")), /* @__PURE__ */ import_react2.default.createElement("strong", null, advanced && quote ? fmt(
+      Number(quote) * Number(data.rate?.pufEthPerEth || 0),
+      4,
+      locale
+    ) : preview, " ", "pufETH")), (token !== "ETH" && busy || advanced) && /* @__PURE__ */ import_react2.default.createElement(
       ProgressSteps,
       {
         step: step || null,
-        labels: advanced ? ["Swap to WETH", "Stake WETH"] : ["Approve", "Stake"]
+        labels: advanced ? [t12("stake.swapWeth"), t12("stake.stakeWeth")] : [t12("stake.approve"), t12("stake.stakeStep")]
       }
-    ), err && /* @__PURE__ */ import_react.default.createElement("p", { className: "error-msg" }, err), step === "done" && txHash && /* @__PURE__ */ import_react.default.createElement(
+    ), err && /* @__PURE__ */ import_react2.default.createElement("p", { className: "error-msg" }, err), step === "done" && txHash && /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
         className: "success-card",
@@ -38886,24 +39205,24 @@ ${sa(b3)}`), super(t12.shortMessage, {
         target: "_blank",
         rel: "noreferrer"
       },
-      "Success. View transaction"
-    ), step !== "done" && /* @__PURE__ */ import_react.default.createElement(
+      t12("stake.success")
+    ), step !== "done" && /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: "btn-primary full",
         onClick: handleStake,
         disabled: !amount || !data.address || busy
       },
-      step === "approving" ? "Approving..." : step === "swapping" ? "Swapping..." : step === "staking" ? "Staking..." : advanced ? "Swap + Stake" : `Stake ${token}`
-    )), /* @__PURE__ */ import_react.default.createElement("div", { className: "advanced-card" }, /* @__PURE__ */ import_react.default.createElement(
+      step === "approving" ? t12("stake.approving") : step === "swapping" ? t12("stake.swapping") : step === "staking" ? t12("stake.staking") : advanced ? t12("stake.swapStake") : t12("stake.stakeToken", { token })
+    )), /* @__PURE__ */ import_react2.default.createElement("div", { className: "advanced-card" }, /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: "toggle-row",
         onClick: () => !isTestnet && setAdvanced((v6) => !v6)
       },
-      /* @__PURE__ */ import_react.default.createElement("span", null, "Stake any token (Advanced)"),
-      /* @__PURE__ */ import_react.default.createElement("strong", null, isTestnet ? "Mainnet only" : advanced ? "On" : "Off")
-    ), advanced && !isTestnet && /* @__PURE__ */ import_react.default.createElement("div", { className: "advanced-fields" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "field-label" }, "Token address"), /* @__PURE__ */ import_react.default.createElement(
+      /* @__PURE__ */ import_react2.default.createElement("span", null, t12("stake.advanced")),
+      /* @__PURE__ */ import_react2.default.createElement("strong", null, isTestnet ? t12("stake.mainnetOnly") : advanced ? t12("stake.on") : t12("stake.off"))
+    ), advanced && !isTestnet && /* @__PURE__ */ import_react2.default.createElement("div", { className: "advanced-fields" }, /* @__PURE__ */ import_react2.default.createElement("label", { className: "field-label" }, t12("stake.tokenAddress")), /* @__PURE__ */ import_react2.default.createElement(
       "input",
       {
         className: "plain-input",
@@ -38911,7 +39230,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
         value: customToken,
         onChange: (e19) => setCustomToken(e19.target.value)
       }
-    ), /* @__PURE__ */ import_react.default.createElement("div", { className: "quote-line" }, "1inch quote:", " ", quote ? `${fmt(quote, 6)} WETH` : "enter token and amount"))));
+    ), /* @__PURE__ */ import_react2.default.createElement("div", { className: "quote-line" }, t12("stake.quote"), " ", quote ? `${fmt(quote, 6, locale)} WETH` : t12("stake.quoteEmpty")))));
   }
   function VaultsScreen({
     data,
@@ -38919,18 +39238,19 @@ ${sa(b3)}`), super(t12.shortMessage, {
     onSuccess
   }) {
     const initialVault = VAULTS.find((v6) => v6.name === prefill.vault) || null;
-    const [selected, setSelected] = (0, import_react.useState)(
+    const [selected, setSelected] = (0, import_react2.useState)(
       initialVault
     );
-    const [inputToken, setInputToken] = (0, import_react.useState)(
+    const [inputToken, setInputToken] = (0, import_react2.useState)(
       VAULT_INPUTS[initialVault?.name || "unifiETH"][0]
     );
-    const [amount, setAmount] = (0, import_react.useState)(prefill.amount || "");
-    const [status, setStatus] = (0, import_react.useState)(null);
-    const [txHash, setTxHash] = (0, import_react.useState)("");
-    const [err, setErr] = (0, import_react.useState)("");
+    const [amount, setAmount] = (0, import_react2.useState)(prefill.amount || "");
+    const [status, setStatus] = (0, import_react2.useState)(null);
+    const [txHash, setTxHash] = (0, import_react2.useState)("");
+    const [err, setErr] = (0, import_react2.useState)("");
     const isTestnet = data.network === "holesky";
-    (0, import_react.useEffect)(() => {
+    const { t: t12, locale } = useI18n();
+    (0, import_react2.useEffect)(() => {
       if (selected) setInputToken(VAULT_INPUTS[selected.name][0]);
     }, [selected]);
     const getApy = (address) => data.vaultsAPY?.data.find(
@@ -38969,19 +39289,19 @@ ${sa(b3)}`), super(t12.shortMessage, {
         localStorage.setItem("lastTxHash", hash);
         onSuccess(hash);
       } catch (e19) {
-        setErr(e19.message || "Deposit failed");
+        setErr(e19.message || t12("vaults.depositFailed"));
         setStatus(null);
       }
     };
-    return /* @__PURE__ */ import_react.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react.default.createElement("h1", { className: "screen-title" }, "Vaults"), isTestnet && /* @__PURE__ */ import_react.default.createElement("div", { className: "empty-state" }, "UniFi vault deposits are mainnet-only in the current Puffer SDK. Switch to Mainnet to deposit."), /* @__PURE__ */ import_react.default.createElement("div", { className: "vault-grid" }, VAULTS.map((vault) => /* @__PURE__ */ import_react.default.createElement("article", { className: "vault-card", key: vault.name }, /* @__PURE__ */ import_react.default.createElement("div", { className: "vault-card-head" }, /* @__PURE__ */ import_react.default.createElement("span", { style: { background: vault.color } }), /* @__PURE__ */ import_react.default.createElement("h2", null, vault.name)), /* @__PURE__ */ import_react.default.createElement("div", { className: "vault-metrics" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "APY"), /* @__PURE__ */ import_react.default.createElement("strong", null, getApy(vault.address) !== void 0 ? `${fmt(getApy(vault.address), 2)}%` : "-")), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "TVL"), /* @__PURE__ */ import_react.default.createElement("strong", null, getTvl(vault.name) ? fmtCompact(getTvl(vault.name)) : "-"))), /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react2.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react2.default.createElement("h1", { className: "screen-title" }, t12("vaults.title")), isTestnet && /* @__PURE__ */ import_react2.default.createElement("div", { className: "empty-state" }, t12("vaults.testnetNote")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "vault-grid" }, VAULTS.map((vault) => /* @__PURE__ */ import_react2.default.createElement("article", { className: "vault-card", key: vault.name }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "vault-card-head" }, /* @__PURE__ */ import_react2.default.createElement("span", { style: { background: vault.color } }), /* @__PURE__ */ import_react2.default.createElement("h2", null, vault.name)), /* @__PURE__ */ import_react2.default.createElement("div", { className: "vault-metrics" }, /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("span", null, t12("vaults.apy")), /* @__PURE__ */ import_react2.default.createElement("strong", null, getApy(vault.address) !== void 0 ? `${fmt(getApy(vault.address), 2, locale)}%` : "-")), /* @__PURE__ */ import_react2.default.createElement("div", null, /* @__PURE__ */ import_react2.default.createElement("span", null, t12("vaults.tvl")), /* @__PURE__ */ import_react2.default.createElement("strong", null, getTvl(vault.name) ? fmtCompact(getTvl(vault.name)) : "-"))), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: "btn-primary small",
         onClick: () => openVault(vault),
         disabled: isTestnet
       },
-      "Deposit"
-    )))), selected && !isTestnet && /* @__PURE__ */ import_react.default.createElement("div", { className: "sheet-overlay", onClick: () => setSelected(null) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bottom-sheet", onClick: (e19) => e19.stopPropagation() }, /* @__PURE__ */ import_react.default.createElement("div", { className: "sheet-handle" }), /* @__PURE__ */ import_react.default.createElement("h2", null, "Deposit ", selected.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "token-tabs compact" }, VAULT_INPUTS[selected.name].map((option) => /* @__PURE__ */ import_react.default.createElement(
+      t12("vaults.deposit")
+    )))), selected && !isTestnet && /* @__PURE__ */ import_react2.default.createElement("div", { className: "sheet-overlay", onClick: () => setSelected(null) }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "bottom-sheet", onClick: (e19) => e19.stopPropagation() }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "sheet-handle" }), /* @__PURE__ */ import_react2.default.createElement("h2", null, t12("vaults.depositVault", { vault: selected.name })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "token-tabs compact" }, VAULT_INPUTS[selected.name].map((option) => /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         key: option.label,
@@ -38990,7 +39310,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
         disabled: status === "depositing"
       },
       option.label
-    ))), /* @__PURE__ */ import_react.default.createElement("label", { className: "field-label" }, "Amount"), /* @__PURE__ */ import_react.default.createElement("div", { className: "amount-row" }, /* @__PURE__ */ import_react.default.createElement(
+    ))), /* @__PURE__ */ import_react2.default.createElement("label", { className: "field-label" }, t12("stake.amount")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "amount-row" }, /* @__PURE__ */ import_react2.default.createElement(
       "input",
       {
         type: "number",
@@ -39000,13 +39320,13 @@ ${sa(b3)}`), super(t12.shortMessage, {
         onChange: (e19) => setAmount(e19.target.value),
         disabled: status === "depositing"
       }
-    )), /* @__PURE__ */ import_react.default.createElement(
+    )), /* @__PURE__ */ import_react2.default.createElement(
       ProgressSteps,
       {
         step: status || null,
-        labels: ["Prepare deposit", "Submit deposit"]
+        labels: [t12("vaults.prepare"), t12("vaults.submit")]
       }
-    ), err && /* @__PURE__ */ import_react.default.createElement("p", { className: "error-msg" }, err), status === "done" && txHash ? /* @__PURE__ */ import_react.default.createElement(
+    ), err && /* @__PURE__ */ import_react2.default.createElement("p", { className: "error-msg" }, err), status === "done" && txHash ? /* @__PURE__ */ import_react2.default.createElement(
       "a",
       {
         className: "success-card",
@@ -39014,22 +39334,22 @@ ${sa(b3)}`), super(t12.shortMessage, {
         target: "_blank",
         rel: "noreferrer"
       },
-      "Success. View transaction"
-    ) : /* @__PURE__ */ import_react.default.createElement(
+      t12("vaults.success")
+    ) : /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: "btn-primary full",
         onClick: handleDeposit,
         disabled: !amount || status === "depositing"
       },
-      status === "depositing" ? "Depositing..." : "Deposit"
-    ), /* @__PURE__ */ import_react.default.createElement(
+      status === "depositing" ? t12("vaults.depositing") : t12("vaults.deposit")
+    ), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: "btn-ghost full",
         onClick: () => setSelected(null)
       },
-      "Close"
+      t12("vaults.close")
     ))));
   }
   function ChatOverlay({
@@ -39037,22 +39357,26 @@ ${sa(b3)}`), super(t12.shortMessage, {
     onClose,
     onAction
   }) {
-    const [messages, setMessages] = (0, import_react.useState)([
-      {
-        role: "assistant",
-        content: `Ask me about Puffer staking, vault APYs, or how much pufETH you would receive. Current APY is ${data.protocolTVL?.apy || "-"}%.`
-      }
+    const { t: t12, locale } = useI18n();
+    const greeting = t12("chat.greeting", {
+      apy: data.protocolTVL?.apy || "-"
+    });
+    const [messages2, setMessages] = (0, import_react2.useState)([
+      { role: "assistant", content: greeting }
     ]);
-    const [input, setInput] = (0, import_react.useState)("");
-    const [sending, setSending] = (0, import_react.useState)(false);
-    const [aiEnabled, setAiEnabled] = (0, import_react.useState)(null);
-    const endRef = (0, import_react.useRef)(null);
-    (0, import_react.useEffect)(() => {
+    const [input, setInput] = (0, import_react2.useState)("");
+    const [sending, setSending] = (0, import_react2.useState)(false);
+    const [aiEnabled, setAiEnabled] = (0, import_react2.useState)(null);
+    const endRef = (0, import_react2.useRef)(null);
+    (0, import_react2.useEffect)(() => {
+      setMessages([{ role: "assistant", content: greeting }]);
+    }, [greeting]);
+    (0, import_react2.useEffect)(() => {
       fetch("/advisor/status").then((res) => res.ok ? res.json() : null).then((status) => setAiEnabled(!!status?.configured)).catch(() => setAiEnabled(false));
     }, []);
-    (0, import_react.useEffect)(() => {
+    (0, import_react2.useEffect)(() => {
       endRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
+    }, [messages2]);
     const handleSend = async () => {
       if (!input.trim() || sending) return;
       const userMsg = { role: "user", content: input.trim() };
@@ -39072,12 +39396,13 @@ ${sa(b3)}`), super(t12.shortMessage, {
             tvl_puffer_staking: "0",
             apy: "0",
             timestamp: ""
-          }
+          },
+          locale
         };
         const response = await fetch("/advisor/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: [...messages, userMsg], context })
+          body: JSON.stringify({ messages: [...messages2, userMsg], context })
         });
         if (response.ok) {
           const result = await response.json();
@@ -39094,29 +39419,36 @@ ${sa(b3)}`), super(t12.shortMessage, {
           ]);
         } else {
           const lower = userMsg.content.toLowerCase();
-          const reply = lower.includes("vault") ? "The Vaults screen has live APY and TVL for all four UniFi vaults. Tap below if you want to browse them." : `At the current rate, 1 ETH previews about ${fmt(data.rate?.pufEthPerEth || 0, 4)} pufETH. Tap below if you want to open the Stake screen.`;
+          const reply = lower.includes("vault") ? t12("chat.fallbackVault") : t12("chat.fallbackStake", {
+            amount: fmt(data.rate?.pufEthPerEth || 0, 4, locale)
+          });
           setMessages((prev) => [
             ...prev,
             {
               role: "assistant",
               content: reply,
-              action: lower.includes("vault") ? { type: "deposit_vault", amount: "", label: "Browse Vaults" } : { type: "stake_eth", amount: "1.0", label: "Stake 1 ETH" }
+              action: lower.includes("vault") ? {
+                type: "deposit_vault",
+                amount: "",
+                label: t12("chat.browseVaults")
+              } : {
+                type: "stake_eth",
+                amount: "1.0",
+                label: t12("chat.stake1Eth")
+              }
             }
           ]);
         }
       } catch {
         setMessages((prev) => [
           ...prev,
-          {
-            role: "assistant",
-            content: "I could not reach the advisor right now, but the live staking and vault screens are ready."
-          }
+          { role: "assistant", content: t12("chat.offline") }
         ]);
       } finally {
         setSending(false);
       }
     };
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-overlay" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-panel" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "chat-header" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "AI Advisor"), /* @__PURE__ */ import_react.default.createElement("button", { onClick: onClose }, "\xD7")), aiEnabled === false && /* @__PURE__ */ import_react.default.createElement("p", { className: "chat-setup-hint" }, "No free AI key found. Add ", /* @__PURE__ */ import_react.default.createElement("code", null, "GROQ_API_KEY"), " (free at console.groq.com) or ", /* @__PURE__ */ import_react.default.createElement("code", null, "GEMINI_API_KEY"), " to ", /* @__PURE__ */ import_react.default.createElement("code", null, ".env"), " ", "and restart ", /* @__PURE__ */ import_react.default.createElement("code", null, "pnpm dev"), ". Using basic fallback until then."), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-messages" }, messages.map((m5, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${m5.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "message-stack" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, m5.content), m5.action && /* @__PURE__ */ import_react.default.createElement(
+    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "chat-overlay" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "chat-panel" }, /* @__PURE__ */ import_react2.default.createElement("header", { className: "chat-header" }, /* @__PURE__ */ import_react2.default.createElement("strong", null, t12("chat.title")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "chat-header-actions" }, /* @__PURE__ */ import_react2.default.createElement(LanguageSwitcher, { compact: true }), /* @__PURE__ */ import_react2.default.createElement("button", { type: "button", onClick: onClose, "aria-label": "Close" }, "\xD7"))), aiEnabled === false && /* @__PURE__ */ import_react2.default.createElement("p", { className: "chat-setup-hint" }, t12("chat.noAiKey")), /* @__PURE__ */ import_react2.default.createElement("div", { className: "chat-messages" }, messages2.map((m5, i) => /* @__PURE__ */ import_react2.default.createElement("div", { key: i, className: `message ${m5.role}` }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "message-stack" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "bubble" }, m5.content), m5.action && /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         type: "button",
@@ -39124,15 +39456,15 @@ ${sa(b3)}`), super(t12.shortMessage, {
         onClick: () => onAction(m5.action)
       },
       m5.action.label
-    )))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: endRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-input-row" }, /* @__PURE__ */ import_react.default.createElement(
+    )))), sending && /* @__PURE__ */ import_react2.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react2.default.createElement("div", { className: "bubble" }, "...")), /* @__PURE__ */ import_react2.default.createElement("div", { ref: endRef })), /* @__PURE__ */ import_react2.default.createElement("div", { className: "chat-input-row" }, /* @__PURE__ */ import_react2.default.createElement(
       "input",
       {
         value: input,
         onChange: (e19) => setInput(e19.target.value),
         onKeyDown: (e19) => e19.key === "Enter" && handleSend(),
-        placeholder: "Ask about Puffer..."
+        placeholder: t12("chat.placeholder")
       }
-    ), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleSend, disabled: !input.trim() || sending }, "\u2191"))));
+    ), /* @__PURE__ */ import_react2.default.createElement("button", { onClick: handleSend, disabled: !input.trim() || sending }, "\u2191"))));
   }
   var initialData = {
     address: null,
@@ -39144,15 +39476,15 @@ ${sa(b3)}`), super(t12.shortMessage, {
     protocolTVL: null
   };
   function App() {
-    const [screen, setScreen] = (0, import_react.useState)("home");
-    const [data, setData] = (0, import_react.useState)(initialData);
-    const [loading, setLoading] = (0, import_react.useState)(true);
-    const [hasWallet, setHasWallet] = (0, import_react.useState)(false);
-    const [chatOpen, setChatOpen] = (0, import_react.useState)(false);
-    const [stakePrefill, setStakePrefill] = (0, import_react.useState)({});
-    const [vaultPrefill, setVaultPrefill] = (0, import_react.useState)({});
-    const [network, setNetwork] = (0, import_react.useState)("mainnet");
-    const fetchData = (0, import_react.useCallback)(async (address, active) => {
+    const [screen, setScreen] = (0, import_react2.useState)("home");
+    const [data, setData] = (0, import_react2.useState)(initialData);
+    const [loading, setLoading] = (0, import_react2.useState)(true);
+    const [hasWallet, setHasWallet] = (0, import_react2.useState)(false);
+    const [chatOpen, setChatOpen] = (0, import_react2.useState)(false);
+    const [stakePrefill, setStakePrefill] = (0, import_react2.useState)({});
+    const [vaultPrefill, setVaultPrefill] = (0, import_react2.useState)({});
+    const [network, setNetwork] = (0, import_react2.useState)("mainnet");
+    const fetchData = (0, import_react2.useCallback)(async (address, active) => {
       const [rate, vaultsAPY, vaultsTVL, protocolTVL] = active === "mainnet" ? await Promise.all([
         safeValue(() => api.getPufETHRate(), null),
         safeValue(() => api.getVaultsAPY(), null),
@@ -39181,6 +39513,12 @@ ${sa(b3)}`), super(t12.shortMessage, {
           BigInt(0)
         )
       ]);
+      const protocolMetrics = protocolTVL ?? (rate ? {
+        lrt_total_usd: String(Number(rate.totalAssets) * 3500),
+        tvl_puffer_staking: String(Number(rate.totalAssets) * 3500),
+        apy: "4.0",
+        timestamp: (/* @__PURE__ */ new Date()).toISOString()
+      } : null);
       setData({
         address,
         network: active,
@@ -39193,10 +39531,10 @@ ${sa(b3)}`), super(t12.shortMessage, {
         rate,
         vaultsAPY,
         vaultsTVL,
-        protocolTVL
+        protocolTVL: protocolMetrics
       });
     }, []);
-    (0, import_react.useEffect)(() => {
+    (0, import_react2.useEffect)(() => {
       const init = async () => {
         if (!window.ethereum) {
           setHasWallet(false);
@@ -39264,23 +39602,23 @@ ${sa(b3)}`), super(t12.shortMessage, {
     const refresh = () => {
       if (data.address) fetchData(data.address, network);
     };
-    if (loading) return /* @__PURE__ */ import_react.default.createElement(SplashScreen, { loading: true });
-    if (!hasWallet) return /* @__PURE__ */ import_react.default.createElement(SplashScreen, null);
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app-shell" }, /* @__PURE__ */ import_react.default.createElement(
+    if (loading) return /* @__PURE__ */ import_react2.default.createElement(SplashScreen, { loading: true });
+    if (!hasWallet) return /* @__PURE__ */ import_react2.default.createElement(SplashScreen, null);
+    return /* @__PURE__ */ import_react2.default.createElement("div", { className: "app-shell" }, /* @__PURE__ */ import_react2.default.createElement(
       AppHeader,
       {
         data,
         network,
         onNetworkChange: handleNetworkChange
       }
-    ), /* @__PURE__ */ import_react.default.createElement("main", { className: "main-content" }, screen === "home" && /* @__PURE__ */ import_react.default.createElement(HomeScreen, { data, onNav: nav }), screen === "stake" && /* @__PURE__ */ import_react.default.createElement(StakeScreen, { data, prefill: stakePrefill, onSuccess: refresh }), screen === "vaults" && /* @__PURE__ */ import_react.default.createElement(
+    ), /* @__PURE__ */ import_react2.default.createElement("main", { className: "main-content" }, screen === "home" && /* @__PURE__ */ import_react2.default.createElement(HomeScreen, { data, onNav: nav }), screen === "stake" && /* @__PURE__ */ import_react2.default.createElement(StakeScreen, { data, prefill: stakePrefill, onSuccess: refresh }), screen === "vaults" && /* @__PURE__ */ import_react2.default.createElement(
       VaultsScreen,
       {
         data,
         prefill: vaultPrefill,
         onSuccess: refresh
       }
-    )), /* @__PURE__ */ import_react.default.createElement(BottomNav, { screen, onNav: nav }), /* @__PURE__ */ import_react.default.createElement(
+    )), /* @__PURE__ */ import_react2.default.createElement(BottomNav, { screen, onNav: nav }), /* @__PURE__ */ import_react2.default.createElement(
       "button",
       {
         className: "advisor-fab",
@@ -39288,7 +39626,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
         "aria-label": "Open AI advisor"
       },
       "\u{1F4AC}"
-    ), chatOpen && /* @__PURE__ */ import_react.default.createElement(
+    ), chatOpen && /* @__PURE__ */ import_react2.default.createElement(
       ChatOverlay,
       {
         data,
@@ -39302,7 +39640,9 @@ ${sa(b3)}`), super(t12.shortMessage, {
   var container = document.getElementById("root");
   if (container) {
     const root = (0, import_client.createRoot)(container);
-    root.render(/* @__PURE__ */ import_react2.default.createElement(App, null));
+    root.render(
+      /* @__PURE__ */ import_react3.default.createElement(I18nProvider, null, /* @__PURE__ */ import_react3.default.createElement(App, null))
+    );
   }
 })();
 /*! Bundled license information:

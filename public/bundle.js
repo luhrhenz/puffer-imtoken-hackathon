@@ -36,8 +36,10 @@
   var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
   // <define:process.env>
+  var define_process_env_default;
   var init_define_process_env = __esm({
     "<define:process.env>"() {
+      define_process_env_default = {};
     }
   });
 
@@ -12733,6 +12735,150 @@
     }
   });
 
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/errors/version.js
+  var version;
+  var init_version = __esm({
+    "node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/errors/version.js"() {
+      init_define_process_env();
+      version = "2.38.6";
+    }
+  });
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/errors/base.js
+  function walk(err, fn4) {
+    if (fn4?.(err))
+      return err;
+    if (err && typeof err === "object" && "cause" in err && err.cause !== void 0)
+      return walk(err.cause, fn4);
+    return fn4 ? null : err;
+  }
+  var errorConfig, BaseError;
+  var init_base = __esm({
+    "node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/errors/base.js"() {
+      init_define_process_env();
+      init_version();
+      errorConfig = {
+        getDocsUrl: ({ docsBaseUrl, docsPath = "", docsSlug }) => docsPath ? `${docsBaseUrl ?? "https://viem.sh"}${docsPath}${docsSlug ? `#${docsSlug}` : ""}` : void 0,
+        version: `viem@${version}`
+      };
+      BaseError = class _BaseError extends Error {
+        constructor(shortMessage, args = {}) {
+          const details = (() => {
+            if (args.cause instanceof _BaseError)
+              return args.cause.details;
+            if (args.cause?.message)
+              return args.cause.message;
+            return args.details;
+          })();
+          const docsPath = (() => {
+            if (args.cause instanceof _BaseError)
+              return args.cause.docsPath || args.docsPath;
+            return args.docsPath;
+          })();
+          const docsUrl = errorConfig.getDocsUrl?.({ ...args, docsPath });
+          const message = [
+            shortMessage || "An error occurred.",
+            "",
+            ...args.metaMessages ? [...args.metaMessages, ""] : [],
+            ...docsUrl ? [`Docs: ${docsUrl}`] : [],
+            ...details ? [`Details: ${details}`] : [],
+            ...errorConfig.version ? [`Version: ${errorConfig.version}`] : []
+          ].join("\n");
+          super(message, args.cause ? { cause: args.cause } : void 0);
+          Object.defineProperty(this, "details", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+          });
+          Object.defineProperty(this, "docsPath", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+          });
+          Object.defineProperty(this, "metaMessages", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+          });
+          Object.defineProperty(this, "shortMessage", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+          });
+          Object.defineProperty(this, "version", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: void 0
+          });
+          Object.defineProperty(this, "name", {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: "BaseError"
+          });
+          this.details = details;
+          this.docsPath = docsPath;
+          this.metaMessages = args.metaMessages;
+          this.name = args.name ?? this.name;
+          this.shortMessage = shortMessage;
+          this.version = version;
+        }
+        walk(fn4) {
+          return walk(this, fn4);
+        }
+      };
+    }
+  });
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/constants/unit.js
+  var etherUnits;
+  var init_unit = __esm({
+    "node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/constants/unit.js"() {
+      init_define_process_env();
+      etherUnits = {
+        gwei: 9,
+        wei: 18
+      };
+    }
+  });
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/formatUnits.js
+  function formatUnits(value, decimals) {
+    let display = value.toString();
+    const negative = display.startsWith("-");
+    if (negative)
+      display = display.slice(1);
+    display = display.padStart(decimals, "0");
+    let [integer, fraction] = [
+      display.slice(0, display.length - decimals),
+      display.slice(display.length - decimals)
+    ];
+    fraction = fraction.replace(/(0+)$/, "");
+    return `${negative ? "-" : ""}${integer || "0"}${fraction ? `.${fraction}` : ""}`;
+  }
+  var init_formatUnits = __esm({
+    "node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/formatUnits.js"() {
+      init_define_process_env();
+    }
+  });
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/formatEther.js
+  function formatEther(wei, unit = "wei") {
+    return formatUnits(wei, etherUnits[unit]);
+  }
+  var init_formatEther = __esm({
+    "node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/formatEther.js"() {
+      init_define_process_env();
+      init_unit();
+      init_formatUnits();
+    }
+  });
+
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/constants-CUYeD71n.js
   function q(e19, { strict: t12 = true } = {}) {
     return !e19 || typeof e19 != "string" ? false : t12 ? /^0x[0-9a-fA-F]*$/.test(e19) : e19.startsWith("0x");
@@ -21282,47 +21428,69 @@ ${sa(b3)}`), super(t12.shortMessage, {
   init_define_process_env();
   var import_react = __toESM(require_react());
 
-  // src/services/api.ts
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/index.js
   init_define_process_env();
-  var API_BASE = window.location.origin;
-  var api = {
-    async getPufETHRate() {
-      const res = await fetch(`${API_BASE}/pufeth/rate`);
-      if (!res.ok) throw new Error("Failed to fetch pufETH rate");
-      return res.json();
-    },
-    async getPufETHMetrics() {
-      const res = await fetch(`${API_BASE}/pufeth/metrics`);
-      if (!res.ok) throw new Error("Failed to fetch pufETH metrics");
-      return res.json();
-    },
-    async getVaultsAPY() {
-      const res = await fetch(`${API_BASE}/vaults/apy`);
-      if (!res.ok) throw new Error("Failed to fetch vault APYs");
-      return res.json();
-    },
-    async getVaultsTVL() {
-      const res = await fetch(`${API_BASE}/vaults/tvl`);
-      if (!res.ok) throw new Error("Failed to fetch vault TVLs");
-      return res.json();
-    },
-    async getProtocolTVL() {
-      const res = await fetch(`${API_BASE}/protocol/tvl`);
-      if (!res.ok) throw new Error("Failed to fetch protocol TVL");
-      return res.json();
-    },
-    async getTokenPrices(addresses) {
-      const addressesStr = addresses.join("%");
-      const res = await fetch(
-        `${API_BASE}/tokens/prices?addresses=${addressesStr}`
-      );
-      if (!res.ok) throw new Error("Failed to fetch token prices");
-      return res.json();
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/parseEther.js
+  init_define_process_env();
+  init_unit();
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/parseUnits.js
+  init_define_process_env();
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/errors/unit.js
+  init_define_process_env();
+  init_base();
+  var InvalidDecimalNumberError = class extends BaseError {
+    constructor({ value }) {
+      super(`Number \`${value}\` is not a valid decimal number.`, {
+        name: "InvalidDecimalNumberError"
+      });
     }
   };
 
-  // src/services/puffer.ts
-  init_define_process_env();
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/parseUnits.js
+  function parseUnits(value, decimals) {
+    if (!/^(-?)([0-9]*)\.?([0-9]*)$/.test(value))
+      throw new InvalidDecimalNumberError({ value });
+    let [integer, fraction = "0"] = value.split(".");
+    const negative = integer.startsWith("-");
+    if (negative)
+      integer = integer.slice(1);
+    fraction = fraction.replace(/(0+)$/, "");
+    if (decimals === 0) {
+      if (Math.round(Number(`.${fraction}`)) === 1)
+        integer = `${BigInt(integer) + 1n}`;
+      fraction = "";
+    } else if (fraction.length > decimals) {
+      const [left, unit, right] = [
+        fraction.slice(0, decimals - 1),
+        fraction.slice(decimals - 1, decimals),
+        fraction.slice(decimals)
+      ];
+      const rounded = Math.round(Number(`${unit}.${right}`));
+      if (rounded > 9)
+        fraction = `${BigInt(left) + BigInt(1)}0`.padStart(left.length + 1, "0");
+      else
+        fraction = `${left}${rounded}`;
+      if (fraction.length > decimals) {
+        fraction = fraction.slice(1);
+        integer = `${BigInt(integer) + 1n}`;
+      }
+      fraction = fraction.slice(0, decimals);
+    } else {
+      fraction = fraction.padEnd(decimals, "0");
+    }
+    return BigInt(`${negative ? "-" : ""}${integer}${fraction}`);
+  }
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/utils/unit/parseEther.js
+  function parseEther(ether, unit = "wei") {
+    return parseUnits(ether, etherUnits[unit]);
+  }
+
+  // node_modules/.pnpm/viem@2.38.6_typescript@5.9.3/node_modules/viem/_esm/index.js
+  init_formatEther();
 
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/main.js
   init_define_process_env();
@@ -38183,35 +38351,176 @@ ${sa(b3)}`), super(t12.shortMessage, {
   // node_modules/.pnpm/@pufferfinance+puffer-sdk@1.31.0_typescript@5.9.3/node_modules/@pufferfinance/puffer-sdk/dist/main.js
   init_constants_CUYeD71n();
 
+  // src/services/api.ts
+  init_define_process_env();
+  var API_BASE = window.location.origin;
+  var api = {
+    async getPufETHRate() {
+      const res = await fetch(`${API_BASE}/pufeth/rate`);
+      if (!res.ok) throw new Error("Failed to fetch pufETH rate");
+      return res.json();
+    },
+    async getPufETHMetrics() {
+      const res = await fetch(`${API_BASE}/pufeth/metrics`);
+      if (!res.ok) throw new Error("Failed to fetch pufETH metrics");
+      return res.json();
+    },
+    async getVaultsAPY() {
+      const res = await fetch(`${API_BASE}/vaults/apy`);
+      if (!res.ok) throw new Error("Failed to fetch vault APYs");
+      return res.json();
+    },
+    async getVaultsTVL() {
+      const res = await fetch(`${API_BASE}/vaults/tvl`);
+      if (!res.ok) throw new Error("Failed to fetch vault TVLs");
+      return res.json();
+    },
+    async getProtocolTVL() {
+      const res = await fetch(`${API_BASE}/protocol/tvl`);
+      if (!res.ok) throw new Error("Failed to fetch protocol TVL");
+      return res.json();
+    },
+    async getTokenPrices(addresses) {
+      const addressesStr = addresses.join("%");
+      const res = await fetch(
+        `${API_BASE}/tokens/prices?addresses=${addressesStr}`
+      );
+      if (!res.ok) throw new Error("Failed to fetch token prices");
+      return res.json();
+    }
+  };
+
   // src/services/puffer.ts
-  var RPC_URL = "https://eth-mainnet.g.alchemy.com/v2/cRrLtE5RwGjA6xFJu4piL";
+  init_define_process_env();
+  var RPC_URL = define_process_env_default.ETH_RPC_URL || "https://eth.llamarpc.com";
+  var HOLESKY_RPC_URL = define_process_env_default.HOLESKY_RPC_URL || "https://ethereum-holesky-rpc.publicnode.com";
+  var NETWORKS = {
+    mainnet: {
+      chain: x.Mainnet,
+      chainId: "0x1",
+      explorer: "https://etherscan.io",
+      label: "Mainnet",
+      rpcUrl: RPC_URL
+    },
+    holesky: {
+      chain: x.Holesky,
+      chainId: "0x4268",
+      explorer: "https://holesky.etherscan.io",
+      label: "Holesky",
+      rpcUrl: HOLESKY_RPC_URL
+    }
+  };
   var pufferClient = null;
+  var activeNetwork = "mainnet";
   var pufferService = {
-    async connectWallet() {
+    async connectWallet(network = activeNetwork) {
       if (!window.ethereum) {
         throw new Error("No wallet found. Please open this app in imToken.");
       }
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts"
       });
-      await this.init(window.ethereum);
+      await this.init(window.ethereum, network);
       return accounts[0];
     },
-    async init(provider) {
+    async init(provider, network = activeNetwork) {
+      activeNetwork = network;
+      const config = NETWORKS[network];
       const walletClient = R3.createWalletClient({
-        chain: x.Mainnet,
+        chain: config.chain,
         provider
       });
       const publicClient = R3.createPublicClient({
-        chain: x.Mainnet,
-        rpcUrls: [RPC_URL]
+        chain: config.chain,
+        rpcUrls: [config.rpcUrl]
       });
-      pufferClient = new Ct5(x.Mainnet, walletClient, publicClient);
+      pufferClient = new Ct5(config.chain, walletClient, publicClient);
       return pufferClient;
+    },
+    async getWalletNetwork() {
+      if (!window.ethereum) return activeNetwork;
+      const chainId = await window.ethereum.request({ method: "eth_chainId" });
+      return chainId === NETWORKS.holesky.chainId ? "holesky" : "mainnet";
+    },
+    async switchNetwork(network) {
+      if (!window.ethereum) {
+        throw new Error("No wallet found. Please open this app in imToken.");
+      }
+      const config = NETWORKS[network];
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: config.chainId }]
+        });
+      } catch (error) {
+        if (error?.code !== 4902) throw error;
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: config.chainId,
+              chainName: "Ethereum Holesky",
+              nativeCurrency: {
+                name: "Holesky Ether",
+                symbol: "ETH",
+                decimals: 18
+              },
+              rpcUrls: [config.rpcUrl],
+              blockExplorerUrls: [config.explorer]
+            }
+          ]
+        });
+      }
+      activeNetwork = network;
+      await this.init(window.ethereum, network);
+    },
+    async ensureNetwork(network) {
+      if (!window.ethereum) {
+        throw new Error("No wallet found. Please open this app in imToken.");
+      }
+      const config = NETWORKS[network];
+      const chainId = await window.ethereum.request({ method: "eth_chainId" });
+      if (chainId !== config.chainId) {
+        await this.switchNetwork(network);
+        return;
+      }
+      activeNetwork = network;
+      await this.init(window.ethereum, network);
+    },
+    async getPufETHRate() {
+      if (!pufferClient) throw new Error("Puffer client not initialized");
+      const vault = pufferClient.vault;
+      const oneEth = BigInt(1e18);
+      const [pufEthPerEth, ethPerPufEth, totalAssets, totalSupply] = await Promise.all([
+        pufferClient.vault.getPufETHRate(),
+        vault.getContract().read.convertToAssets([oneEth]),
+        vault.getContract().read.totalAssets(),
+        vault.getContract().read.totalSupply()
+      ]);
+      return {
+        pufEthPerEth: formatEther(pufEthPerEth),
+        ethPerPufEth: formatEther(ethPerPufEth),
+        totalAssets: formatEther(totalAssets),
+        totalSupply: formatEther(totalSupply)
+      };
     },
     async getPufETHBalance(address) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
       return pufferClient.vault.balanceOf(address);
+    },
+    async getEthBalance(address) {
+      if (!window.ethereum) {
+        throw new Error("No wallet found. Please open this app in imToken.");
+      }
+      const balance = await window.ethereum.request({
+        method: "eth_getBalance",
+        params: [address, "latest"]
+      });
+      return formatEther(BigInt(balance));
+    },
+    async getTokenBalance(token, address) {
+      if (!pufferClient) throw new Error("Puffer client not initialized");
+      return pufferClient.erc20Permit.withToken(token).getContract().read.balanceOf([address]);
     },
     async stakeETH(address, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
@@ -38220,25 +38529,41 @@ ${sa(b3)}`), super(t12.shortMessage, {
       );
       return transact(amountWei);
     },
+    async stakeWETH(address, amountWei) {
+      if (!pufferClient) throw new Error("Puffer client not initialized");
+      await this.approveToken(
+        c.WETH,
+        address,
+        amountWei,
+        f2[NETWORKS[activeNetwork].chain].PufferVault
+      );
+      const { transact } = pufferClient.vault.deposit(
+        address,
+        amountWei
+      );
+      return transact();
+    },
     async stakeStETH(address, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
-      const { transact } = pufferClient.vault.depositStETH(
-        address
+      const { transact } = await pufferClient.depositor.depositStETH(
+        address,
+        amountWei
       );
-      return transact(amountWei);
+      return transact();
     },
     async stakeWstETH(address, amountWei) {
       if (!pufferClient) throw new Error("Puffer client not initialized");
-      const { transact } = pufferClient.vault.depositWstETH(
-        address
-      );
-      return transact(amountWei);
-    },
-    async approveToken(token, address, amountWei) {
-      if (!pufferClient) throw new Error("Puffer client not initialized");
-      return pufferClient.vault.approveToken(
-        token,
+      const { transact } = await pufferClient.depositor.depositWstETH(
         address,
+        amountWei
+      );
+      return transact();
+    },
+    async approveToken(token, address, amountWei, spender) {
+      if (!pufferClient) throw new Error("Puffer client not initialized");
+      return pufferClient.erc20Permit.withToken(token).approve(
+        address,
+        spender || f2[NETWORKS[activeNetwork].chain].PufferDepositor,
         amountWei
       );
     },
@@ -38256,292 +38581,709 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
-  // src/services/advisor.ts
-  init_define_process_env();
-  var LLM_API_URL = "https://api.openai.com/v1/chat/completions";
-  function buildSystemPrompt(context) {
-    const { address, pufETHBalance, rate, protocolTVL, vaultsAPY } = context;
-    const vaultData = [
-      { name: "unifiETH", apy: 0, address: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc" },
-      { name: "unifiUSD", apy: 0, address: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4" },
-      { name: "unifiBTC", apy: 0, address: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0" },
-      { name: "pufETHs", apy: 0, address: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735" }
-    ];
-    vaultsAPY.data.forEach((v6) => {
-      const key = v6.token_address.toLowerCase();
-      if (key.includes("196ead47")) vaultData[0].apy = v6.apy;
-      else if (key.includes("82c40e07")) vaultData[1].apy = v6.apy;
-      else if (key.includes("170d847a")) vaultData[2].apy = v6.apy;
-      else if (key.includes("62a4ce07")) vaultData[3].apy = v6.apy;
-    });
-    const pufEthBalanceInEth = (Number(pufETHBalance) * Number(rate.ethPerPufEth)).toFixed(4);
-    const vaultsTable = vaultData.map((v6) => `${v6.name}: ${v6.apy}% APY`).join(", ");
-    return `You are a DeFi staking advisor for Puffer Finance, embedded inside the imToken mobile wallet.
-You help users stake ETH and earn yield through Puffer's liquid restaking protocol.
-
-Be concise \u2014 this is a mobile interface. Keep responses under 4 sentences unless the user asks for detail.
-Never use markdown headers or bullet points. Write in plain conversational sentences.
-Always be specific \u2014 use the real numbers from the context below.
-
-LIVE PROTOCOL DATA (fetched just now):
-- pufETH/ETH rate: ${rate.ethPerPufEth} ETH per pufETH (rate appreciation = staking yield)
-- Protocol TVL: $${(Number(protocolTVL.lrt_total_usd) / 1e9).toFixed(2)}B
-- pufETH staking APY: ${protocolTVL.apy}%
-
-UNIFI VAULT OPPORTUNITIES:
-${vaultsTable}
-
-USER:
-- Address: ${address.slice(0, 6)}...${address.slice(-4)}
-- pufETH balance: ${pufETHBalance} pufETH (\u2248 ${pufEthBalanceInEth} ETH)
-
-When you recommend a specific action (stake, deposit into a vault), end your message with an XML action tag:
-<action>{"type":"stake_eth","amount":"1.0","label":"Stake 1 ETH \u2192 pufETH"}</action>
-
-Only include one action tag per message. Only recommend amounts the user mentioned or that make sense from context.
-If the user wants to stake a token other than ETH/stETH/wstETH, use type "swap_and_stake" and set inputToken.`;
-  }
-  async function sendMessage(messages, context, apiKey) {
-    const systemPrompt = buildSystemPrompt(context);
-    const response = await fetch(LLM_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [{ role: "system", content: systemPrompt }, ...messages],
-        temperature: 0.7,
-        max_tokens: 500
-      })
-    });
-    if (!response.ok) {
-      throw new Error("Failed to get AI response");
-    }
-    const data = await response.json();
-    const content = data.choices[0].message.content;
-    const actionMatch = content.match(/<action>(.*?)<\/action>/s);
-    let action;
-    if (actionMatch) {
-      try {
-        action = JSON.parse(actionMatch[1]);
-      } catch {
-      }
-    }
-    return { reply: content.replace(actionMatch?.[0] || "", "").trim(), action };
-  }
-
   // src/App.tsx
-  var IS_MOCK = true;
-  var MOCK_CONTEXT = {
-    address: "0xMock000000000000000000000000000000001234",
-    balance: "2.4500",
-    rate: { pufEthPerEth: "0.959", ethPerPufEth: "1.042", totalAssets: "450000", totalSupply: "432000" },
-    metrics: { lrtMarketCap: 12e8, averageDailyVolume: 5e6, holderCount: 18420 },
-    vaultsAPY: {
-      data: [
-        { token_address: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc", apy: 5.2 },
-        { token_address: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4", apy: 4.8 },
-        { token_address: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0", apy: 3.9 },
-        { token_address: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735", apy: 6.1 }
-      ],
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
+  var WETH_ADDRESS = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+  var STAKE_TOKEN_MAP = {
+    stETH: c.stETH,
+    wstETH: c.wstETH
+  };
+  var VAULTS = [
+    {
+      name: "unifiETH",
+      unifiToken: f3.unifiETH,
+      address: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc",
+      color: "#6EA8FE"
     },
-    vaultsTVL: { unifi_eth_vault: "120000000", unifi_usd_vault: "85000000", unifi_btc_vault: "45000000" },
-    protocolTVL: { lrt_total_usd: "1200000000", tvl_puffer_staking: "900000000", apy: "4.2", timestamp: (/* @__PURE__ */ new Date()).toISOString() }
+    {
+      name: "unifiUSD",
+      unifiToken: f3.unifiUSD,
+      address: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4",
+      color: "#49D17D"
+    },
+    {
+      name: "unifiBTC",
+      unifiToken: f3.unifiBTC,
+      address: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0",
+      color: "#F5A623"
+    },
+    {
+      name: "pufETHs",
+      unifiToken: f3.pufETHs,
+      address: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735",
+      color: "#F97373"
+    }
+  ];
+  var VAULT_INPUTS = {
+    unifiETH: [
+      { label: "WETH", token: c.WETH, decimals: 18 },
+      { label: "stETH", token: c.stETH, decimals: 18 },
+      { label: "wstETH", token: c.wstETH, decimals: 18 }
+    ],
+    unifiUSD: [
+      { label: "USDC", token: c.USDC, decimals: 6 },
+      { label: "USDT", token: c.USDT, decimals: 6 },
+      { label: "DAI", token: c.DAI, decimals: 18 }
+    ],
+    unifiBTC: [
+      { label: "WBTC", token: c.WBTC, decimals: 8 },
+      { label: "LBTC", token: c.LBTC, decimals: 8 },
+      { label: "tBTC", token: c.tBTC, decimals: 18 }
+    ],
+    pufETHs: [
+      { label: "pufETH", token: c.pufETH, decimals: 18 },
+      { label: "wstETH", token: c.wstETH, decimals: 18 }
+    ]
   };
-  var VAULT_ADDRESSES = {
-    unifiETH: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc",
-    unifiUSD: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4",
-    unifiBTC: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0",
-    pufETHs: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735"
-  };
-  function App() {
-    const [context, setContext] = (0, import_react.useState)({
-      address: null,
-      balance: "0",
-      rate: null,
-      metrics: null,
-      vaultsAPY: null,
-      vaultsTVL: null,
-      protocolTVL: null
+  function fmt(n4, decimals = 4) {
+    const v6 = Number(n4);
+    if (!Number.isFinite(v6)) return "-";
+    return v6.toLocaleString(void 0, {
+      maximumFractionDigits: decimals,
+      minimumFractionDigits: decimals
     });
-    const [loading, setLoading] = (0, import_react.useState)(true);
-    const [error, setError] = (0, import_react.useState)(null);
-    const [messages, setMessages] = (0, import_react.useState)([]);
+  }
+  function fmtCompact(n4) {
+    const v6 = Number(n4);
+    if (!Number.isFinite(v6)) return "-";
+    if (v6 >= 1e9) return `$${(v6 / 1e9).toFixed(2)}B`;
+    if (v6 >= 1e6) return `$${(v6 / 1e6).toFixed(1)}M`;
+    if (v6 >= 1e3) return `$${(v6 / 1e3).toFixed(1)}K`;
+    return `$${v6.toFixed(2)}`;
+  }
+  function shortAddr(addr) {
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+  }
+  function parseAmount(value, decimals = 18) {
+    return parseUnits(value || "0", decimals);
+  }
+  async function safeValue(fn4, fallback) {
+    try {
+      return await fn4();
+    } catch (error) {
+      console.warn(error);
+      return fallback;
+    }
+  }
+  function PufferLogo() {
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "puffer-logo", "aria-label": "Puffer" }, /* @__PURE__ */ import_react.default.createElement("span", null, "P"));
+  }
+  function AppHeader({
+    data,
+    network,
+    onNetworkChange
+  }) {
+    return /* @__PURE__ */ import_react.default.createElement("header", { className: "top-header" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "brand-lockup" }, /* @__PURE__ */ import_react.default.createElement(PufferLogo, null), /* @__PURE__ */ import_react.default.createElement("span", null, "StakeMind")), /* @__PURE__ */ import_react.default.createElement("div", { className: "header-actions" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "network-tabs" }, ["mainnet", "holesky"].map((key) => /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        key,
+        className: network === key ? "active" : "",
+        onClick: () => onNetworkChange(key)
+      },
+      NETWORKS[key].label
+    ))), data.address && /* @__PURE__ */ import_react.default.createElement("div", { className: "wallet-pill" }, /* @__PURE__ */ import_react.default.createElement("span", null, shortAddr(data.address)), /* @__PURE__ */ import_react.default.createElement("strong", null, fmt(data.balances.pufETH, 4), " pufETH"))));
+  }
+  function BottomNav({
+    screen,
+    onNav
+  }) {
+    return /* @__PURE__ */ import_react.default.createElement("nav", { className: "bottom-nav" }, /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: screen === "home" ? "active" : "",
+        onClick: () => onNav("home")
+      },
+      /* @__PURE__ */ import_react.default.createElement("span", null, "\u2302"),
+      "Home"
+    ), /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: screen === "stake" ? "active" : "",
+        onClick: () => onNav("stake")
+      },
+      /* @__PURE__ */ import_react.default.createElement("span", null, "\u21E7"),
+      "Stake"
+    ), /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: screen === "vaults" ? "active" : "",
+        onClick: () => onNav("vaults")
+      },
+      /* @__PURE__ */ import_react.default.createElement("span", null, "\u25A6"),
+      "Vaults"
+    ));
+  }
+  function SplashScreen({ loading = false }) {
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app splash-shell" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "splash-card" }, /* @__PURE__ */ import_react.default.createElement(PufferLogo, null), /* @__PURE__ */ import_react.default.createElement("h1", null, "StakeMind"), /* @__PURE__ */ import_react.default.createElement("p", null, loading ? "Connecting wallet..." : "Open in imToken to connect your wallet")));
+  }
+  function HomeScreen({
+    data,
+    onNav
+  }) {
+    const lastTx = localStorage.getItem("lastTxHash");
+    const explorer = NETWORKS[data.network].explorer;
+    return /* @__PURE__ */ import_react.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "hero-card" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("p", { className: "eyebrow" }, "Live pufETH / ETH \xB7 ", NETWORKS[data.network].label), /* @__PURE__ */ import_react.default.createElement("h1", null, data.rate ? fmt(data.rate.ethPerPufEth, 4) : "-", " ETH")), /* @__PURE__ */ import_react.default.createElement("div", { className: "metric-grid" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "Protocol APY"), /* @__PURE__ */ import_react.default.createElement("strong", null, data.protocolTVL ? `${fmt(data.protocolTVL.apy, 2)}%` : "-")), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "Total TVL"), /* @__PURE__ */ import_react.default.createElement("strong", null, data.protocolTVL ? fmtCompact(data.protocolTVL.lrt_total_usd) : "-"))), data.network === "holesky" && /* @__PURE__ */ import_react.default.createElement("p", { className: "network-note" }, "Holesky uses testnet contracts. UniFi APY and TVL are mainnet-only.")), /* @__PURE__ */ import_react.default.createElement("div", { className: "cta-row" }, /* @__PURE__ */ import_react.default.createElement("button", { className: "btn-primary", onClick: () => onNav("stake") }, "Stake ETH"), /* @__PURE__ */ import_react.default.createElement("button", { className: "btn-secondary", onClick: () => onNav("vaults") }, "Browse Vaults")), /* @__PURE__ */ import_react.default.createElement("div", { className: "section-block" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "section-title-row" }, /* @__PURE__ */ import_react.default.createElement("h2", null, "Recent activity")), lastTx ? /* @__PURE__ */ import_react.default.createElement(
+      "a",
+      {
+        className: "activity-row",
+        href: `${explorer}/tx/${lastTx}`,
+        target: "_blank",
+        rel: "noreferrer"
+      },
+      /* @__PURE__ */ import_react.default.createElement("span", null, "Last transaction"),
+      /* @__PURE__ */ import_react.default.createElement("strong", null, shortAddr(lastTx))
+    ) : /* @__PURE__ */ import_react.default.createElement("div", { className: "empty-state" }, "No local transaction yet")));
+  }
+  function ProgressSteps({
+    step,
+    labels
+  }) {
+    const activeIndex = step === "approving" || step === "swapping" ? 0 : step === "staking" || step === "depositing" || step === "done" ? 1 : -1;
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "progress-steps" }, labels.map((label, index) => /* @__PURE__ */ import_react.default.createElement(
+      "div",
+      {
+        key: label,
+        className: activeIndex > index || step === "done" ? "done" : activeIndex === index ? "active" : ""
+      },
+      /* @__PURE__ */ import_react.default.createElement("span", null, index + 1),
+      label
+    )));
+  }
+  function StakeScreen({
+    data,
+    prefill,
+    onSuccess
+  }) {
+    const [token, setToken] = (0, import_react.useState)(prefill.token || "ETH");
+    const [amount, setAmount] = (0, import_react.useState)(prefill.amount || "");
+    const [advanced, setAdvanced] = (0, import_react.useState)(!!prefill.advanced);
+    const [customToken, setCustomToken] = (0, import_react.useState)(prefill.customToken || "");
+    const [quote, setQuote] = (0, import_react.useState)("");
+    const [step, setStep] = (0, import_react.useState)(null);
+    const [txHash, setTxHash] = (0, import_react.useState)("");
+    const [err, setErr] = (0, import_react.useState)("");
+    const isTestnet = data.network === "holesky";
+    (0, import_react.useEffect)(() => {
+      if (prefill.token) setToken(prefill.token);
+      if (prefill.amount) setAmount(prefill.amount);
+      if (prefill.customToken) setCustomToken(prefill.customToken);
+      if (prefill.advanced !== void 0) setAdvanced(prefill.advanced);
+    }, [prefill]);
+    const preview = amount && data.rate ? fmt(Number(amount) * Number(data.rate.pufEthPerEth), 4) : "-";
+    const fetchQuote = (0, import_react.useCallback)(async () => {
+      if (!advanced || !customToken || !amount) {
+        setQuote("");
+        return;
+      }
+      try {
+        const params = new URLSearchParams({
+          src: customToken,
+          dst: WETH_ADDRESS,
+          amount: parseEther(amount).toString()
+        });
+        const res = await fetch(`/swap/quote?${params.toString()}`);
+        if (!res.ok) throw new Error("Quote unavailable");
+        const json = await res.json();
+        setQuote(formatEther(BigInt(json.dstAmount || "0")));
+      } catch {
+        setQuote("");
+      }
+    }, [advanced, customToken, amount]);
+    (0, import_react.useEffect)(() => {
+      fetchQuote();
+    }, [fetchQuote]);
+    const handleMax = () => {
+      if (!advanced) setAmount(data.balances[token] || "0");
+    };
+    const handleStake = async () => {
+      if (!data.address || !amount) return;
+      setErr("");
+      setTxHash("");
+      try {
+        const amountWei = parseAmount(amount);
+        let hash = "";
+        await pufferService.ensureNetwork(data.network);
+        if (advanced) {
+          if (isTestnet) {
+            throw new Error(
+              "Advanced swap + stake is available on mainnet only."
+            );
+          }
+          if (!customToken) throw new Error("Enter a token address");
+          setStep("swapping");
+          const params = new URLSearchParams({
+            src: customToken,
+            dst: WETH_ADDRESS,
+            amount: amountWei.toString(),
+            from: data.address,
+            slippage: "1",
+            disableEstimate: "true"
+          });
+          const res = await fetch(`/swap/transaction?${params.toString()}`);
+          if (!res.ok) throw new Error("1inch swap route unavailable");
+          const swap = await res.json();
+          await window.ethereum.request({
+            method: "eth_sendTransaction",
+            params: [swap.tx]
+          });
+          setStep("staking");
+          hash = await pufferService.stakeWETH(
+            data.address,
+            BigInt(swap.dstAmount || "0")
+          );
+        } else if (token === "ETH") {
+          setStep("staking");
+          hash = await pufferService.stakeETH(data.address, amountWei);
+        } else {
+          setStep("approving");
+          await pufferService.approveToken(
+            STAKE_TOKEN_MAP[token],
+            data.address,
+            amountWei
+          );
+          setStep("staking");
+          hash = token === "stETH" ? await pufferService.stakeStETH(data.address, amountWei) : await pufferService.stakeWstETH(data.address, amountWei);
+        }
+        setStep("done");
+        setTxHash(hash);
+        localStorage.setItem("lastTxHash", hash);
+        onSuccess(hash);
+      } catch (e19) {
+        setErr(e19.message || "Transaction failed");
+        setStep(null);
+      }
+    };
+    const busy = !!step && step !== "done";
+    return /* @__PURE__ */ import_react.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react.default.createElement("h1", { className: "screen-title" }, "Stake"), /* @__PURE__ */ import_react.default.createElement("div", { className: "form-card" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "token-tabs" }, ["ETH", "stETH", "wstETH"].map((t12) => /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        key: t12,
+        className: token === t12 ? "active" : "",
+        onClick: () => setToken(t12),
+        disabled: busy || advanced
+      },
+      t12
+    ))), /* @__PURE__ */ import_react.default.createElement("label", { className: "field-label" }, "Amount"), /* @__PURE__ */ import_react.default.createElement("div", { className: "amount-row" }, /* @__PURE__ */ import_react.default.createElement(
+      "input",
+      {
+        type: "number",
+        inputMode: "decimal",
+        placeholder: "0.0",
+        value: amount,
+        onChange: (e19) => setAmount(e19.target.value),
+        disabled: busy
+      }
+    ), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleMax, disabled: busy || advanced }, "MAX")), /* @__PURE__ */ import_react.default.createElement("div", { className: "balance-line" }, "Balance", " ", advanced ? "-" : `${fmt(data.balances[token] || "0", 4)} ${token}`), /* @__PURE__ */ import_react.default.createElement("div", { className: "preview-card" }, /* @__PURE__ */ import_react.default.createElement("span", null, "You will receive"), /* @__PURE__ */ import_react.default.createElement("strong", null, advanced && quote ? fmt(Number(quote) * Number(data.rate?.pufEthPerEth || 0), 4) : preview, " ", "pufETH")), (token !== "ETH" && busy || advanced) && /* @__PURE__ */ import_react.default.createElement(
+      ProgressSteps,
+      {
+        step: step || null,
+        labels: advanced ? ["Swap to WETH", "Stake WETH"] : ["Approve", "Stake"]
+      }
+    ), err && /* @__PURE__ */ import_react.default.createElement("p", { className: "error-msg" }, err), step === "done" && txHash && /* @__PURE__ */ import_react.default.createElement(
+      "a",
+      {
+        className: "success-card",
+        href: `${NETWORKS[data.network].explorer}/tx/${txHash}`,
+        target: "_blank",
+        rel: "noreferrer"
+      },
+      "Success. View transaction"
+    ), step !== "done" && /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: "btn-primary full",
+        onClick: handleStake,
+        disabled: !amount || !data.address || busy
+      },
+      step === "approving" ? "Approving..." : step === "swapping" ? "Swapping..." : step === "staking" ? "Staking..." : advanced ? "Swap + Stake" : `Stake ${token}`
+    )), /* @__PURE__ */ import_react.default.createElement("div", { className: "advanced-card" }, /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: "toggle-row",
+        onClick: () => !isTestnet && setAdvanced((v6) => !v6)
+      },
+      /* @__PURE__ */ import_react.default.createElement("span", null, "Stake any token (Advanced)"),
+      /* @__PURE__ */ import_react.default.createElement("strong", null, isTestnet ? "Mainnet only" : advanced ? "On" : "Off")
+    ), advanced && !isTestnet && /* @__PURE__ */ import_react.default.createElement("div", { className: "advanced-fields" }, /* @__PURE__ */ import_react.default.createElement("label", { className: "field-label" }, "Token address"), /* @__PURE__ */ import_react.default.createElement(
+      "input",
+      {
+        className: "plain-input",
+        placeholder: "0x...",
+        value: customToken,
+        onChange: (e19) => setCustomToken(e19.target.value)
+      }
+    ), /* @__PURE__ */ import_react.default.createElement("div", { className: "quote-line" }, "1inch quote:", " ", quote ? `${fmt(quote, 6)} WETH` : "enter token and amount"))));
+  }
+  function VaultsScreen({
+    data,
+    prefill,
+    onSuccess
+  }) {
+    const initialVault = VAULTS.find((v6) => v6.name === prefill.vault) || null;
+    const [selected, setSelected] = (0, import_react.useState)(
+      initialVault
+    );
+    const [inputToken, setInputToken] = (0, import_react.useState)(
+      VAULT_INPUTS[initialVault?.name || "unifiETH"][0]
+    );
+    const [amount, setAmount] = (0, import_react.useState)(prefill.amount || "");
+    const [status, setStatus] = (0, import_react.useState)(null);
+    const [txHash, setTxHash] = (0, import_react.useState)("");
+    const [err, setErr] = (0, import_react.useState)("");
+    const isTestnet = data.network === "holesky";
+    (0, import_react.useEffect)(() => {
+      if (selected) setInputToken(VAULT_INPUTS[selected.name][0]);
+    }, [selected]);
+    const getApy = (address) => data.vaultsAPY?.data.find(
+      (v6) => v6.token_address.toLowerCase() === address.toLowerCase()
+    )?.apy;
+    const getTvl = (name) => {
+      const map = {
+        unifiETH: data.vaultsTVL?.unifi_eth_vault,
+        unifiUSD: data.vaultsTVL?.unifi_usd_vault,
+        unifiBTC: data.vaultsTVL?.unifi_btc_vault,
+        pufETHs: data.vaultsTVL?.pufeths_vault
+      };
+      return map[name];
+    };
+    const openVault = (vault) => {
+      setSelected(vault);
+      setAmount("");
+      setStatus(null);
+      setTxHash("");
+      setErr("");
+    };
+    const handleDeposit = async () => {
+      if (!selected || !data.address || !amount) return;
+      setErr("");
+      try {
+        setStatus("depositing");
+        await pufferService.ensureNetwork("mainnet");
+        const hash = await pufferService.depositToVault(
+          data.address,
+          selected.unifiToken,
+          inputToken.token,
+          parseAmount(amount, inputToken.decimals)
+        );
+        setStatus("done");
+        setTxHash(hash);
+        localStorage.setItem("lastTxHash", hash);
+        onSuccess(hash);
+      } catch (e19) {
+        setErr(e19.message || "Deposit failed");
+        setStatus(null);
+      }
+    };
+    return /* @__PURE__ */ import_react.default.createElement("section", { className: "screen-content" }, /* @__PURE__ */ import_react.default.createElement("h1", { className: "screen-title" }, "Vaults"), isTestnet && /* @__PURE__ */ import_react.default.createElement("div", { className: "empty-state" }, "UniFi vault deposits are mainnet-only in the current Puffer SDK. Switch to Mainnet to deposit."), /* @__PURE__ */ import_react.default.createElement("div", { className: "vault-grid" }, VAULTS.map((vault) => /* @__PURE__ */ import_react.default.createElement("article", { className: "vault-card", key: vault.name }, /* @__PURE__ */ import_react.default.createElement("div", { className: "vault-card-head" }, /* @__PURE__ */ import_react.default.createElement("span", { style: { background: vault.color } }), /* @__PURE__ */ import_react.default.createElement("h2", null, vault.name)), /* @__PURE__ */ import_react.default.createElement("div", { className: "vault-metrics" }, /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "APY"), /* @__PURE__ */ import_react.default.createElement("strong", null, getApy(vault.address) !== void 0 ? `${fmt(getApy(vault.address), 2)}%` : "-")), /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("span", null, "TVL"), /* @__PURE__ */ import_react.default.createElement("strong", null, getTvl(vault.name) ? fmtCompact(getTvl(vault.name)) : "-"))), /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: "btn-primary small",
+        onClick: () => openVault(vault),
+        disabled: isTestnet
+      },
+      "Deposit"
+    )))), selected && !isTestnet && /* @__PURE__ */ import_react.default.createElement("div", { className: "sheet-overlay", onClick: () => setSelected(null) }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bottom-sheet", onClick: (e19) => e19.stopPropagation() }, /* @__PURE__ */ import_react.default.createElement("div", { className: "sheet-handle" }), /* @__PURE__ */ import_react.default.createElement("h2", null, "Deposit ", selected.name), /* @__PURE__ */ import_react.default.createElement("div", { className: "token-tabs compact" }, VAULT_INPUTS[selected.name].map((option) => /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        key: option.label,
+        className: inputToken.label === option.label ? "active" : "",
+        onClick: () => setInputToken(option),
+        disabled: status === "depositing"
+      },
+      option.label
+    ))), /* @__PURE__ */ import_react.default.createElement("label", { className: "field-label" }, "Amount"), /* @__PURE__ */ import_react.default.createElement("div", { className: "amount-row" }, /* @__PURE__ */ import_react.default.createElement(
+      "input",
+      {
+        type: "number",
+        inputMode: "decimal",
+        placeholder: "0.0",
+        value: amount,
+        onChange: (e19) => setAmount(e19.target.value),
+        disabled: status === "depositing"
+      }
+    )), /* @__PURE__ */ import_react.default.createElement(
+      ProgressSteps,
+      {
+        step: status || null,
+        labels: ["Prepare deposit", "Submit deposit"]
+      }
+    ), err && /* @__PURE__ */ import_react.default.createElement("p", { className: "error-msg" }, err), status === "done" && txHash ? /* @__PURE__ */ import_react.default.createElement(
+      "a",
+      {
+        className: "success-card",
+        href: `${NETWORKS[data.network].explorer}/tx/${txHash}`,
+        target: "_blank",
+        rel: "noreferrer"
+      },
+      "Success. View transaction"
+    ) : /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: "btn-primary full",
+        onClick: handleDeposit,
+        disabled: !amount || status === "depositing"
+      },
+      status === "depositing" ? "Depositing..." : "Deposit"
+    ), /* @__PURE__ */ import_react.default.createElement(
+      "button",
+      {
+        className: "btn-ghost full",
+        onClick: () => setSelected(null)
+      },
+      "Close"
+    ))));
+  }
+  function ChatOverlay({
+    data,
+    onClose,
+    onAction
+  }) {
+    const [messages, setMessages] = (0, import_react.useState)([
+      {
+        role: "assistant",
+        content: `Ask me about Puffer staking, vault APYs, or how much pufETH you would receive. Current APY is ${data.protocolTVL?.apy || "-"}%.`
+      }
+    ]);
     const [input, setInput] = (0, import_react.useState)("");
     const [sending, setSending] = (0, import_react.useState)(false);
-    const [pendingAction, setPendingAction] = (0, import_react.useState)(null);
-    const [showVaults, setShowVaults] = (0, import_react.useState)(false);
-    const messagesEndRef = (0, import_react.useRef)(null);
-    const fetchData = (0, import_react.useCallback)(async (address) => {
+    const [aiEnabled, setAiEnabled] = (0, import_react.useState)(null);
+    const endRef = (0, import_react.useRef)(null);
+    (0, import_react.useEffect)(() => {
+      fetch("/advisor/status").then((res) => res.ok ? res.json() : null).then((status) => setAiEnabled(!!status?.configured)).catch(() => setAiEnabled(false));
+    }, []);
+    (0, import_react.useEffect)(() => {
+      endRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+    const handleSend = async () => {
+      if (!input.trim() || sending) return;
+      const userMsg = { role: "user", content: input.trim() };
+      setMessages((prev) => [...prev, userMsg]);
+      setInput("");
+      setSending(true);
       try {
-        const [rate, metrics, vaultsAPY, vaultsTVL, protocolTVL] = await Promise.all([
-          api.getPufETHRate(),
-          api.getPufETHMetrics(),
-          api.getVaultsAPY(),
-          api.getVaultsTVL(),
-          api.getProtocolTVL()
-        ]);
-        const balance = await pufferService.getPufETHBalance(address);
-        setContext({
-          address,
-          balance: (Number(balance) / 1e18).toFixed(4),
-          rate,
-          metrics,
-          vaultsAPY,
-          vaultsTVL,
-          protocolTVL
+        const context = {
+          address: data.address || "",
+          pufETHBalance: data.balances.pufETH,
+          rate: data.rate || { pufEthPerEth: "0", ethPerPufEth: "0" },
+          metrics: {},
+          vaultsAPY: data.vaultsAPY || { data: [], timestamp: "" },
+          vaultsTVL: data.vaultsTVL || {},
+          protocolTVL: data.protocolTVL || {
+            lrt_total_usd: "0",
+            tvl_puffer_staking: "0",
+            apy: "0",
+            timestamp: ""
+          }
+        };
+        const response = await fetch("/advisor/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ messages: [...messages, userMsg], context })
         });
-      } catch (err) {
-        setError(err.message);
+        if (response.ok) {
+          const result = await response.json();
+          if (typeof result.aiEnabled === "boolean") {
+            setAiEnabled(result.aiEnabled);
+          }
+          setMessages((prev) => [
+            ...prev,
+            { role: "assistant", content: result.reply }
+          ]);
+          if (result.action) setTimeout(() => onAction(result.action), 400);
+        } else {
+          const lower = userMsg.content.toLowerCase();
+          const reply = lower.includes("vault") ? "The Vaults screen has live APY and TVL for all four UniFi vaults. I can take you there to review before depositing." : `At the current rate, 1 ETH previews about ${fmt(data.rate?.pufEthPerEth || 0, 4)} pufETH. I can open the Stake screen with the amount filled so you can confirm.`;
+          setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+          setTimeout(
+            () => onAction(
+              lower.includes("vault") ? { type: "deposit_vault", amount: "", label: "Browse Vaults" } : { type: "stake_eth", amount: "1.0", label: "Stake 1 ETH" }
+            ),
+            400
+          );
+        }
+      } catch {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: "I could not reach the advisor right now, but the live staking and vault screens are ready."
+          }
+        ]);
+      } finally {
+        setSending(false);
       }
+    };
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-overlay" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-panel" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "chat-header" }, /* @__PURE__ */ import_react.default.createElement("strong", null, "AI Advisor"), /* @__PURE__ */ import_react.default.createElement("button", { onClick: onClose }, "\xD7")), aiEnabled === false && /* @__PURE__ */ import_react.default.createElement("p", { className: "chat-setup-hint" }, "No free AI key found. Add ", /* @__PURE__ */ import_react.default.createElement("code", null, "GROQ_API_KEY"), " (free at console.groq.com) or ", /* @__PURE__ */ import_react.default.createElement("code", null, "GEMINI_API_KEY"), " to ", /* @__PURE__ */ import_react.default.createElement("code", null, ".env"), " ", "and restart ", /* @__PURE__ */ import_react.default.createElement("code", null, "pnpm dev"), ". Using basic fallback until then."), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-messages" }, messages.map((m5, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${m5.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, m5.content))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: endRef })), /* @__PURE__ */ import_react.default.createElement("div", { className: "chat-input-row" }, /* @__PURE__ */ import_react.default.createElement(
+      "input",
+      {
+        value: input,
+        onChange: (e19) => setInput(e19.target.value),
+        onKeyDown: (e19) => e19.key === "Enter" && handleSend(),
+        placeholder: "Ask about Puffer..."
+      }
+    ), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleSend, disabled: !input.trim() || sending }, "\u2191"))));
+  }
+  var initialData = {
+    address: null,
+    balances: { ETH: "0", stETH: "0", wstETH: "0", pufETH: "0" },
+    network: "mainnet",
+    rate: null,
+    vaultsAPY: null,
+    vaultsTVL: null,
+    protocolTVL: null
+  };
+  function App() {
+    const [screen, setScreen] = (0, import_react.useState)("home");
+    const [data, setData] = (0, import_react.useState)(initialData);
+    const [loading, setLoading] = (0, import_react.useState)(true);
+    const [hasWallet, setHasWallet] = (0, import_react.useState)(false);
+    const [chatOpen, setChatOpen] = (0, import_react.useState)(false);
+    const [stakePrefill, setStakePrefill] = (0, import_react.useState)({});
+    const [vaultPrefill, setVaultPrefill] = (0, import_react.useState)({});
+    const [network, setNetwork] = (0, import_react.useState)("mainnet");
+    const fetchData = (0, import_react.useCallback)(async (address, active) => {
+      const [rate, vaultsAPY, vaultsTVL, protocolTVL] = active === "mainnet" ? await Promise.all([
+        safeValue(() => api.getPufETHRate(), null),
+        safeValue(() => api.getVaultsAPY(), null),
+        safeValue(() => api.getVaultsTVL(), null),
+        safeValue(() => api.getProtocolTVL(), null)
+      ]) : [
+        await safeValue(() => pufferService.getPufETHRate(), null),
+        null,
+        null,
+        {
+          lrt_total_usd: "0",
+          tvl_puffer_staking: "0",
+          apy: "0",
+          timestamp: (/* @__PURE__ */ new Date()).toISOString()
+        }
+      ];
+      const [pufETH, eth, stETH, wstETH] = await Promise.all([
+        safeValue(() => pufferService.getPufETHBalance(address), BigInt(0)),
+        safeValue(() => pufferService.getEthBalance(address), "0"),
+        safeValue(
+          () => pufferService.getTokenBalance(c.stETH, address),
+          BigInt(0)
+        ),
+        safeValue(
+          () => pufferService.getTokenBalance(c.wstETH, address),
+          BigInt(0)
+        )
+      ]);
+      setData({
+        address,
+        network: active,
+        balances: {
+          ETH: eth,
+          stETH: formatEther(stETH),
+          wstETH: formatEther(wstETH),
+          pufETH: formatEther(pufETH)
+        },
+        rate,
+        vaultsAPY,
+        vaultsTVL,
+        protocolTVL
+      });
     }, []);
     (0, import_react.useEffect)(() => {
       const init = async () => {
+        if (!window.ethereum) {
+          setHasWallet(false);
+          setLoading(false);
+          return;
+        }
+        setHasWallet(true);
         try {
-          if (IS_MOCK) {
-            setContext(MOCK_CONTEXT);
-            setMessages([{
-              role: "assistant",
-              content: "\u{1F44B} Welcome to StakeMind! Your AI staking advisor for Puffer Finance.\n\nYou have 2.45 pufETH (\u22482.55 ETH). Current rate: 1.042 ETH per pufETH. Protocol APY: 4.2%.\n\nTop vault: pufETHs at 6.1% APY. Want to stake more ETH or explore vaults?"
-            }]);
-            setLoading(false);
-            return;
-          }
-          const address = await pufferService.connectWallet();
-          await fetchData(address);
-          setMessages([{ role: "assistant", content: "Welcome to StakeMind! How can I help you with staking today?" }]);
-        } catch (err) {
-          console.error("Init error:", err);
-          setError(err.message || "Failed to initialize app");
+          const activeNetwork2 = await pufferService.getWalletNetwork();
+          setNetwork(activeNetwork2);
+          const address = await pufferService.connectWallet(activeNetwork2);
+          await fetchData(address, activeNetwork2);
+        } catch (e19) {
+          console.error(e19);
         } finally {
           setLoading(false);
         }
       };
       init();
-    }, []);
-    (0, import_react.useEffect)(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
-    const handleSend = async () => {
-      if (!input.trim() || sending) return;
-      const userMessage = { role: "user", content: input };
-      setMessages((prev) => [...prev, userMessage]);
-      setInput("");
-      setSending(true);
+    }, [fetchData]);
+    const nav = (next) => {
+      setScreen(next);
+      if (next !== "stake") setStakePrefill({});
+      if (next !== "vaults") setVaultPrefill({});
+    };
+    const handleAdvisorAction = (action) => {
+      setChatOpen(false);
+      if (action.type === "stake_eth") {
+        setStakePrefill({ token: "ETH", amount: action.amount });
+        setScreen("stake");
+      } else if (action.type === "stake_steth") {
+        setStakePrefill({ token: "stETH", amount: action.amount });
+        setScreen("stake");
+      } else if (action.type === "stake_wsteth") {
+        setStakePrefill({ token: "wstETH", amount: action.amount });
+        setScreen("stake");
+      } else if (action.type === "swap_and_stake") {
+        setStakePrefill({
+          advanced: true,
+          amount: action.amount,
+          customToken: action.inputToken
+        });
+        setScreen("stake");
+      } else if (action.type === "deposit_vault") {
+        setVaultPrefill({ vault: action.vault, amount: action.amount });
+        setScreen("vaults");
+      }
+    };
+    const handleNetworkChange = async (next) => {
+      if (!data.address || next === network) return;
+      setLoading(true);
       try {
-        if (IS_MOCK) {
-          const mockReplies = {
-            stake: {
-              reply: "Sure! How much ETH would you like to stake? At the current rate of 1.042 ETH per pufETH, staking 1 ETH will mint about 0.96 pufETH. Current APY is 4.2%.",
-              action: { type: "stake_eth", amount: "1", label: "Stake 1 ETH \u2192 pufETH" }
-            },
-            vault: {
-              reply: "Top vaults right now: pufETHs leads at 6.1% APY, followed by unifiETH at 5.2%, unifiUSD at 4.8%, and unifiBTC at 3.9%. pufETHs is the best choice for maximizing ETH-denominated yield."
-            },
-            balance: {
-              reply: `You currently hold ${context.balance} pufETH, worth approximately ${(Number(context.balance) * 1.042).toFixed(4)} ETH at today's rate. That's earning you about 4.2% APY just by holding.`
-            },
-            apy: {
-              reply: "pufETH base staking APY is 4.2% from validator rewards. UniFi vaults offer 3.9%\u20136.1% depending on strategy. The rate appreciates over time as validators earn, so your pufETH becomes worth more ETH."
-            },
-            earn: {
-              reply: "Staking 2 ETH for 3 months at 4.2% APY would earn you about 0.021 ETH (\u2248$63 at current prices). Your 2 ETH becomes 1.92 pufETH, which grows to \u22482.021 ETH worth of pufETH after 3 months.",
-              action: { type: "stake_eth", amount: "2", label: "Stake 2 ETH \u2192 pufETH" }
-            },
-            difference: {
-              reply: "unifiETH is a multi-strategy ETH vault (5.2% APY) that deploys across DeFi. pufETHs is a single-sided pufETH vault (6.1% APY) optimized for liquid restaking yield. pufETHs has higher APY but is ETH-only."
-            }
-          };
-          const key = Object.keys(mockReplies).find((k3) => input.toLowerCase().includes(k3));
-          const result2 = mockReplies[key || ""] || {
-            reply: "I can help you stake ETH/stETH/wstETH, compare vault APYs, estimate earnings, or explain how Puffer works. What would you like to know?"
-          };
-          setMessages((prev) => [...prev, { role: "assistant", content: result2.reply }]);
-          if (result2.action) setPendingAction(result2.action);
-          setSending(false);
-          return;
-        }
-        const result = await sendMessage(
-          [...messages, userMessage],
-          context,
-          ""
-        );
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: result.reply }
-        ]);
-        if (result.action) setPendingAction(result.action);
-      } catch (err) {
-        setError(err.message);
+        await pufferService.switchNetwork(next);
+        setNetwork(next);
+        setScreen("home");
+        setStakePrefill({});
+        setVaultPrefill({});
+        await fetchData(data.address, next);
+      } catch (e19) {
+        console.error(e19);
       } finally {
-        setSending(false);
+        setLoading(false);
       }
     };
-    const handleConfirm = async () => {
-      if (!pendingAction || !context.address) return;
-      try {
-        if (IS_MOCK) {
-          const mockTx = "0xMock" + Math.random().toString(16).slice(2, 18).toUpperCase();
-          setMessages((prev) => [...prev, { role: "assistant", content: `\u2705 Mock transaction submitted!
-Tx: ${mockTx}
-
-In a real wallet, this would stake ${pendingAction.amount} ETH and mint ~${(Number(pendingAction.amount) * 0.959).toFixed(4)} pufETH.` }]);
-          setPendingAction(null);
-          return;
-        }
-        const amountWei = BigInt(Number(pendingAction.amount) * 1e18);
-        let txHash;
-        switch (pendingAction.type) {
-          case "stake_eth":
-            txHash = await pufferService.stakeETH(context.address, amountWei);
-            break;
-          case "stake_steth":
-            txHash = await pufferService.stakeStETH(context.address, amountWei);
-            break;
-          case "stake_wsteth":
-            txHash = await pufferService.stakeWstETH(context.address, amountWei);
-            break;
-        }
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", content: `Transaction submitted! ${txHash}` }
-        ]);
-        setPendingAction(null);
-        await fetchData(context.address);
-      } catch (err) {
-        setError(err.message);
-      }
+    const refresh = () => {
+      if (data.address) fetchData(data.address, network);
     };
-    if (loading) {
-      return /* @__PURE__ */ import_react.default.createElement("div", { className: "screen loading-screen" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "skeleton-card" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "skeleton-line" }), /* @__PURE__ */ import_react.default.createElement("div", { className: "skeleton-line short" }));
-    }
-    if (error) {
-      return /* @__PURE__ */ import_react.default.createElement("div", { className: "screen error-screen" }, /* @__PURE__ */ import_react.default.createElement("p", null, error));
-    }
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app" }, /* @__PURE__ */ import_react.default.createElement("header", { className: "header" }, /* @__PURE__ */ import_react.default.createElement("h1", null, "StakeMind ", IS_MOCK && /* @__PURE__ */ import_react.default.createElement("span", { className: "mock-badge" }, "MOCK")), /* @__PURE__ */ import_react.default.createElement("div", { className: "header-info" }, /* @__PURE__ */ import_react.default.createElement("span", null, context.address?.slice(0, 6), "...", context.address?.slice(-4)), /* @__PURE__ */ import_react.default.createElement("span", { className: "balance" }, context.balance, " pufETH")), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setShowVaults(true) }, "Vaults")), /* @__PURE__ */ import_react.default.createElement("main", { className: "chat-container" }, messages.map((msg, i) => /* @__PURE__ */ import_react.default.createElement("div", { key: i, className: `message ${msg.role}` }, /* @__PURE__ */ import_react.default.createElement("div", { className: "bubble" }, msg.content))), sending && /* @__PURE__ */ import_react.default.createElement("div", { className: "message assistant" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "typing" }, "...")), /* @__PURE__ */ import_react.default.createElement("div", { ref: messagesEndRef })), /* @__PURE__ */ import_react.default.createElement("footer", { className: "input-container" }, /* @__PURE__ */ import_react.default.createElement(
-      "input",
+    if (loading) return /* @__PURE__ */ import_react.default.createElement(SplashScreen, { loading: true });
+    if (!hasWallet) return /* @__PURE__ */ import_react.default.createElement(SplashScreen, null);
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "app-shell" }, /* @__PURE__ */ import_react.default.createElement(
+      AppHeader,
       {
-        value: input,
-        onChange: (e19) => setInput(e19.target.value),
-        placeholder: "Ask about staking...",
-        onKeyPress: (e19) => e19.key === "Enter" && handleSend()
+        data,
+        network,
+        onNetworkChange: handleNetworkChange
       }
-    ), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleSend, disabled: sending || !input.trim() }, "Send")), pendingAction && /* @__PURE__ */ import_react.default.createElement("div", { className: "modal" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "Confirm ", pendingAction.label), /* @__PURE__ */ import_react.default.createElement("button", { onClick: handleConfirm }, "Confirm"), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setPendingAction(null) }, "Cancel"))), showVaults && /* @__PURE__ */ import_react.default.createElement("div", { className: "modal" }, /* @__PURE__ */ import_react.default.createElement("div", { className: "modal-content" }, /* @__PURE__ */ import_react.default.createElement("h3", null, "UniFi Vaults"), Object.entries(VAULT_ADDRESSES).map(([name]) => /* @__PURE__ */ import_react.default.createElement("div", { key: name, className: "vault-card" }, /* @__PURE__ */ import_react.default.createElement("h4", null, name), /* @__PURE__ */ import_react.default.createElement(
+    ), /* @__PURE__ */ import_react.default.createElement("main", { className: "main-content" }, screen === "home" && /* @__PURE__ */ import_react.default.createElement(HomeScreen, { data, onNav: nav }), screen === "stake" && /* @__PURE__ */ import_react.default.createElement(StakeScreen, { data, prefill: stakePrefill, onSuccess: refresh }), screen === "vaults" && /* @__PURE__ */ import_react.default.createElement(
+      VaultsScreen,
+      {
+        data,
+        prefill: vaultPrefill,
+        onSuccess: refresh
+      }
+    )), /* @__PURE__ */ import_react.default.createElement(BottomNav, { screen, onNav: nav }), /* @__PURE__ */ import_react.default.createElement(
       "button",
       {
-        onClick: () => {
-          setMessages((prev) => [
-            ...prev,
-            { role: "user", content: `Tell me about ${name}` }
-          ]);
-          setShowVaults(false);
-        }
+        className: "advisor-fab",
+        onClick: () => setChatOpen(true),
+        "aria-label": "Open AI advisor"
       },
-      "Ask AI"
-    ))), /* @__PURE__ */ import_react.default.createElement("button", { onClick: () => setShowVaults(false) }, "Close"))));
+      "\u{1F4AC}"
+    ), chatOpen && /* @__PURE__ */ import_react.default.createElement(
+      ChatOverlay,
+      {
+        data,
+        onClose: () => setChatOpen(false),
+        onAction: handleAdvisorAction
+      }
+    ));
   }
 
   // src/index.tsx

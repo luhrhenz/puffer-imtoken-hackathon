@@ -1,0 +1,17 @@
+{
+  "name": "StakeMind",
+  "short_name": "StakeMind",
+  "description": "AI-assisted Puffer staking and vaults mini-app.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D0D0D",
+  "theme_color": "#F5A623",
+  "icons": [
+    {
+      "src": "/stakemind-icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

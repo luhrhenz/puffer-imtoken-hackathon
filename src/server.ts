@@ -10,6 +10,8 @@ import {
   protocolRouter,
   tokensRouter,
   gaugesRouter,
+  swapRouter,
+  advisorRouter,
 } from './api';
 import { env } from './common/lib/environment';
 import { logger } from './common/lib/logger';
@@ -22,12 +24,27 @@ const app = express();
 
 // Configuration
 app.set('port', env.PORT);
+app.set('trust proxy', 1);
 
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        connectSrc: [
+          "'self'",
+          'https://api.openai.com',
+          'https://api.groq.com',
+          'https://generativelanguage.googleapis.com',
+          'https://api.1inch.dev',
+        ],
+      },
+    },
+  }),
+);
 app.use(pinoHttp({ logger }));
 app.use(requestLoggingMiddleware);
 app.use(rateLimitMiddleware);
@@ -51,6 +68,8 @@ baseRouter.use('/vaults', vaultsRouter);
 baseRouter.use('/protocol', protocolRouter);
 baseRouter.use('/tokens', tokensRouter);
 baseRouter.use('/gauges', gaugesRouter);
+baseRouter.use('/swap', swapRouter);
+baseRouter.use('/advisor', advisorRouter);
 
 // Mount the base router with the BASE_URL prefix.
 app.use(env.BASE_URL, baseRouter);

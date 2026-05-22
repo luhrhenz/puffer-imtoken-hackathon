@@ -1,3 +1,5 @@
+import { LlmConfig } from '@/common/lib/llm-config';
+
 export interface AdvisorContext {
   address: string;
   pufETHBalance: string;
@@ -26,16 +28,51 @@ interface Message {
   content: string;
 }
 
-const LLM_API_URL = 'https://api.openai.com/v1/chat/completions';
+function parseActionFromContent(content: string): {
+  reply: string;
+  action?: Action;
+} {
+  const actionMatch = content.match(/<action>(.*?)<\/action>/s);
+  let action: Action | undefined;
+
+  if (actionMatch) {
+    try {
+      action = JSON.parse(actionMatch[1]);
+    } catch {
+      // Invalid JSON, ignore
+    }
+  }
+
+  return {
+    reply: content.replace(actionMatch?.[0] || '', '').trim(),
+    action,
+  };
+}
 
 export function buildSystemPrompt(context: AdvisorContext): string {
   const { address, pufETHBalance, rate, protocolTVL, vaultsAPY } = context;
 
   const vaultData = [
-    { name: 'unifiETH', apy: 0, address: '0x196ead472583bc1e9af7a05f860d9857e1bd3dcc' },
-    { name: 'unifiUSD', apy: 0, address: '0x82c40e07277eBb92935f79cE92268F80dDc7caB4' },
-    { name: 'unifiBTC', apy: 0, address: '0x170d847a8320f3b6a77ee15b0cae430e3ec933a0' },
-    { name: 'pufETHs', apy: 0, address: '0x62a4ce0722ee65635c0f8339dd814d549b6f6735' },
+    {
+      name: 'unifiETH',
+      apy: 0,
+      address: '0x196ead472583bc1e9af7a05f860d9857e1bd3dcc',
+    },
+    {
+      name: 'unifiUSD',
+      apy: 0,
+      address: '0x82c40e07277eBb92935f79cE92268F80dDc7caB4',
+    },
+    {
+      name: 'unifiBTC',
+      apy: 0,
+      address: '0x170d847a8320f3b6a77ee15b0cae430e3ec933a0',
+    },
+    {
+      name: 'pufETHs',
+      apy: 0,
+      address: '0x62a4ce0722ee65635c0f8339dd814d549b6f6735',
+    },
   ];
 
   vaultsAPY.data.forEach((v: any) => {
@@ -46,8 +83,12 @@ export function buildSystemPrompt(context: AdvisorContext): string {
     else if (key.includes('62a4ce07')) vaultData[3].apy = v.apy;
   });
 
-  const pufEthBalanceInEth = (Number(pufETHBalance) * Number(rate.ethPerPufEth)).toFixed(4);
-  const vaultsTable = vaultData.map(v => `${v.name}: ${v.apy}% APY`).join(', ');
+  const pufEthBalanceInEth = (
+    Number(pufETHBalance) * Number(rate.ethPerPufEth)
+  ).toFixed(4);
+  const vaultsTable = vaultData
+    .map((v) => `${v.name}: ${v.apy}% APY`)
+    .join(', ');
 
   return `You are a DeFi staking advisor for Puffer Finance, embedded inside the imToken mobile wallet.
 You help users stake ETH and earn yield through Puffer's liquid restaking protocol.
@@ -75,21 +116,19 @@ Only include one action tag per message. Only recommend amounts the user mention
 If the user wants to stake a token other than ETH/stETH/wstETH, use type "swap_and_stake" and set inputToken.`;
 }
 
-export async function sendMessage(
+async function sendOpenAiCompatible(
+  config: LlmConfig,
   messages: Message[],
-  context: AdvisorContext,
-  apiKey: string,
-): Promise<{ reply: string; action?: Action }> {
-  const systemPrompt = buildSystemPrompt(context);
-
-  const response = await fetch(LLM_API_URL, {
+  systemPrompt: string,
+): Promise<string> {
+  const response = await fetch(config.url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
+      Authorization: `Bearer ${config.apiKey}`,
     },
     body: JSON.stringify({
-      model: 'gpt-4o-mini',
+      model: config.model,
       messages: [{ role: 'system', content: systemPrompt }, ...messages],
       temperature: 0.7,
       max_tokens: 500,
@@ -97,22 +136,57 @@ export async function sendMessage(
   });
 
   if (!response.ok) {
-    throw new Error('Failed to get AI response');
+    const err = await response.text();
+    throw new Error(`LLM request failed (${config.provider}): ${err}`);
   }
 
   const data = await response.json();
-  const content = data.choices[0].message.content;
+  return data.choices[0].message.content as string;
+}
 
-  const actionMatch = content.match(/<action>(.*?)<\/action>/s);
-  let action: Action | undefined;
+async function sendGemini(
+  config: LlmConfig,
+  messages: Message[],
+  systemPrompt: string,
+): Promise<string> {
+  const url = `${config.url}/${config.model}:generateContent?key=${config.apiKey}`;
+  const contents = messages.map((m) => ({
+    role: m.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: m.content }],
+  }));
 
-  if (actionMatch) {
-    try {
-      action = JSON.parse(actionMatch[1]);
-    } catch {
-      // Invalid JSON, ignore
-    }
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: systemPrompt }] },
+      contents,
+      generationConfig: { temperature: 0.7, maxOutputTokens: 500 },
+    }),
+  });
+
+  if (!response.ok) {
+    const err = await response.text();
+    throw new Error(`LLM request failed (gemini): ${err}`);
   }
 
-  return { reply: content.replace(actionMatch?.[0] || '', '').trim(), action };
+  const data = await response.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error('Empty Gemini response');
+  return text;
+}
+
+export async function sendMessage(
+  messages: Message[],
+  context: AdvisorContext,
+  config: LlmConfig,
+): Promise<{ reply: string; action?: Action }> {
+  const systemPrompt = buildSystemPrompt(context);
+
+  const content =
+    config.provider === 'gemini'
+      ? await sendGemini(config, messages, systemPrompt)
+      : await sendOpenAiCompatible(config, messages, systemPrompt);
+
+  return parseActionFromContent(content);
 }

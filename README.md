@@ -29,7 +29,7 @@ When it recommends an action, a confirmation button appears inline. Tap it, revi
 - **Frontend**: React + TypeScript
 - **Blockchain**: Official Puffer SDK, viem
 - **Data**: Live Puffer API
-- **AI**: OpenAI GPT-4o-mini
+- **AI**: Groq / Gemini (free tiers) or OpenAI
 - **Backend**: Express API proxy
 - **Environment**: imToken WebView compatible
 
@@ -184,11 +184,42 @@ git clone <this-repo>
 cd puffer-imtoken-hackathon
 pnpm install
 cp .env.example .env
-# Fill in .env values
+# Fill in .env values (see below)
 pnpm dev
 ```
 
 Server starts at `http://localhost:8080`. Swagger docs at `http://localhost:8080/docs`.
+
+### AI advisor (free options)
+
+OpenAI is **paid**. StakeMind supports **free** providers (auto-detected in this order: Groq → Gemini → OpenAI).
+
+**Recommended — Groq (free):**
+
+1. Create a key at [console.groq.com](https://console.groq.com)
+2. Add to `.env`:
+
+```bash
+GROQ_API_KEY=gsk_...
+```
+
+**Or Google Gemini (free):**
+
+1. Create a key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+2. Add to `.env`:
+
+```bash
+GEMINI_API_KEY=...
+```
+
+Without any key, `/advisor/chat` uses a small keyword fallback (not real AI). Check configuration:
+
+```bash
+curl http://localhost:8080/advisor/status
+# {"configured":true,"provider":"groq","model":"llama-3.3-70b-versatile","freeTier":true}
+```
+
+On **Vercel**, set `GROQ_API_KEY` (or `GEMINI_API_KEY`) in Project → Settings → Environment Variables, then redeploy.
 
 ## Docker
 

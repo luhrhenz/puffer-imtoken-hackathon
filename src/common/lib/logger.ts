@@ -1,7 +1,11 @@
 import pino from 'pino';
 import { env } from './environment';
 
-const isProd = env.ENVIRONMENT == 'production' || env.ENVIRONMENT == 'staging';
+const isServerless = process.env.VERCEL === '1';
+const isProd =
+  env.ENVIRONMENT == 'production' ||
+  env.ENVIRONMENT == 'staging' ||
+  isServerless;
 
 const baseLogger = {
   level: isProd ? 'info' : 'debug',

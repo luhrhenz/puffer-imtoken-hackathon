@@ -9,3 +9,5 @@ declare module 'express' {
     locals: ResponseLocals;
   }
 }
+
+declare const __ONE_INCH_API_KEY__: string;

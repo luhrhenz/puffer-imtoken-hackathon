@@ -561,6 +561,122 @@ a {
 .advanced-fields {
   padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: grid;
+  gap: 10px;
+}
+
+.advanced-amount-row .amount-symbol {
+  min-width: 52px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f5a623;
+  font-weight: 800;
+  font-size: 0.82rem;
+  background: #101010;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+.quote-btn {
+  margin-top: 4px;
+}
+
+.quote-btn.loading {
+  pointer-events: none;
+}
+
+.btn-spinner-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(17, 17, 17, 0.25);
+  border-top-color: #111;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.route-card {
+  margin-top: 4px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #101010;
+  border: 1px solid rgba(245, 166, 35, 0.22);
+}
+
+.route-flow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: #f5a623;
+  margin-bottom: 12px;
+}
+
+.route-arrow {
+  color: #a7a095;
+  font-weight: 600;
+}
+
+.route-rows {
+  display: grid;
+  gap: 8px;
+}
+
+.route-rows div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.84rem;
+}
+
+.route-rows strong {
+  color: #f7f3ea;
+  font-size: 0.9rem;
+}
+
+.advanced-progress {
+  margin: 4px 0;
+}
+
+.advanced-progress .progress-steps div {
+  flex: 1 1 30%;
+  min-width: 0;
+  font-size: 0.68rem;
+}
+
+.powered-by {
+  margin: 6px 0 0;
+  text-align: center;
+  color: #6f6a60;
+  font-size: 0.72rem;
+}
+
+.tx-hash-list {
+  display: grid;
+  gap: 8px;
+}
+
+.success-card.compact {
+  min-height: 42px;
+  padding: 10px 12px;
+  font-size: 0.84rem;
 }
 
 .plain-input {

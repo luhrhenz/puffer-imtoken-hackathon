@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { formatEther, parseEther, parseUnits } from 'viem';
+import { formatEther, parseUnits } from 'viem';
 import { Token, UnifiToken } from '@pufferfinance/puffer-sdk';
 import {
   api,
@@ -10,6 +10,7 @@ import {
 } from './services/api';
 import { NETWORKS, NetworkKey, pufferService } from './services/puffer';
 import { Action } from './services/advisor';
+import { AdvancedStakePanel } from './components/AdvancedStakePanel';
 import { useI18n, LanguageSwitcher } from './i18n/context';
 import type { Locale } from './i18n/locales';
 
@@ -50,8 +51,6 @@ interface VaultPrefill {
   vault?: string;
   amount?: string;
 }
-
-const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
 const STAKE_TOKEN_MAP: Record<Exclude<StakeToken, 'ETH'>, Token> = {
   stETH: Token.stETH,
@@ -363,8 +362,6 @@ function StakeScreen({
   const [token, setToken] = useState<StakeToken>(prefill.token || 'ETH');
   const [amount, setAmount] = useState(prefill.amount || '');
   const [advanced, setAdvanced] = useState(!!prefill.advanced);
-  const [customToken, setCustomToken] = useState(prefill.customToken || '');
-  const [quote, setQuote] = useState<string>('');
   const [step, setStep] = useState<StakeStep>(null);
   const [txHash, setTxHash] = useState('');
   const [err, setErr] = useState('');
@@ -374,7 +371,6 @@ function StakeScreen({
   useEffect(() => {
     if (prefill.token) setToken(prefill.token);
     if (prefill.amount) setAmount(prefill.amount);
-    if (prefill.customToken) setCustomToken(prefill.customToken);
     if (prefill.advanced !== undefined) setAdvanced(prefill.advanced);
   }, [prefill]);
 
@@ -382,30 +378,6 @@ function StakeScreen({
     amount && data.rate
       ? fmt(Number(amount) * Number(data.rate.pufEthPerEth), 4, locale)
       : '-';
-
-  const fetchQuote = useCallback(async () => {
-    if (!advanced || !customToken || !amount) {
-      setQuote('');
-      return;
-    }
-    try {
-      const params = new URLSearchParams({
-        src: customToken,
-        dst: WETH_ADDRESS,
-        amount: parseEther(amount).toString(),
-      });
-      const res = await fetch(`/swap/quote?${params.toString()}`);
-      if (!res.ok) throw new Error('Quote unavailable');
-      const json = await res.json();
-      setQuote(formatEther(BigInt(json.dstAmount || '0')));
-    } catch {
-      setQuote('');
-    }
-  }, [advanced, customToken, amount]);
-
-  useEffect(() => {
-    fetchQuote();
-  }, [fetchQuote]);
 
   const handleMax = () => {
     if (!advanced) setAmount(data.balances[token] || '0');
@@ -420,33 +392,7 @@ function StakeScreen({
       let hash = '';
       await pufferService.ensureNetwork(data.network);
 
-      if (advanced) {
-        if (isTestnet) {
-          throw new Error(t('stake.advancedMainnet'));
-        }
-        if (!customToken) throw new Error(t('stake.enterToken'));
-        setStep('swapping');
-        const params = new URLSearchParams({
-          src: customToken,
-          dst: WETH_ADDRESS,
-          amount: amountWei.toString(),
-          from: data.address,
-          slippage: '1',
-          disableEstimate: 'true',
-        });
-        const res = await fetch(`/swap/transaction?${params.toString()}`);
-        if (!res.ok) throw new Error('1inch swap route unavailable');
-        const swap = await res.json();
-        await window.ethereum.request({
-          method: 'eth_sendTransaction',
-          params: [swap.tx],
-        });
-        setStep('staking');
-        hash = await pufferService.stakeWETH(
-          data.address,
-          BigInt(swap.dstAmount || '0'),
-        );
-      } else if (token === 'ETH') {
+      if (token === 'ETH') {
         setStep('staking');
         hash = await pufferService.stakeETH(data.address, amountWei);
       } else {
@@ -478,93 +424,82 @@ function StakeScreen({
     <section className="screen-content">
       <h1 className="screen-title">{t('stake.title')}</h1>
       <div className="form-card">
-        <div className="token-tabs">
-          {(['ETH', 'stETH', 'wstETH'] as StakeToken[]).map((t) => (
-            <button
-              key={t}
-              className={token === t ? 'active' : ''}
-              onClick={() => setToken(t)}
-              disabled={busy || advanced}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
+        {!advanced && (
+          <>
+            <div className="token-tabs">
+              {(['ETH', 'stETH', 'wstETH'] as StakeToken[]).map((t) => (
+                <button
+                  key={t}
+                  className={token === t ? 'active' : ''}
+                  onClick={() => setToken(t)}
+                  disabled={busy}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
 
-        <label className="field-label">{t('stake.amount')}</label>
-        <div className="amount-row">
-          <input
-            type="number"
-            inputMode="decimal"
-            placeholder="0.0"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            disabled={busy}
-          />
-          <button onClick={handleMax} disabled={busy || advanced}>
-            MAX
-          </button>
-        </div>
-        <div className="balance-line">
-          {t('stake.balance')}{' '}
-          {advanced
-            ? '-'
-            : `${fmt(data.balances[token] || '0', 4, locale)} ${token}`}
-        </div>
-
-        <div className="preview-card">
-          <span>{t('stake.youReceive')}</span>
-          <strong>
-            {advanced && quote
-              ? fmt(
-                  Number(quote) * Number(data.rate?.pufEthPerEth || 0),
-                  4,
-                  locale,
-                )
-              : preview}{' '}
-            pufETH
-          </strong>
-        </div>
-
-        {((token !== 'ETH' && busy) || advanced) && (
-          <ProgressSteps
-            step={step || null}
-            labels={
-              advanced
-                ? [t('stake.swapWeth'), t('stake.stakeWeth')]
-                : [t('stake.approve'), t('stake.stakeStep')]
-            }
-          />
+            <label className="field-label">{t('stake.amount')}</label>
+            <div className="amount-row">
+              <input
+                type="number"
+                inputMode="decimal"
+                placeholder="0.0"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                disabled={busy}
+              />
+              <button onClick={handleMax} disabled={busy}>
+                MAX
+              </button>
+            </div>
+            <div className="balance-line">
+              {t('stake.balance')}{' '}
+              {`${fmt(data.balances[token] || '0', 4, locale)} ${token}`}
+            </div>
+          </>
         )}
 
-        {err && <p className="error-msg">{err}</p>}
-        {step === 'done' && txHash && (
-          <a
-            className="success-card"
-            href={`${NETWORKS[data.network].explorer}/tx/${txHash}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {t('stake.success')}
-          </a>
-        )}
+        {!advanced && (
+          <>
+            <div className="preview-card">
+              <span>{t('stake.youReceive')}</span>
+              <strong>{preview} pufETH</strong>
+            </div>
 
-        {step !== 'done' && (
-          <button
-            className="btn-primary full"
-            onClick={handleStake}
-            disabled={!amount || !data.address || busy}
-          >
-            {step === 'approving'
-              ? t('stake.approving')
-              : step === 'swapping'
-                ? t('stake.swapping')
-                : step === 'staking'
-                  ? t('stake.staking')
-                  : advanced
-                    ? t('stake.swapStake')
+            {token !== 'ETH' && busy && (
+              <ProgressSteps
+                step={step || null}
+                labels={[t('stake.approve'), t('stake.stakeStep')]}
+              />
+            )}
+
+            {err && <p className="error-msg">{err}</p>}
+            {step === 'done' && txHash && (
+              <a
+                className="success-card"
+                href={`${NETWORKS[data.network].explorer}/tx/${txHash}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {t('stake.success')}
+              </a>
+            )}
+
+            {step !== 'done' && (
+              <button
+                className="btn-primary full"
+                onClick={handleStake}
+                disabled={!amount || !data.address || busy}
+              >
+                {step === 'approving'
+                  ? t('stake.approving')
+                  : step === 'staking'
+                    ? t('stake.staking')
                     : t('stake.stakeToken', { token })}
-          </button>
+              </button>
+            )}
+          </>
         )}
       </div>
 
@@ -582,22 +517,14 @@ function StakeScreen({
                 : t('stake.off')}
           </strong>
         </button>
-        {advanced && !isTestnet && (
-          <div className="advanced-fields">
-            <label className="field-label">{t('stake.tokenAddress')}</label>
-            <input
-              className="plain-input"
-              placeholder="0x..."
-              value={customToken}
-              onChange={(e) => setCustomToken(e.target.value)}
-            />
-            <div className="quote-line">
-              {t('stake.quote')}{' '}
-              {quote
-                ? `${fmt(quote, 6, locale)} WETH`
-                : t('stake.quoteEmpty')}
-            </div>
-          </div>
+        {advanced && !isTestnet && data.address && (
+          <AdvancedStakePanel
+            walletAddress={data.address}
+            rate={data.rate}
+            onSuccess={onSuccess}
+            initialToken={prefill.customToken}
+            initialAmount={prefill.amount}
+          />
         )}
       </div>
     </section>

@@ -25,6 +25,7 @@ esbuild.build({
   define: {
     'process.env.NODE_ENV': '"production"',
     'process.env': '{}',
+    __ONE_INCH_API_KEY__: JSON.stringify(process.env.ONE_INCH_API_KEY || ''),
     global: 'window',
   },
 });

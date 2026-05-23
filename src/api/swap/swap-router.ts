@@ -5,6 +5,12 @@ import { sendResponse } from '@/common/lib/response';
 const swapRouter = Router();
 const ONE_INCH_BASE = 'https://api.1inch.dev/swap/v6.0/1';
 
+swapRouter.get('/status', (_req: Request, res: Response) => {
+  return sendResponse(res, 200, {
+    proxyAvailable: Boolean(env.ONE_INCH_API_KEY),
+  });
+});
+
 function oneInchHeaders() {
   return env.ONE_INCH_API_KEY
     ? { Authorization: `Bearer ${env.ONE_INCH_API_KEY}` }

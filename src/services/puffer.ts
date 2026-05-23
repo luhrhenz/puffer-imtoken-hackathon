@@ -6,7 +6,7 @@ import {
   UnifiToken,
   CONTRACT_ADDRESSES,
 } from '@pufferfinance/puffer-sdk';
-import { formatEther } from 'viem';
+import { encodeFunctionData, formatEther, maxUint256 } from 'viem';
 
 const RPC_URL = process.env.ETH_RPC_URL || 'https://eth.llamarpc.com';
 const HOLESKY_RPC_URL =
@@ -254,5 +254,71 @@ export const pufferService = {
         isPreapproved: false,
       });
     return transact();
+  },
+
+  async approveErc20Address(
+    tokenAddress: string,
+    owner: string,
+    spender: string,
+    amountWei: bigint = maxUint256,
+  ): Promise<string> {
+    if (!window.ethereum) {
+      throw new Error('No wallet found. Please open this app in imToken.');
+    }
+
+    const data = encodeFunctionData({
+      abi: [
+        {
+          name: 'approve',
+          type: 'function',
+          stateMutability: 'nonpayable',
+          inputs: [
+            { name: 'spender', type: 'address' },
+            { name: 'amount', type: 'uint256' },
+          ],
+          outputs: [{ type: 'bool' }],
+        },
+      ] as const,
+      functionName: 'approve',
+      args: [spender as `0x${string}`, amountWei],
+    });
+
+    return window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [
+        {
+          from: owner,
+          to: tokenAddress,
+          data,
+        },
+      ],
+    });
+  },
+
+  async sendRawTransaction(tx: {
+    from: string;
+    to: string;
+    data: string;
+    value?: string;
+    gas?: string;
+    gasPrice?: string;
+  }): Promise<string> {
+    if (!window.ethereum) {
+      throw new Error('No wallet found. Please open this app in imToken.');
+    }
+
+    return window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [
+        {
+          from: tx.from,
+          to: tx.to,
+          data: tx.data,
+          value: tx.value || '0x0',
+          ...(tx.gas ? { gas: tx.gas } : {}),
+          ...(tx.gasPrice ? { gasPrice: tx.gasPrice } : {}),
+        },
+      ],
+    });
   },
 };

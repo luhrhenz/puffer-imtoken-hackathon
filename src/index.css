@@ -81,6 +81,97 @@ a {
   border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+.bg-bubbles {
+  position: fixed;
+  inset: 0;
+  max-width: var(--app-max);
+  margin: 0 auto;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-bubbles .bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(245, 166, 35, 0.14),
+    rgba(245, 166, 35, 0.02) 70%
+  );
+  border: 1px solid rgba(245, 166, 35, 0.08);
+  animation: bubble-float 18s ease-in-out infinite;
+}
+
+.bg-bubbles .b1 {
+  width: 120px;
+  height: 120px;
+  left: -20px;
+  top: 12%;
+  animation-duration: 22s;
+}
+
+.bg-bubbles .b2 {
+  width: 80px;
+  height: 80px;
+  right: 8%;
+  top: 22%;
+  animation-delay: -4s;
+  animation-duration: 16s;
+}
+
+.bg-bubbles .b3 {
+  width: 56px;
+  height: 56px;
+  left: 18%;
+  top: 48%;
+  animation-delay: -8s;
+}
+
+.bg-bubbles .b4 {
+  width: 140px;
+  height: 140px;
+  right: -40px;
+  top: 58%;
+  animation-delay: -2s;
+  animation-duration: 24s;
+}
+
+.bg-bubbles .b5 {
+  width: 44px;
+  height: 44px;
+  left: 62%;
+  top: 72%;
+  animation-delay: -11s;
+  animation-duration: 14s;
+}
+
+.bg-bubbles .b6 {
+  width: 96px;
+  height: 96px;
+  left: 6%;
+  bottom: 14%;
+  animation-delay: -6s;
+  animation-duration: 20s;
+}
+
+@keyframes bubble-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(8px, -18px, 0) scale(1.06);
+    opacity: 0.85;
+  }
+}
+
+.app-shell > :not(.bg-bubbles) {
+  position: relative;
+  z-index: 1;
+}
+
 .puffer-logo {
   width: 34px;
   height: 34px;
@@ -954,6 +1045,7 @@ a {
   line-height: 1.42;
   font-size: clamp(0.86rem, 2.8vw, 0.92rem);
   overflow-wrap: anywhere;
+  white-space: pre-line;
   word-break: break-word;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { formatEther, parseUnits } from 'viem';
 import { Token, UnifiToken } from '@pufferfinance/puffer-sdk';
 import {
@@ -10,6 +10,7 @@ import {
 } from './services/api';
 import { NETWORKS, NetworkKey, pufferService } from './services/puffer';
 import { Action } from './services/advisor';
+import { buildAdvisorOpeningMessage } from './services/advisor-insight';
 import { AdvancedStakePanel } from './components/AdvancedStakePanel';
 import { useI18n, LanguageSwitcher } from './i18n/context';
 import type { Locale } from './i18n/locales';
@@ -148,6 +149,19 @@ function PufferLogo() {
   return (
     <div className="puffer-logo" aria-label="Puffer">
       <span>P</span>
+    </div>
+  );
+}
+
+function BackgroundBubbles() {
+  return (
+    <div className="bg-bubbles" aria-hidden>
+      <span className="bubble b1" />
+      <span className="bubble b2" />
+      <span className="bubble b3" />
+      <span className="bubble b4" />
+      <span className="bubble b5" />
+      <span className="bubble b6" />
     </div>
   );
 }
@@ -718,12 +732,31 @@ function ChatOverlay({
   onAction: (action: Action) => void;
 }) {
   const { t, locale } = useI18n();
-  const greeting = t('chat.greeting', {
-    apy: data.protocolTVL?.apy || '-',
-  });
+
+  const openingMessage = useMemo(
+    () =>
+      buildAdvisorOpeningMessage(
+        {
+          rate: data.rate,
+          protocolTVL: data.protocolTVL,
+          vaultsAPY: data.vaultsAPY,
+          vaultsTVL: data.vaultsTVL,
+          pufETHBalance: data.balances.pufETH,
+        },
+        (key, vars) => t(key, vars),
+      ),
+    [
+      data.rate,
+      data.protocolTVL,
+      data.vaultsAPY,
+      data.vaultsTVL,
+      data.balances.pufETH,
+      t,
+    ],
+  );
 
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: greeting },
+    { role: 'assistant', content: openingMessage },
   ]);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
@@ -731,8 +764,8 @@ function ChatOverlay({
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMessages([{ role: 'assistant', content: greeting }]);
-  }, [greeting]);
+    setMessages([{ role: 'assistant', content: openingMessage }]);
+  }, [openingMessage]);
 
   useEffect(() => {
     fetch('/advisor/status')
@@ -1037,6 +1070,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <BackgroundBubbles />
       <AppHeader
         data={data}
         network={network}

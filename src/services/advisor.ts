@@ -1,4 +1,5 @@
 import { LlmConfig } from '@/common/lib/llm-config';
+import { buildFormattedAdvisorContext } from '@/services/advisor-insight';
 
 export interface AdvisorContext {
   address: string;
@@ -57,47 +58,18 @@ const LANGUAGE_NAMES: Record<string, string> = {
 };
 
 export function buildSystemPrompt(context: AdvisorContext): string {
-  const { address, pufETHBalance, rate, protocolTVL, vaultsAPY, locale = 'en' } =
+  const { address, pufETHBalance, rate, protocolTVL, vaultsAPY, vaultsTVL, locale = 'en' } =
     context;
   const language = LANGUAGE_NAMES[locale] ?? LANGUAGE_NAMES.en;
 
-  const vaultData = [
-    {
-      name: 'unifiETH',
-      apy: 0,
-      address: '0x196ead472583bc1e9af7a05f860d9857e1bd3dcc',
-    },
-    {
-      name: 'unifiUSD',
-      apy: 0,
-      address: '0x82c40e07277eBb92935f79cE92268F80dDc7caB4',
-    },
-    {
-      name: 'unifiBTC',
-      apy: 0,
-      address: '0x170d847a8320f3b6a77ee15b0cae430e3ec933a0',
-    },
-    {
-      name: 'pufETHs',
-      apy: 0,
-      address: '0x62a4ce0722ee65635c0f8339dd814d549b6f6735',
-    },
-  ];
-
-  vaultsAPY.data.forEach((v: any) => {
-    const key = v.token_address.toLowerCase();
-    if (key.includes('196ead47')) vaultData[0].apy = v.apy;
-    else if (key.includes('82c40e07')) vaultData[1].apy = v.apy;
-    else if (key.includes('170d847a')) vaultData[2].apy = v.apy;
-    else if (key.includes('62a4ce07')) vaultData[3].apy = v.apy;
+  const formatted = buildFormattedAdvisorContext({
+    address,
+    pufETHBalance,
+    rate,
+    protocolTVL,
+    vaultsAPY,
+    vaultsTVL,
   });
-
-  const pufEthBalanceInEth = (
-    Number(pufETHBalance) * Number(rate.ethPerPufEth)
-  ).toFixed(4);
-  const vaultsTable = vaultData
-    .map((v) => `${v.name}: ${v.apy}% APY`)
-    .join(', ');
 
   return `You are a DeFi staking advisor for Puffer Finance, embedded inside the imToken mobile wallet.
 You help users understand Puffer staking, pufETH, UniFi vaults, APY, risks, and how to stake when they choose to.
@@ -111,16 +83,18 @@ Never use markdown headers or bullet points. Write in plain conversational sente
 Always be specific — use the real numbers from the context below.
 
 LIVE PROTOCOL DATA (fetched just now):
-- pufETH/ETH rate: ${rate.ethPerPufEth} ETH per pufETH (rate appreciation = staking yield)
-- Protocol TVL: $${(Number(protocolTVL.lrt_total_usd) / 1e9).toFixed(2)}B
-- pufETH staking APY: ${protocolTVL.apy}%
+- pufETH/ETH rate: ${formatted.ethPerPufEth} ETH per pufETH (${formatted.pufEthPerEth} pufETH per 1 ETH)
+- Protocol TVL: ${formatted.protocolTvl} (pufETH staking TVL: ${formatted.stakingTvl})
+- pufETH staking APY: ${formatted.stakingApy}
+- Best vault right now: ${formatted.bestVaultName} at ${formatted.bestVaultApy}
 
 UNIFI VAULT OPPORTUNITIES:
-${vaultsTable}
+${formatted.vaultsTable}
+${formatted.vaultTvlLines ? `\nVAULT TVL: ${formatted.vaultTvlLines}` : ''}
 
 USER:
 - Address: ${address.slice(0, 6)}...${address.slice(-4)}
-- pufETH balance: ${pufETHBalance} pufETH (≈ ${pufEthBalanceInEth} ETH)
+- pufETH balance: ${formatted.pufEthBalance} pufETH (≈ ${formatted.pufEthBalanceInEth} ETH)
 
 Only when the user clearly wants to stake or deposit NOW (not for general questions), end your message with an XML action tag:
 <action>{"type":"stake_eth","amount":"1.0","label":"Stake 1 ETH → pufETH"}</action>

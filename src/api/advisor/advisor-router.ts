@@ -1,4 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
+import {
+  formatEth,
+  formatPercent,
+  formatPufEthBalance,
+  getBestVault,
+  resolveVaultApys,
+} from '@/common/lib/advisor-format';
 import { sendMessage } from '@/services/advisor';
 import { resolveLlmConfig, llmStatus } from '@/common/lib/llm-config';
 import { sendResponse } from '@/common/lib/response';
@@ -17,9 +24,12 @@ function isInformationalQuestion(text: string) {
 
 function fallbackAdvisor(messages: any[], context: any) {
   const latest = String(messages.at(-1)?.content || '').toLowerCase();
-  const rate = Number(context?.rate?.pufEthPerEth || 0);
-  const apy = context?.protocolTVL?.apy || '0';
-  const balance = context?.pufETHBalance || '0';
+  const rate = formatEth(context?.rate?.pufEthPerEth || 0);
+  const apy = formatPercent(context?.protocolTVL?.apy || 0);
+  const balance = formatPufEthBalance(context?.pufETHBalance || 0);
+  const vaults = resolveVaultApys(context?.vaultsAPY);
+  const best = getBestVault(vaults);
+  const bestVaultApy = formatPercent(best.apy);
   const informational = isInformationalQuestion(latest);
 
   if (latest.includes('balance')) {
@@ -35,7 +45,7 @@ function fallbackAdvisor(messages: any[], context: any) {
       latest.includes('deposit'))
   ) {
     return {
-      reply: `Current pufETH staking APY is ${apy}%. At the live rate, 1 ETH previews about ${rate.toFixed(4)} pufETH. Tap the button below when you are ready to stake.`,
+      reply: `Current pufETH staking APY is ${apy}. At the live rate, 1 ETH previews about ${rate} pufETH. Tap the button below when you are ready to stake.`,
       action: {
         type: 'stake_eth',
         amount: '1.0',
@@ -46,8 +56,7 @@ function fallbackAdvisor(messages: any[], context: any) {
 
   if (!informational && latest.includes('vault')) {
     return {
-      reply:
-        'The Vaults screen has live APY and TVL for all four UniFi vaults. Tap below to compare and deposit.',
+      reply: `The Vaults screen has live APY and TVL for all four UniFi vaults. Best right now is ${best.name} at ${bestVaultApy}. Tap below to compare and deposit.`,
       action: {
         type: 'deposit_vault',
         amount: '',
@@ -58,12 +67,12 @@ function fallbackAdvisor(messages: any[], context: any) {
 
   if (informational) {
     return {
-      reply: `Puffer staking lets you deposit ETH (or stETH/wstETH) and receive pufETH, a liquid restaking token that earns yield as validator rewards accrue. Right now pufETH staking APY is about ${apy}%, and 1 ETH would preview roughly ${rate.toFixed(4)} pufETH at the live rate. UniFi vaults on top can offer higher targeted APY if you want to go further.`,
+      reply: `Puffer staking lets you deposit ETH (or stETH/wstETH) and receive pufETH, a liquid restaking token that earns yield as validator rewards accrue. Right now pufETH staking APY is ${apy}, and 1 ETH would preview roughly ${rate} pufETH at the live rate. ${best.name} is the top UniFi vault at ${bestVaultApy} if you want to go further.`,
     };
   }
 
   return {
-    reply: `Current pufETH staking APY is ${apy}%. At the live rate, 1 ETH previews about ${rate.toFixed(4)} pufETH. Ask me to stake or compare vaults when you are ready.`,
+    reply: `Current pufETH staking APY is ${apy}. At the live rate, 1 ETH previews about ${rate} pufETH. Best vault: ${best.name} at ${bestVaultApy}. Ask me to stake or compare vaults when you are ready.`,
   };
 }
 

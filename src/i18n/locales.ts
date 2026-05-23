@@ -92,6 +92,8 @@ const en = {
     title: 'AI Advisor',
     greeting:
       'Ask me about Puffer staking, vault APYs, or how much pufETH you would receive. Current APY is {{apy}}%.',
+    openingInsight:
+      'Hey! pufETH is currently at {{ethPerPufEth}} ETH per pufETH, earning {{stakingAPY}} APY.\nBest vault right now: {{bestVault}} at {{bestVaultApy}}.\nI can help you stake ETH, compare vaults, or estimate your earnings. What would you like to do?',
     placeholder: 'Ask about Puffer...',
     noAiKey:
       'No AI key configured on server. Using basic replies until Groq/Gemini is set up.',
@@ -187,6 +189,8 @@ const zh: Messages = {
     title: 'AI 顾问',
     greeting:
       '可问我 Puffer 质押、金库 APY 或能获得多少 pufETH。当前 APY 为 {{apy}}%。',
+    openingInsight:
+      '你好！当前 pufETH 汇率约为每枚 pufETH {{ethPerPufEth}} ETH，质押 APY 为 {{stakingAPY}}。\n当前最佳金库：{{bestVault}}，APY {{bestVaultApy}}。\n我可以帮你质押 ETH、对比金库或估算收益。你想做什么？',
     placeholder: '询问 Puffer...',
     noAiKey: '服务器未配置 AI 密钥，当前使用基础回复。',
     offline: '暂时无法连接顾问，但质押与金库页面可正常使用。',
@@ -280,6 +284,8 @@ const es: Messages = {
     title: 'Asesor IA',
     greeting:
       'Pregunta sobre staking Puffer, APY de bóvedas o cuánto pufETH recibirías. APY actual: {{apy}}%.',
+    openingInsight:
+      '¡Hola! pufETH está a {{ethPerPufEth}} ETH por pufETH, con APY de staking de {{stakingAPY}}.\nMejor bóveda ahora: {{bestVault}} a {{bestVaultApy}}.\nPuedo ayudarte a hacer stake de ETH, comparar bóvedas o estimar ganancias. ¿Qué te gustaría hacer?',
     placeholder: 'Pregunta sobre Puffer...',
     noAiKey: 'Sin clave IA en el servidor. Respuestas básicas por ahora.',
     offline:

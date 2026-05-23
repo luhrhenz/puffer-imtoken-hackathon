@@ -54937,6 +54937,75 @@ ${sa(b3)}`), super(t12.shortMessage, {
     }
   };
 
+  // src/services/advisor-insight.ts
+  init_define_process_env();
+
+  // src/common/lib/advisor-format.ts
+  init_define_process_env();
+  var VAULT_DEFS = [
+    {
+      name: "unifiETH",
+      address: "0x196ead472583bc1e9af7a05f860d9857e1bd3dcc"
+    },
+    {
+      name: "unifiUSD",
+      address: "0x82c40e07277eBb92935f79cE92268F80dDc7caB4"
+    },
+    {
+      name: "unifiBTC",
+      address: "0x170d847a8320f3b6a77ee15b0cae430e3ec933a0"
+    },
+    {
+      name: "pufETHs",
+      address: "0x62a4ce0722ee65635c0f8339dd814d549b6f6735"
+    }
+  ];
+  var usdCompact = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    notation: "compact",
+    maximumFractionDigits: 2
+  });
+  function formatPercent(value) {
+    const n4 = Number(value);
+    if (!Number.isFinite(n4)) return "0.00%";
+    return `${n4.toFixed(2)}%`;
+  }
+  function formatEth(value) {
+    const n4 = Number(value);
+    if (!Number.isFinite(n4)) return "0.0000";
+    return n4.toFixed(4);
+  }
+  function resolveVaultApys(vaultsAPY) {
+    const vaults = VAULT_DEFS.map((v6) => ({ name: v6.name, apy: 0 }));
+    vaultsAPY?.data?.forEach((row) => {
+      const key = row.token_address.toLowerCase();
+      if (key.includes("196ead47")) vaults[0].apy = row.apy;
+      else if (key.includes("82c40e07")) vaults[1].apy = row.apy;
+      else if (key.includes("170d847a")) vaults[2].apy = row.apy;
+      else if (key.includes("62a4ce07")) vaults[3].apy = row.apy;
+    });
+    return vaults;
+  }
+  function getBestVault(vaults) {
+    if (!vaults.length) return { name: "unifiETH", apy: 0 };
+    return vaults.reduce((best, v6) => v6.apy > best.apy ? v6 : best, vaults[0]);
+  }
+
+  // src/services/advisor-insight.ts
+  function buildAdvisorOpeningMessage(data, interpolate2) {
+    const ethPerPufEth = formatEth(data.rate?.ethPerPufEth ?? 0);
+    const stakingAPY = formatPercent(data.protocolTVL?.apy ?? 0);
+    const vaults = resolveVaultApys(data.vaultsAPY);
+    const best = getBestVault(vaults);
+    return interpolate2("chat.openingInsight", {
+      ethPerPufEth,
+      stakingAPY,
+      bestVault: best.name,
+      bestVaultApy: formatPercent(best.apy)
+    });
+  }
+
   // src/components/AdvancedStakePanel.tsx
   init_define_process_env();
   var import_react2 = __toESM(require_react());
@@ -55222,6 +55291,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
     chat: {
       title: "AI Advisor",
       greeting: "Ask me about Puffer staking, vault APYs, or how much pufETH you would receive. Current APY is {{apy}}%.",
+      openingInsight: "Hey! pufETH is currently at {{ethPerPufEth}} ETH per pufETH, earning {{stakingAPY}} APY.\nBest vault right now: {{bestVault}} at {{bestVaultApy}}.\nI can help you stake ETH, compare vaults, or estimate your earnings. What would you like to do?",
       placeholder: "Ask about Puffer...",
       noAiKey: "No AI key configured on server. Using basic replies until Groq/Gemini is set up.",
       offline: "I could not reach the advisor right now, but the live staking and vault screens are ready.",
@@ -55309,6 +55379,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
     chat: {
       title: "AI \u987E\u95EE",
       greeting: "\u53EF\u95EE\u6211 Puffer \u8D28\u62BC\u3001\u91D1\u5E93 APY \u6216\u80FD\u83B7\u5F97\u591A\u5C11 pufETH\u3002\u5F53\u524D APY \u4E3A {{apy}}%\u3002",
+      openingInsight: "\u4F60\u597D\uFF01\u5F53\u524D pufETH \u6C47\u7387\u7EA6\u4E3A\u6BCF\u679A pufETH {{ethPerPufEth}} ETH\uFF0C\u8D28\u62BC APY \u4E3A {{stakingAPY}}\u3002\n\u5F53\u524D\u6700\u4F73\u91D1\u5E93\uFF1A{{bestVault}}\uFF0CAPY {{bestVaultApy}}\u3002\n\u6211\u53EF\u4EE5\u5E2E\u4F60\u8D28\u62BC ETH\u3001\u5BF9\u6BD4\u91D1\u5E93\u6216\u4F30\u7B97\u6536\u76CA\u3002\u4F60\u60F3\u505A\u4EC0\u4E48\uFF1F",
       placeholder: "\u8BE2\u95EE Puffer...",
       noAiKey: "\u670D\u52A1\u5668\u672A\u914D\u7F6E AI \u5BC6\u94A5\uFF0C\u5F53\u524D\u4F7F\u7528\u57FA\u7840\u56DE\u590D\u3002",
       offline: "\u6682\u65F6\u65E0\u6CD5\u8FDE\u63A5\u987E\u95EE\uFF0C\u4F46\u8D28\u62BC\u4E0E\u91D1\u5E93\u9875\u9762\u53EF\u6B63\u5E38\u4F7F\u7528\u3002",
@@ -55396,6 +55467,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
     chat: {
       title: "Asesor IA",
       greeting: "Pregunta sobre staking Puffer, APY de b\xF3vedas o cu\xE1nto pufETH recibir\xEDas. APY actual: {{apy}}%.",
+      openingInsight: "\xA1Hola! pufETH est\xE1 a {{ethPerPufEth}} ETH por pufETH, con APY de staking de {{stakingAPY}}.\nMejor b\xF3veda ahora: {{bestVault}} a {{bestVaultApy}}.\nPuedo ayudarte a hacer stake de ETH, comparar b\xF3vedas o estimar ganancias. \xBFQu\xE9 te gustar\xEDa hacer?",
       placeholder: "Pregunta sobre Puffer...",
       noAiKey: "Sin clave IA en el servidor. Respuestas b\xE1sicas por ahora.",
       offline: "No pude contactar al asesor, pero las pantallas de stake y b\xF3vedas est\xE1n listas.",
@@ -55813,6 +55885,9 @@ ${sa(b3)}`), super(t12.shortMessage, {
   function PufferLogo() {
     return /* @__PURE__ */ import_react3.default.createElement("div", { className: "puffer-logo", "aria-label": "Puffer" }, /* @__PURE__ */ import_react3.default.createElement("span", null, "P"));
   }
+  function BackgroundBubbles() {
+    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "bg-bubbles", "aria-hidden": true }, /* @__PURE__ */ import_react3.default.createElement("span", { className: "bubble b1" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "bubble b2" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "bubble b3" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "bubble b4" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "bubble b5" }), /* @__PURE__ */ import_react3.default.createElement("span", { className: "bubble b6" }));
+  }
   function AppHeader({
     data,
     network,
@@ -56138,19 +56213,36 @@ ${sa(b3)}`), super(t12.shortMessage, {
     onAction
   }) {
     const { t: t12, locale } = useI18n();
-    const greeting = t12("chat.greeting", {
-      apy: data.protocolTVL?.apy || "-"
-    });
+    const openingMessage = (0, import_react3.useMemo)(
+      () => buildAdvisorOpeningMessage(
+        {
+          rate: data.rate,
+          protocolTVL: data.protocolTVL,
+          vaultsAPY: data.vaultsAPY,
+          vaultsTVL: data.vaultsTVL,
+          pufETHBalance: data.balances.pufETH
+        },
+        (key, vars) => t12(key, vars)
+      ),
+      [
+        data.rate,
+        data.protocolTVL,
+        data.vaultsAPY,
+        data.vaultsTVL,
+        data.balances.pufETH,
+        t12
+      ]
+    );
     const [messages2, setMessages] = (0, import_react3.useState)([
-      { role: "assistant", content: greeting }
+      { role: "assistant", content: openingMessage }
     ]);
     const [input, setInput] = (0, import_react3.useState)("");
     const [sending, setSending] = (0, import_react3.useState)(false);
     const [aiEnabled, setAiEnabled] = (0, import_react3.useState)(null);
     const endRef = (0, import_react3.useRef)(null);
     (0, import_react3.useEffect)(() => {
-      setMessages([{ role: "assistant", content: greeting }]);
-    }, [greeting]);
+      setMessages([{ role: "assistant", content: openingMessage }]);
+    }, [openingMessage]);
     (0, import_react3.useEffect)(() => {
       fetch("/advisor/status").then((res) => res.ok ? res.json() : null).then((status) => setAiEnabled(!!status?.configured)).catch(() => setAiEnabled(false));
     }, []);
@@ -56384,7 +56476,7 @@ ${sa(b3)}`), super(t12.shortMessage, {
     };
     if (loading) return /* @__PURE__ */ import_react3.default.createElement(SplashScreen, { loading: true });
     if (!hasWallet) return /* @__PURE__ */ import_react3.default.createElement(SplashScreen, null);
-    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "app-shell" }, /* @__PURE__ */ import_react3.default.createElement(
+    return /* @__PURE__ */ import_react3.default.createElement("div", { className: "app-shell" }, /* @__PURE__ */ import_react3.default.createElement(BackgroundBubbles, null), /* @__PURE__ */ import_react3.default.createElement(
       AppHeader,
       {
         data,
